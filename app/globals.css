@@ -907,7 +907,7 @@ html.light-mode .experience {
   padding: 0.5rem 1.25rem;
   border: 1px solid var(--primary-blue);
   background-color: transparent;
-  color: var(--primary-blue);
+  color: white;
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -933,6 +933,11 @@ html.light-mode .filter-btn:hover {
 
 .filter-btn.active {
   background-color: var(--primary-blue);
+  color: white;
+}
+
+html.light-mode .filter-btn.active {
+  background-color: var(--primary-dark);
   color: white;
 }
 

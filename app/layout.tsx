@@ -14,22 +14,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                const theme = localStorage.getItem('theme') || 'light';
-                if (theme === 'light') {
-                  document.documentElement.classList.add('light-mode');
-                }
+                try {
+                  const theme = localStorage.getItem('theme') || 'light';
+                  if (theme === 'light') {
+                    document.documentElement.classList.add('light-mode');
+                  }
+                } catch (e) {}
               })();
             `,
           }}
         />
       </head>
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning>
         {children}
       </body>
     </html>
