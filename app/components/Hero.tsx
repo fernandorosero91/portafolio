@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 export default function Hero() {
   return (
     <section className="hero" id="inicio">
@@ -38,7 +40,14 @@ export default function Hero() {
         
         <div className="hero-avatar">
           <div className="avatar-box">
-            <div className="avatar-placeholder">👤</div>
+            <Image 
+              src="/profile-photo.jpg" 
+              alt="Fernando Rosero - Perfil Profesional"
+              width={400}
+              height={500}
+              priority
+              style={{ objectFit: 'cover', width: '100%', height: '100%', borderRadius: '12px' }}
+            />
           </div>
         </div>
       </div>

@@ -27,10 +27,10 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-section">
-          <a href="#" className="navbar-logo" style={{ fontSize: '1.5rem', marginBottom: '1rem', display: 'block' }}>
+          <a href="#" className="navbar-logo footer-logo">
             FR
           </a>
-          <p style={{ color: 'var(--text-tertiary)', fontSize: '0.9rem', lineHeight: 1.6 }}>
+          <p className="footer-description">
             Desarrollador Full Stack y Contador Público especializado en soluciones financieras innovadoras.
           </p>
         </div>
