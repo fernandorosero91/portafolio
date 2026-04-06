@@ -1,10 +1,12 @@
 'use client';
 
 import Image from 'next/image';
+import ParticlesBackground from './ParticlesBackground';
 
 export default function Hero() {
   return (
     <section className="hero" id="inicio">
+      <ParticlesBackground />
       <div className="hero-container">
         <div className="hero-content">
           <div className="hero-badge">● Disponible para proyectos</div>

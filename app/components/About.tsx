@@ -1,6 +1,12 @@
 'use client';
 
+import { useScrollReveal } from '../hooks/useScrollReveal';
+
 export default function About() {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
+  const { ref: contentRef, isVisible: contentVisible } = useScrollReveal({ delay: 200 });
+  const { ref: skillsRef, isVisible: skillsVisible } = useScrollReveal({ delay: 400 });
+
   const skillCategories = [
     {
       category: 'Contabilidad & Finanzas',
@@ -27,13 +33,13 @@ export default function About() {
   return (
     <section className="about" id="about">
       <div className="section-container">
-        <div className="section-header">
+        <div ref={headerRef} className={`section-header scroll-reveal ${headerVisible ? 'visible' : ''}`}>
           <h2 className="section-title">Acerca de Mí</h2>
           <p className="section-subtitle">Conoce mi trayectoria profesional y habilidades</p>
         </div>
         
         <div className="about-grid">
-          <div className="about-content">
+          <div ref={contentRef} className={`about-content scroll-reveal-left ${contentVisible ? 'visible' : ''}`}>
             <h3>Mi Trayectoria</h3>
             <p className="about-text">
               Soy Contador Público con Maestría en Gerencia y Auditoría Tributaria, actualmente cursando 5to semestre de Ingeniería de Software. Mi trayectoria profesional combina más de 8 años de experiencia en el sector contable y financiero con una creciente pasión por el desarrollo de software.
@@ -46,7 +52,7 @@ export default function About() {
             </p>
           </div>
           
-          <div className="skills-section">
+          <div ref={skillsRef} className={`skills-section scroll-reveal-right ${skillsVisible ? 'visible' : ''}`}>
             <h4>Habilidades Técnicas</h4>
             <div className="skills-categories">
               {skillCategories.map((category) => (

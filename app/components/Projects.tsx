@@ -1,6 +1,10 @@
 'use client';
 
+import { useScrollReveal } from '../hooks/useScrollReveal';
+
 export default function Projects() {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
+
   const projects = [
     {
       title: 'Sistema de Gestión de Parqueaderos',
@@ -35,14 +39,16 @@ export default function Projects() {
   return (
     <section className="projects" id="projects">
       <div className="section-container">
-        <div className="section-header">
+        <div ref={headerRef} className={`section-header scroll-reveal ${headerVisible ? 'visible' : ''}`}>
           <h2 className="section-title">Proyectos Destacados</h2>
           <p className="section-subtitle">Soluciones tecnológicas que combinan finanzas y desarrollo</p>
         </div>
         
         <div className="testimonials-grid">
-          {projects.map((project, index) => (
-            <div key={index} className="testimonial-card">
+          {projects.map((project, index) => {
+            const { ref, isVisible } = useScrollReveal({ delay: index * 100 });
+            return (
+              <div key={index} ref={ref} className={`testimonial-card scroll-reveal-scale ${isVisible ? 'visible' : ''}`}>
               <div className="project-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d={project.icon} />
@@ -59,7 +65,8 @@ export default function Projects() {
                 {project.status === 'production' ? '✓ En Producción' : '⚡ En Pruebas'}
               </p>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,8 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Contact() {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
+  const { ref: formRef, isVisible: formVisible } = useScrollReveal({ delay: 200 });
+  const { ref: infoRef, isVisible: infoVisible } = useScrollReveal({ delay: 400 });
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,13 +28,13 @@ export default function Contact() {
   return (
     <section className="contact" id="contact">
       <div className="section-container">
-        <div className="section-header" style={{ marginBottom: '3rem' }}>
+        <div ref={headerRef} className={`section-header scroll-reveal ${headerVisible ? 'visible' : ''}`} style={{ marginBottom: '3rem' }}>
           <h2 className="section-title">Contacto</h2>
           <p className="section-subtitle">¿Tienes un proyecto en mente? Hablemos</p>
         </div>
         
         <div className="contact-grid">
-          <form onSubmit={handleSubmit} className="contact-form">
+          <form ref={formRef} onSubmit={handleSubmit} className={`contact-form scroll-reveal-left ${formVisible ? 'visible' : ''}`}>
             <div className="form-group">
               <label htmlFor="name">Nombre</label>
               <input
@@ -82,7 +87,7 @@ export default function Contact() {
             </button>
           </form>
           
-          <div className="contact-info">
+          <div ref={infoRef} className={`contact-info scroll-reveal-right ${infoVisible ? 'visible' : ''}`}>
             <div className="contact-item">
               <div className="contact-icon">@</div>
               <div className="contact-details">
