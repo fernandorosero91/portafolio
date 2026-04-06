@@ -96,7 +96,7 @@ export default function Contact() {
               <div className="contact-icon">@</div>
               <div className="contact-details">
                 <h4>{t('contact.email')}</h4>
-                <p>elier.rosero@example.com</p>
+                <p>ferrosero@gmail.com</p>
               </div>
             </div>
             
@@ -104,7 +104,7 @@ export default function Contact() {
               <div className="contact-icon">☎</div>
               <div className="contact-details">
                 <h4>{t('contact.phone')}</h4>
-                <p>+57 (310) 123-4567</p>
+                <p>+57 (311) 709-8269</p>
               </div>
             </div>
             
