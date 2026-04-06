@@ -52,7 +52,7 @@ export default function Hero() {
           </div>
           
           <div className="hero-buttons">
-            <button className="btn btn-primary">{t('hero.viewProjects')}</button>
+            <a href="#projects" className="btn btn-primary">{t('hero.viewProjects')}</a>
             <button className="btn btn-secondary">↓ {t('hero.downloadCV')}</button>
           </div>
         </div>
