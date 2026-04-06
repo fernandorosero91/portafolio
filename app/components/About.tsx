@@ -1,31 +1,38 @@
 'use client';
 
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function About() {
+  const { t } = useLanguage();
   const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
-  const { ref: contentRef, isVisible: contentVisible } = useScrollReveal({ delay: 200 });
-  const { ref: skillsRef, isVisible: skillsVisible } = useScrollReveal({ delay: 400 });
+  const { ref: contentRef, isVisible: contentVisible } = useScrollReveal({ threshold: 0.1, delay: 200 });
+  const { ref: skillsRef, isVisible: skillsVisible } = useScrollReveal({ threshold: 0.1, delay: 400 });
 
   const skillCategories = [
     {
       category: 'Contabilidad & Finanzas',
+      translationKey: 'accounting',
       skills: ['Contabilidad & NIIF', 'Auditoría Tributaria', 'Gestión Financiera', 'Estados Financieros', 'Planeación Tributaria']
     },
     {
       category: 'Desarrollo Backend',
+      translationKey: 'backend',
       skills: ['Python', 'Django', 'Java', 'Spring Boot', 'Node.js', 'Express.js', 'Laravel', 'Flask']
     },
     {
       category: 'Desarrollo Frontend',
+      translationKey: 'frontend',
       skills: ['JavaScript', 'React', 'Vue.js', 'HTML5', 'CSS3', 'Tailwind CSS', 'EJS']
     },
     {
       category: 'Bases de Datos',
+      translationKey: 'databases',
       skills: ['PostgreSQL', 'MySQL', 'SQL Server']
     },
     {
       category: 'Herramientas & Otros',
+      translationKey: 'tools',
       skills: ['Git', 'Cloud Computing', 'DevOps', 'API REST', 'Metodologías Ágiles']
     }
   ];
@@ -34,30 +41,30 @@ export default function About() {
     <section className="about" id="about">
       <div className="section-container">
         <div ref={headerRef} className={`section-header scroll-reveal ${headerVisible ? 'visible' : ''}`}>
-          <h2 className="section-title">Acerca de Mí</h2>
-          <p className="section-subtitle">Conoce mi trayectoria profesional y habilidades</p>
+          <h2 className="section-title">{t('about.title')}</h2>
+          <p className="section-subtitle">{t('about.subtitle')}</p>
         </div>
         
         <div className="about-grid">
           <div ref={contentRef} className={`about-content scroll-reveal-left ${contentVisible ? 'visible' : ''}`}>
-            <h3>Mi Trayectoria</h3>
+            <h3>{t('about.myJourney')}</h3>
             <p className="about-text">
-              Soy Contador Público con Maestría en Gerencia y Auditoría Tributaria, actualmente cursando 5to semestre de Ingeniería de Software. Mi trayectoria profesional combina más de 8 años de experiencia en el sector contable y financiero con una creciente pasión por el desarrollo de software.
+              {t('about.text1')}
             </p>
             <p className="about-text">
-              He trabajado en instituciones como la Universidad de Nariño, Corponariño y actualmente me desempeño como Contador Público en Coopcolon y Docente en la Universidad Autónoma. Paralelamente, desarrollo soluciones tecnológicas que integran mis conocimientos contables con programación, creando herramientas que automatizan y optimizan procesos empresariales.
+              {t('about.text2')}
             </p>
             <p className="about-text">
-              Más allá del ámbito profesional, encuentro equilibrio en mis pasiones personales. La música es parte fundamental de mi vida, especialmente el canto, que me permite expresar creatividad de una forma diferente. También soy un apasionado del fútbol, deporte que practico regularmente y que me ha enseñado el valor del trabajo en equipo, la disciplina y la perseverancia, valores que aplico tanto en mi vida personal como profesional.
+              {t('about.text3')}
             </p>
           </div>
           
           <div ref={skillsRef} className={`skills-section scroll-reveal-right ${skillsVisible ? 'visible' : ''}`}>
-            <h4>Habilidades Técnicas</h4>
+            <h4>{t('about.skills')}</h4>
             <div className="skills-categories">
               {skillCategories.map((category) => (
                 <div key={category.category} className="skill-category">
-                  <h5 className="category-title">{category.category}</h5>
+                  <h5 className="category-title">{t(`about.${category.translationKey}`)}</h5>
                   <div className="skills-tags">
                     {category.skills.map((skill) => (
                       <span key={skill} className="skill-tag">{skill}</span>

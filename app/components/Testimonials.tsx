@@ -1,10 +1,12 @@
 'use client';
 
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Testimonials() {
+  const { t } = useLanguage();
   const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
-  const { ref: featuredRef, isVisible: featuredVisible } = useScrollReveal({ delay: 200 });
+  const { ref: featuredRef, isVisible: featuredVisible } = useScrollReveal({ threshold: 0.1, delay: 200 });
 
   const featuredTestimonial = {
     name: 'Fredy Urbano',
@@ -41,8 +43,8 @@ export default function Testimonials() {
     <section className="testimonials" id="testimonials">
       <div className="section-container">
         <div ref={headerRef} className={`section-header scroll-reveal ${headerVisible ? 'visible' : ''}`}>
-          <h2 className="section-title">Testimonios</h2>
-          <p className="section-subtitle">Opiniones de colegas y clientes sobre mi trabajo</p>
+          <h2 className="section-title">{t('testimonials.title')}</h2>
+          <p className="section-subtitle">{t('testimonials.subtitle')}</p>
         </div>
 
         <div ref={featuredRef} className={`featured-testimonial scroll-reveal-scale ${featuredVisible ? 'visible' : ''}`}>

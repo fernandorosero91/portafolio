@@ -1,10 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import Image from 'next/image';
 
 export default function Navbar() {
+  const { language, setLanguage, t } = useLanguage();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
 
   useEffect(() => {
     // Check for saved theme preference or default to 'light'
@@ -14,6 +18,19 @@ export default function Navbar() {
       document.documentElement.classList.add('light-mode');
     }
   }, []);
+
+  useEffect(() => {
+    // Close language menu when clicking outside
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (languageMenuOpen && !target.closest('.language-selector')) {
+        setLanguageMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [languageMenuOpen]);
 
   const toggleTheme = () => {
     document.documentElement.classList.toggle('light-mode');
@@ -31,13 +48,22 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   };
 
+  const toggleLanguageMenu = () => {
+    setLanguageMenuOpen(!languageMenuOpen);
+  };
+
+  const selectLanguage = (lang: 'es' | 'en') => {
+    setLanguage(lang);
+    setLanguageMenuOpen(false);
+  };
+
   const navLinks = [
-    { href: '#inicio', label: 'Inicio' },
-    { href: '#about', label: 'Acerca de' },
-    { href: '#projects', label: 'Proyectos' },
-    { href: '#testimonials', label: 'Testimonios' },
-    { href: '#experience', label: 'Experiencia' },
-    { href: '#contact', label: 'Contacto' },
+    { href: '#inicio', label: t('nav.home') },
+    { href: '#about', label: t('nav.about') },
+    { href: '#projects', label: t('nav.projects') },
+    { href: '#testimonials', label: t('nav.testimonials') },
+    { href: '#experience', label: t('nav.experience') },
+    { href: '#contact', label: t('nav.contact') },
   ];
 
   return (
@@ -57,10 +83,42 @@ export default function Navbar() {
           
           {/* Desktop Actions */}
           <div className="navbar-actions">
+            <div className="language-selector">
+              <button 
+                className="theme-toggle language-toggle" 
+                onClick={toggleLanguageMenu}
+                aria-label="Select language"
+                title="Select language / Seleccionar idioma"
+              >
+                <Image 
+                  src="/globe.svg" 
+                  alt="Language" 
+                  width={20} 
+                  height={20}
+                  style={{ filter: 'brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%)' }}
+                />
+              </button>
+              {languageMenuOpen && (
+                <div className="language-dropdown">
+                  <button 
+                    className={`language-option ${language === 'es' ? 'active' : ''}`}
+                    onClick={() => selectLanguage('es')}
+                  >
+                    🇪🇸 Español
+                  </button>
+                  <button 
+                    className={`language-option ${language === 'en' ? 'active' : ''}`}
+                    onClick={() => selectLanguage('en')}
+                  >
+                    🇬🇧 English
+                  </button>
+                </div>
+              )}
+            </div>
             <button className="theme-toggle" onClick={toggleTheme}>
               {theme === 'light' ? '☀' : '☾'}
             </button>
-            <button className="cv-button">Descargar CV</button>
+            <button className="cv-button">{t('nav.downloadCV')}</button>
             
             {/* Mobile Hamburger */}
             <button 
