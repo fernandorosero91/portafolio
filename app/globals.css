@@ -173,14 +173,11 @@ html.light-mode .cv-button:hover {
 
 .language-toggle:hover img {
   opacity: 1;
+  filter: brightness(0) saturate(100%) invert(60%) sepia(98%) saturate(1352%) hue-rotate(359deg) brightness(102%) contrast(102%) !important;
 }
 
 html.light-mode .language-toggle img {
   filter: brightness(0) saturate(100%) invert(30%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(60%) contrast(90%) !important;
-}
-
-.language-toggle:hover img {
-  filter: brightness(0) saturate(100%) invert(60%) sepia(98%) saturate(1352%) hue-rotate(359deg) brightness(102%) contrast(102%) !important;
 }
 
 html.light-mode .language-toggle:hover img {
@@ -216,7 +213,7 @@ html.light-mode .language-dropdown {
   cursor: pointer;
   text-align: left;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   font-size: 0.95rem;
   display: flex;
   align-items: center;
@@ -229,14 +226,14 @@ html.light-mode .language-option {
 }
 
 .language-option:hover {
-  background: rgba(74, 111, 168, 0.15);
-  color: var(--primary-blue);
-  transform: translateX(2px);
+  background-color: var(--accent-amber);
+  color: white;
+  transform: translateY(-2px);
 }
 
 html.light-mode .language-option:hover {
-  background: rgba(74, 111, 168, 0.1);
-  color: var(--primary-blue);
+  background-color: var(--accent-amber);
+  color: white;
 }
 
 .language-option.active {
@@ -245,9 +242,9 @@ html.light-mode .language-option:hover {
 }
 
 .language-option.active:hover {
-  background: var(--primary-dark);
+  background-color: var(--accent-amber);
   color: white;
-  transform: translateX(0);
+  transform: translateY(-2px);
 }
 
 @keyframes fadeInDropdown {
