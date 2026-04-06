@@ -13,17 +13,17 @@ export default function About() {
     {
       category: 'Contabilidad & Finanzas',
       translationKey: 'accounting',
-      skills: ['Contabilidad & NIIF', 'Auditoría Tributaria', 'Gestión Financiera', 'Estados Financieros', 'Planeación Tributaria']
+      skills: ['NIIF', 'Auditoría Tributaria', 'Gestión Financiera', 'Planeación Tributaria']
     },
     {
       category: 'Desarrollo Backend',
       translationKey: 'backend',
-      skills: ['Python', 'Django', 'Java', 'Spring Boot', 'Node.js', 'Express.js', 'Laravel', 'Flask']
+      skills: ['Python', 'Django', 'Java', 'Spring Boot', 'Node.js', 'Laravel']
     },
     {
       category: 'Desarrollo Frontend',
       translationKey: 'frontend',
-      skills: ['JavaScript', 'React', 'Vue.js', 'HTML5', 'CSS3', 'Tailwind CSS', 'EJS']
+      skills: ['JavaScript', 'React', 'Vue.js', 'HTML5', 'CSS3', 'Tailwind CSS']
     },
     {
       category: 'Bases de Datos',
@@ -31,9 +31,9 @@ export default function About() {
       skills: ['PostgreSQL', 'MySQL', 'SQL Server']
     },
     {
-      category: 'Herramientas & Otros',
+      category: 'Herramientas',
       translationKey: 'tools',
-      skills: ['Git', 'Cloud Computing', 'DevOps', 'API REST', 'Metodologías Ágiles']
+      skills: ['Git', 'Cloud Computing', 'DevOps', 'API REST']
     }
   ];
 
