@@ -1,16 +1,31 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import ParticlesBackground from './ParticlesBackground';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Hero() {
   const { t } = useLanguage();
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section className="hero" id="inicio">
       <ParticlesBackground />
       <div className="hero-container">
-        <div className="hero-content">
+        <div 
+          className="hero-content"
+          style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+        >
           <div className="hero-badge">● {t('hero.available')}</div>
           <h1>
             <span className="name-first">{t('hero.name')}</span><br />
@@ -42,7 +57,10 @@ export default function Hero() {
           </div>
         </div>
         
-        <div className="hero-avatar">
+        <div 
+          className="hero-avatar"
+          style={{ transform: `translateY(${scrollY * 0.05}px)` }}
+        >
           <div className="avatar-box">
             <Image 
               src="/profile-photo.jpg" 
