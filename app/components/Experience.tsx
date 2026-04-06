@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 type FilterType = 'all' | 'academic' | 'professional';
 
 export default function Experience() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
 
   const experiences = [
     {
@@ -94,7 +96,7 @@ export default function Experience() {
   return (
     <section className="experience" id="experience">
       <div className="section-container">
-        <div className="section-header">
+        <div ref={headerRef} className={`section-header scroll-reveal ${headerVisible ? 'visible' : ''}`}>
           <h2 className="section-title">Experiencia & Educación</h2>
           <p className="section-subtitle">Mi recorrido profesional y académico</p>
         </div>
