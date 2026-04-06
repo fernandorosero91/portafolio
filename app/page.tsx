@@ -7,10 +7,12 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
+import CustomCursor from './components/CustomCursor';
 
 export default function Home() {
   return (
     <>
+      <CustomCursor />
       <ScrollProgress />
       <Navbar />
       <Hero />

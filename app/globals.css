@@ -1328,6 +1328,92 @@ html.light-mode .footer-bottom {
   color: var(--light-text-tertiary);
 }
 
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--primary-blue);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+  mix-blend-mode: difference;
+}
+
+html.light-mode .custom-cursor {
+  border-color: var(--primary-dark);
+}
+
+.custom-cursor.hovering {
+  width: 60px;
+  height: 60px;
+  border-color: var(--accent-amber);
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+html.light-mode .custom-cursor.hovering {
+  border-color: var(--light-accent-amber);
+  background-color: rgba(180, 83, 9, 0.1);
+}
+
+.custom-cursor.clicking {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(74, 111, 168, 0.2);
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background-color: var(--primary-blue);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10001;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+}
+
+html.light-mode .custom-cursor-dot {
+  background-color: var(--primary-dark);
+}
+
+.custom-cursor-dot.hovering {
+  width: 12px;
+  height: 12px;
+  background-color: var(--accent-amber);
+}
+
+html.light-mode .custom-cursor-dot.hovering {
+  background-color: var(--light-accent-amber);
+}
+
+.custom-cursor-dot.clicking {
+  width: 6px;
+  height: 6px;
+}
+
+/* Hide default cursor on desktop */
+@media (min-width: 769px) {
+  body {
+    cursor: none;
+  }
+  
+  a, button, .skill-tag, .filter-btn, .testimonial-card, .timeline-content {
+    cursor: none;
+  }
+}
+
+/* Show default cursor on mobile/tablet */
+@media (max-width: 768px) {
+  .custom-cursor,
+  .custom-cursor-dot {
+    display: none;
+  }
+}
+
 /* Scroll Progress Bar */
 .scroll-progress-container {
   position: fixed;
