@@ -1,48 +1,23 @@
 'use client';
 
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useLanguage } from '../contexts/LanguageContext';
+import { testimonialsData } from '../data/testimonials';
 
 export default function Testimonials() {
+  const { t, language } = useLanguage();
   const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
-  const { ref: featuredRef, isVisible: featuredVisible } = useScrollReveal({ delay: 200 });
+  const { ref: featuredRef, isVisible: featuredVisible } = useScrollReveal({ threshold: 0.1, delay: 200 });
 
-  const featuredTestimonial = {
-    name: 'Fredy Urbano',
-    role: 'Gerente @ Coopcolon',
-    avatar: 'FU',
-    text: 'Elier Fernando es un profesional excepcional que combina conocimientos contables profundos con habilidades tecnológicas. Su capacidad para entender procesos financieros y traducirlos en soluciones de software es invaluable.'
-  };
-
-  const testimonials = [
-    {
-      name: 'Maria Yadir Palacios',
-      role: 'Directora Programa Contaduría Pública AUNAR',
-      avatar: 'MY',
-      text: 'Excelente docente y profesional. Su experiencia práctica enriquece las clases y motiva a los estudiantes a aplicar conocimientos en proyectos reales.',
-      stars: 5
-    },
-    {
-      name: 'German Carlosama',
-      role: 'Director Financiero Asociación IntyQuilla',
-      avatar: 'GC',
-      text: 'Su comprensión de normativas tributarias y capacidad para automatizar procesos contables ha mejorado significativamente nuestra eficiencia operativa.',
-      stars: 5
-    },
-    {
-      name: 'Clara Milena',
-      role: 'Propietaria El Pan de Bono',
-      avatar: 'CM',
-      text: 'Profesional comprometido y responsable. Sus soluciones tecnológicas han transformado la manera en que gestionamos nuestros procesos financieros.',
-      stars: 5
-    },
-  ];
+  const featuredTestimonial = testimonialsData[language].featured;
+  const testimonials = testimonialsData[language].testimonials;
 
   return (
     <section className="testimonials" id="testimonials">
       <div className="section-container">
         <div ref={headerRef} className={`section-header scroll-reveal ${headerVisible ? 'visible' : ''}`}>
-          <h2 className="section-title">Testimonios</h2>
-          <p className="section-subtitle">Opiniones de colegas y clientes sobre mi trabajo</p>
+          <h2 className="section-title">{t('testimonials.title')}</h2>
+          <p className="section-subtitle">{t('testimonials.subtitle')}</p>
         </div>
 
         <div ref={featuredRef} className={`featured-testimonial scroll-reveal-scale ${featuredVisible ? 'visible' : ''}`}>

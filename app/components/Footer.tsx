@@ -1,25 +1,28 @@
 'use client';
 
+import { useLanguage } from '../contexts/LanguageContext';
+
 export default function Footer() {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const footerLinks = {
-    Navegación: [
-      { label: 'Inicio', href: '#inicio' },
-      { label: 'Acerca de', href: '#about' },
-      { label: 'Proyectos', href: '#projects' },
-      { label: 'Experiencia', href: '#experience' },
+    [t('footer.navigation')]: [
+      { label: t('footer.home'), href: '#inicio' },
+      { label: t('footer.about'), href: '#about' },
+      { label: t('footer.projects'), href: '#projects' },
+      { label: t('footer.experience'), href: '#experience' },
     ],
-    Recursos: [
-      { label: 'Blog', href: '#blog' },
-      { label: 'Documentación', href: '#docs' },
-      { label: 'Tutoriales', href: '#tutorials' },
-      { label: 'FAQ', href: '#faq' },
+    [t('footer.resources')]: [
+      { label: t('footer.blog'), href: '#blog' },
+      { label: t('footer.documentation'), href: '#docs' },
+      { label: t('footer.tutorials'), href: '#tutorials' },
+      { label: t('footer.faq'), href: '#faq' },
     ],
-    Legal: [
-      { label: 'Privacidad', href: '#privacy' },
-      { label: 'Términos', href: '#terms' },
-      { label: 'Cookies', href: '#cookies' },
+    [t('footer.legal')]: [
+      { label: t('footer.privacy'), href: '#privacy' },
+      { label: t('footer.terms'), href: '#terms' },
+      { label: t('footer.cookies'), href: '#cookies' },
     ],
   };
 
@@ -31,7 +34,7 @@ export default function Footer() {
             FR
           </a>
           <p className="footer-description">
-            Desarrollador Full Stack y Contador Público especializado en soluciones financieras innovadoras.
+            {t('footer.description')}
           </p>
         </div>
         
@@ -50,7 +53,7 @@ export default function Footer() {
       </div>
       
       <div className="footer-bottom">
-        <p>© {currentYear} Fernando Rosero. Todos los derechos reservados.</p>
+        <p>© {currentYear} Fernando Rosero. {t('footer.rights')}.</p>
       </div>
     </footer>
   );

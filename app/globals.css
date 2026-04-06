@@ -154,6 +154,110 @@ html.light-mode .cv-button:hover {
   align-items: center;
 }
 
+/* Language Selector */
+.language-selector {
+  position: relative;
+}
+
+.language-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.language-toggle img {
+  transition: filter 0.3s ease;
+  opacity: 0.8;
+}
+
+.language-toggle:hover img {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(60%) sepia(98%) saturate(1352%) hue-rotate(359deg) brightness(102%) contrast(102%) !important;
+}
+
+html.light-mode .language-toggle img {
+  filter: brightness(0) saturate(100%) invert(30%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(60%) contrast(90%) !important;
+}
+
+html.light-mode .language-toggle:hover img {
+  filter: brightness(0) saturate(100%) invert(60%) sepia(98%) saturate(1352%) hue-rotate(359deg) brightness(102%) contrast(102%) !important;
+}
+
+.language-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: var(--card-bg);
+  border: 1px solid rgba(74, 111, 168, 0.2);
+  border-radius: 12px;
+  padding: 0.5rem;
+  min-width: 160px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  animation: fadeInDropdown 0.2s ease;
+}
+
+html.light-mode .language-dropdown {
+  background: white;
+  border: 1px solid rgba(74, 111, 168, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.language-option {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-align: left;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+html.light-mode .language-option {
+  color: var(--light-text-primary);
+}
+
+.language-option:hover {
+  background-color: var(--accent-amber);
+  color: white;
+  transform: translateY(-2px);
+}
+
+html.light-mode .language-option:hover {
+  background-color: var(--accent-amber);
+  color: white;
+}
+
+.language-option.active {
+  background: var(--primary-blue);
+  color: white;
+}
+
+.language-option.active:hover {
+  background-color: var(--accent-amber);
+  color: white;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeInDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Hamburger Menu */
 .hamburger {
   display: none;
