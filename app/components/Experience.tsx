@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useLanguage } from '../contexts/LanguageContext';
 import { experiencesData } from '../data/experiences';
-import FlipCard from './FlipCard';
 
 type FilterType = 'all' | 'academic' | 'professional';
 
@@ -50,19 +49,15 @@ export default function Experience() {
 
         <div className="timeline">
           {filteredExperiences.map((exp, index) => (
-            <FlipCard
-              key={index}
-              front={{
-                year: exp.year,
-                title: exp.title,
-                subtitle: exp.subtitle,
-              }}
-              back={{
-                description: exp.description,
-                type: exp.type,
-              }}
-              index={index}
-            />
+            <div key={index} className="timeline-item" data-type={exp.type}>
+              <div className="timeline-dot"></div>
+              <div className="timeline-content">
+                <div className="timeline-year">{exp.year}</div>
+                <h3 className="timeline-title">{exp.title}</h3>
+                <p className="timeline-subtitle">{exp.subtitle}</p>
+                <p className="timeline-description">{exp.description}</p>
+              </div>
+            </div>
           ))}
         </div>
       </div>
