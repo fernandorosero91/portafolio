@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useDownloadCV } from '../hooks/useDownloadCV';
 import Image from 'next/image';
 
 export default function Navbar() {
   const { language, setLanguage, t } = useLanguage();
+  const { downloadCV } = useDownloadCV();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
@@ -118,7 +120,7 @@ export default function Navbar() {
             <button className="theme-toggle" onClick={toggleTheme}>
               {theme === 'light' ? '☀' : '☾'}
             </button>
-            <button className="cv-button">{t('nav.downloadCV')}</button>
+            <button onClick={downloadCV} className="cv-button">{t('nav.downloadCV')}</button>
             
             {/* Mobile Hamburger */}
             <button 

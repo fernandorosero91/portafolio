@@ -4,9 +4,11 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import ParticlesBackground from './ParticlesBackground';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useDownloadCV } from '../hooks/useDownloadCV';
 
 export default function Hero() {
   const { t } = useLanguage();
+  const { downloadCV } = useDownloadCV();
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -17,6 +19,10 @@ export default function Hero() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleDownloadCV = () => {
+    downloadCV();
+  };
 
   return (
     <section className="hero" id="inicio">
@@ -53,7 +59,7 @@ export default function Hero() {
           
           <div className="hero-buttons">
             <a href="#projects" className="btn btn-primary">{t('hero.viewProjects')}</a>
-            <button className="btn btn-secondary">↓ {t('hero.downloadCV')}</button>
+            <button onClick={handleDownloadCV} className="btn btn-secondary">↓ {t('hero.downloadCV')}</button>
           </div>
         </div>
         
