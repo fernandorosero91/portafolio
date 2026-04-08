@@ -72,7 +72,7 @@ function RadarChart({
 }: { 
   skills: Skill[]; 
   isVisible: boolean; 
-  chartRef: React.RefObject<HTMLDivElement>;
+  chartRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
