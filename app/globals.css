@@ -1189,18 +1189,21 @@ html.light-mode .filter-btn.active:hover {
   position: absolute;
   left: 12px;
   transform: translateX(-50%);
-  width: 20px;
-  height: 20px;
-  background-color: var(--accent-teal);
-  border: 4px solid var(--bg-dark);
-  border-radius: 50%;
+  width: auto;
+  height: auto;
+  background: none;
+  border: none;
+  border-radius: 0;
   top: 0;
-  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.2);
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 html.light-mode .timeline-dot {
-  border-color: var(--light-bg);
-  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.15);
+  border: none;
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {
@@ -2241,31 +2244,31 @@ html.light-mode .carousel-card {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: rgba(74, 111, 168, 0.15);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
   font-size: 0.85rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
   color: var(--text-primary);
-  border: 1px solid rgba(74, 111, 168, 0.3);
+  border: none;
 }
 
 html.light-mode .card-badge {
-  background-color: rgba(46, 68, 107, 0.1);
-  border-color: rgba(46, 68, 107, 0.2);
+  background-color: transparent;
+  border: none;
   color: var(--light-text-primary);
 }
 
 .carousel-card[data-type="academic"] .card-badge {
-  background-color: rgba(45, 212, 191, 0.15);
-  border-color: var(--accent-teal);
+  background-color: transparent;
+  border: none;
   color: var(--accent-teal);
 }
 
 .carousel-card[data-type="professional"] .card-badge {
-  background-color: rgba(245, 158, 11, 0.15);
-  border-color: var(--accent-amber);
+  background-color: transparent;
+  border: none;
   color: var(--accent-amber);
 }
 
@@ -2425,22 +2428,22 @@ html.light-mode .carousel-counter {
 }
 
 .timeline-item[data-type="academic"] .timeline-dot {
-  background-color: var(--accent-teal);
-  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.2);
+  background: none;
+  box-shadow: none;
 }
 
 html.light-mode .timeline-item[data-type="academic"] .timeline-dot {
-  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.15);
+  box-shadow: none;
 }
 
 .timeline-item[data-type="professional"] .timeline-dot {
-  background-color: var(--accent-amber);
-  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+  background: none;
+  box-shadow: none;
 }
 
 html.light-mode .timeline-item[data-type="professional"] .timeline-dot {
-  background-color: var(--light-accent-amber);
-  box-shadow: 0 0 0 4px rgba(180, 83, 9, 0.15);
+  background: none;
+  box-shadow: none;
 }
 
 .timeline-item[data-type="academic"] .timeline-content {

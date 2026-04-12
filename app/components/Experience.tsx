@@ -137,18 +137,7 @@ export default function Experience() {
                     data-type={exp.type}
                   >
                     <div className="card-badge">
-                      {exp.type === 'academic' ? (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                        </svg>
-                      ) : (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <rect x="2" y="7" width="20" height="14" rx="2"/>
-                          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                        </svg>
-                      )}
-                      <span>{exp.type === 'academic' ? t('experience.academic') : t('experience.professional')}</span>
+                      {exp.type === 'academic' ? t('experience.academic') : t('experience.professional')}
                     </div>
                     <div className="card-year">{exp.year}</div>
                     <h3 className="card-title">{exp.title}</h3>
@@ -189,19 +178,7 @@ export default function Experience() {
           <div className="timeline">
             {filteredExperiences.map((exp, index) => (
               <div key={index} className="timeline-item" data-type={exp.type}>
-                <div className="timeline-dot">
-                  {exp.type === 'academic' ? (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                    </svg>
-                  ) : (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                      <rect x="2" y="7" width="20" height="14" rx="2"/>
-                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                    </svg>
-                  )}
-                </div>
+                <div className="timeline-dot"></div>
                 <div className="timeline-content">
                   <div className="timeline-year">{exp.year}</div>
                   <h3 className="timeline-title">{exp.title}</h3>
