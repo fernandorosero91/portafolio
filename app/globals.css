@@ -884,6 +884,10 @@ html.light-mode .skill-tag:hover {
   box-shadow: 0 6px 16px rgba(46, 68, 107, 0.2);
 }
 
+html.light-mode .skill-tag:hover .skill-name {
+  color: white;
+}
+
 .skill-tag:hover .skill-icon {
   transform: scale(1.15);
 }
