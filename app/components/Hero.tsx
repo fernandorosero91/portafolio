@@ -59,7 +59,7 @@ export default function Hero() {
           
           <div className="hero-buttons">
             <a href="#projects" className="btn btn-primary">{t('hero.viewProjects')}</a>
-            <button onClick={handleDownloadCV} className="btn btn-secondary">↓ {t('hero.downloadCV')}</button>
+            <button onClick={handleDownloadCV} className="btn btn-secondary"> {t('hero.downloadCV')}</button>
           </div>
         </div>
         
