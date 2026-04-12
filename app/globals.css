@@ -2571,18 +2571,6 @@ html.light-mode .dot.active {
   background-color: var(--light-accent-amber);
 }
 
-.carousel-counter {
-  text-align: center;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: var(--text-tertiary);
-  font-weight: 600;
-}
-
-html.light-mode .carousel-counter {
-  color: var(--light-text-tertiary);
-}
-
 /* Enhanced Timeline Styles */
 .timeline-dot svg {
   width: 16px;

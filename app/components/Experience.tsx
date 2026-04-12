@@ -169,10 +169,6 @@ export default function Experience() {
                 />
               ))}
             </div>
-
-            <div className="carousel-counter">
-              {currentIndex + 1} / {filteredExperiences.length}
-            </div>
           </div>
         ) : (
           <div className="timeline">
