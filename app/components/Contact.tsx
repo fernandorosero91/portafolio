@@ -164,24 +164,38 @@ export default function Contact() {
     setSubmitStatus('idle');
 
     try {
-      // Aquí puedes integrar con tu servicio de email preferido
-      // Ejemplos: EmailJS, Resend, SendGrid, Nodemailer, etc.
-      
-      // Simulación de envío (reemplazar con tu lógica real)
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      // Por ahora, solo mostramos los datos en consola
-      console.log('Datos del formulario validados:', {
+      // Preparar los datos para enviar
+      const emailData = {
         name: data.name.trim(),
         email: data.email.trim().toLowerCase(),
         subject: data.subject.trim(),
         message: data.message.trim(),
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent
+        timestamp: new Date().toLocaleString('es-CO', { 
+          timeZone: 'America/Bogota',
+          dateStyle: 'full',
+          timeStyle: 'short'
+        })
+      };
+
+      // Enviar a la API
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData),
       });
 
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Error al enviar el mensaje');
+      }
+
+      console.log('Email enviado exitosamente:', result);
+
       setSubmitStatus('success');
-      setSubmitMessage('¡Mensaje enviado exitosamente! Te responderé pronto.');
+      setSubmitMessage('¡Mensaje enviado exitosamente! Recibirás una confirmación en tu email.');
       reset();
       
       // Limpiar mensaje después de 5 segundos
@@ -190,10 +204,17 @@ export default function Contact() {
         setSubmitMessage('');
       }, 5000);
 
-    } catch (error) {
-      console.error('Error al enviar el formulario:', error);
+    } catch (error: any) {
+      console.error('Error al enviar el email:', error);
+      
+      let errorMessage = 'Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.';
+      
+      if (error.message) {
+        errorMessage = error.message;
+      }
+      
       setSubmitStatus('error');
-      setSubmitMessage('Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.');
+      setSubmitMessage(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
