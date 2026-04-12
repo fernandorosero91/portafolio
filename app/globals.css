@@ -2219,13 +2219,13 @@ html.light-mode .carousel-card {
 
 .carousel-card.prev {
   opacity: 0.3;
-  transform: translateX(-120%) scale(0.85);
+  transform: translateX(-105%) scale(0.85);
   z-index: 1;
 }
 
 .carousel-card.next {
   opacity: 0.3;
-  transform: translateX(120%) scale(0.85);
+  transform: translateX(105%) scale(0.85);
   z-index: 1;
 }
 
