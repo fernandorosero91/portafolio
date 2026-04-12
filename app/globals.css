@@ -701,7 +701,7 @@ html.light-mode .avatar-placeholder {
 
 /* About Section - Nuevo Layout Profesional */
 .about {
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   background-color: var(--bg-dark);
 }
 
@@ -716,13 +716,13 @@ html.light-mode .about {
 
 .section-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
 }
 
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   font-family: 'Cormorant Garamond', serif;
   color: var(--text-primary);
 }
@@ -734,6 +734,7 @@ html.light-mode .section-title {
 .section-subtitle {
   font-size: 1rem;
   color: var(--text-tertiary);
+  margin-bottom: 0;
 }
 
 html.light-mode .section-subtitle {
@@ -742,12 +743,12 @@ html.light-mode .section-subtitle {
 
 /* Biografía - Ancho completo */
 .about-intro {
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .about-intro h3 {
   font-size: 1.75rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   color: var(--text-primary);
   text-align: center;
   font-weight: 700;
@@ -761,7 +762,7 @@ html.light-mode .about-intro h3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
 }
 
 .about-text {
@@ -781,7 +782,7 @@ html.light-mode .about-text {
 
 .skills-main-title {
   font-size: 1.75rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   color: var(--text-primary);
   text-align: center;
   font-weight: 700;
@@ -962,7 +963,7 @@ html.light-mode .skill-tag:hover {
 
 /* Projects Section */
 .projects {
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   background-color: var(--bg-card);
 }
 
@@ -1040,7 +1041,7 @@ html.light-mode .project-icon svg {
 
 /* Testimonials Section */
 .testimonials {
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   background-color: var(--bg-card);
 }
 
@@ -1187,7 +1188,7 @@ html.light-mode .testimonial-author-name {
 
 /* Experience Section */
 .experience {
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   background-color: var(--bg-dark);
 }
 
@@ -1394,7 +1395,7 @@ html.light-mode .timeline-description {
 
 /* Contact Section */
 .contact {
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   background: linear-gradient(135deg, #0A0E1A 0%, #141B2D 100%);
 }
 
