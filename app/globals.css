@@ -1460,18 +1460,65 @@ html.light-mode .contact-details p {
 }
 
 .social-link:hover {
-  background-color: var(--accent-amber);
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-html.light-mode .social-link {
-  background-color: var(--primary-dark);
+/* LinkedIn - Color oficial #0A66C2 */
+.social-link.linkedin {
+  background-color: #0A66C2;
 }
 
-html.light-mode .social-link:hover {
-  background-color: var(--accent-amber);
-  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.3);
+.social-link.linkedin:hover {
+  background-color: #004182;
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.4);
+}
+
+/* GitHub - Color oficial #181717 */
+.social-link.github {
+  background-color: #181717;
+}
+
+.social-link.github:hover {
+  background-color: #000000;
+  box-shadow: 0 4px 12px rgba(24, 23, 23, 0.4);
+}
+
+/* YouTube - Color oficial #FF0000 */
+.social-link.youtube {
+  background-color: #FF0000;
+}
+
+.social-link.youtube:hover {
+  background-color: #CC0000;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
+}
+
+html.light-mode .social-link.linkedin {
+  background-color: #0A66C2;
+}
+
+html.light-mode .social-link.linkedin:hover {
+  background-color: #004182;
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.4);
+}
+
+html.light-mode .social-link.github {
+  background-color: #181717;
+}
+
+html.light-mode .social-link.github:hover {
+  background-color: #000000;
+  box-shadow: 0 4px 12px rgba(24, 23, 23, 0.4);
+}
+
+html.light-mode .social-link.youtube {
+  background-color: #FF0000;
+}
+
+html.light-mode .social-link.youtube:hover {
+  background-color: #CC0000;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
 }
 
 /* Footer */
