@@ -11,11 +11,6 @@ export default function About() {
 
   const skillCategories = [
     {
-      category: 'Contabilidad & Finanzas',
-      translationKey: 'accounting',
-      skills: ['NIIF', 'Auditoría Tributaria', 'Gestión Financiera', 'Planeación Tributaria']
-    },
-    {
       category: 'Desarrollo Backend',
       translationKey: 'backend',
       skills: ['Python', 'Django', 'Java', 'Spring Boot', 'Node.js', 'Laravel']
@@ -34,6 +29,11 @@ export default function About() {
       category: 'Herramientas',
       translationKey: 'tools',
       skills: ['Git', 'Cloud Computing', 'DevOps', 'API REST']
+    },
+    {
+      category: 'Contabilidad & Finanzas',
+      translationKey: 'accounting',
+      skills: ['NIIF', 'Auditoría Tributaria', 'Gestión Financiera', 'Planeación Tributaria']
     }
   ];
 
