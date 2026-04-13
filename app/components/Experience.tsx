@@ -189,6 +189,9 @@ export default function Experience() {
               <div key={index} className="timeline-item" data-type={exp.type}>
                 <div className="timeline-dot"></div>
                 <div className="timeline-content">
+                  <div className="timeline-badge" data-type={exp.type}>
+                    {exp.type === 'academic' ? t('experience.academic') : t('experience.professional')}
+                  </div>
                   <div className="timeline-year">{exp.year}</div>
                   <h3 className="timeline-title">{exp.title}</h3>
                   <p className="timeline-subtitle">{exp.subtitle}</p>

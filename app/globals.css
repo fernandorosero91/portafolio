@@ -52,12 +52,31 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
   line-height: 1.6;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 /* Navbar */
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 1000;
   background-color: rgba(10, 14, 26, 0.95);
   backdrop-filter: blur(10px);
@@ -702,17 +721,36 @@ html.light-mode .mobile-menu ul li a:hover {
 
   /* Timeline */
   .timeline::before {
-    left: 0;
+    display: none;
   }
 
   .timeline-item:nth-child(odd) .timeline-content,
   .timeline-item:nth-child(even) .timeline-content {
-    padding-left: 2.5rem;
-    text-align: left;
+    padding: 1.5rem;
+    text-align: center;
+    margin-left: 0;
+    width: 100%;
   }
 
   .timeline-dot {
-    left: 0;
+    display: none;
+  }
+
+  .timeline-title {
+    font-size: 1.25rem;
+  }
+
+  .timeline-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .timeline-description {
+    font-size: 0.95rem;
+  }
+
+  .timeline-badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
   }
 
   /* Contact */
@@ -832,8 +870,10 @@ html.light-mode .mobile-menu ul li a:hover {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 4rem 2rem;
+  padding: 8rem 2rem 4rem 2rem;
   background: linear-gradient(135deg, #0A0E1A 0%, #141B2D 100%);
+  overflow: hidden;
+  width: 100%;
 }
 
 html.light-mode .hero {
@@ -1016,14 +1056,12 @@ html.light-mode .btn-secondary:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--border-color);
   position: relative;
   overflow: hidden;
 }
 
 html.light-mode .avatar-box {
   background: linear-gradient(135deg, #E5E7EB 0%, #F3F4F6 100%);
-  border-color: var(--light-border);
 }
 
 .avatar-placeholder {
@@ -1047,6 +1085,7 @@ html.light-mode .avatar-placeholder {
 .about {
   padding: 4rem 2rem;
   background-color: var(--bg-dark);
+  scroll-margin-top: 80px;
 }
 
 html.light-mode .about {
@@ -1313,6 +1352,7 @@ html.light-mode .skill-tag:hover .skill-name {
 .projects {
   padding: 4rem 2rem;
   background-color: var(--bg-card);
+  scroll-margin-top: 80px;
 }
 
 html.light-mode .projects {
@@ -1621,6 +1661,7 @@ html.light-mode .btn-github:hover {
 .testimonials {
   padding: 4rem 2rem;
   background-color: var(--bg-card);
+  scroll-margin-top: 80px;
 }
 
 html.light-mode .testimonials {
@@ -1768,6 +1809,7 @@ html.light-mode .testimonial-author-name {
 .experience {
   padding: 4rem 2rem;
   background-color: var(--bg-dark);
+  scroll-margin-top: 80px;
 }
 
 html.light-mode .experience {
@@ -1833,6 +1875,8 @@ html.light-mode .filter-btn.active:hover {
 .timeline {
   position: relative;
   padding: 2rem 0;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .timeline::before {
@@ -1847,7 +1891,7 @@ html.light-mode .filter-btn.active:hover {
 
 @media (max-width: 768px) {
   .timeline::before {
-    left: 0;
+    display: none;
   }
 }
 
@@ -1903,48 +1947,89 @@ html.light-mode .timeline-dot {
 
 @media (max-width: 768px) {
   .timeline-dot {
-    left: 0;
+    left: 8px;
   }
 }
 
 .timeline-content {
   background-color: var(--bg-card);
-  padding: 2rem;
-  border-radius: 12px;
+  padding: 2.5rem;
+  border-radius: 16px;
   border: 1px solid var(--border-color);
   border-left: 4px solid var(--primary-blue);
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .timeline-content:hover {
   transform: translateX(5px);
   border-left-color: var(--accent-amber);
-  box-shadow: 0 4px 20px rgba(74, 111, 168, 0.15);
+  box-shadow: 0 8px 24px rgba(74, 111, 168, 0.2);
 }
 
 html.light-mode .timeline-content {
   background-color: var(--light-card);
   border-color: var(--light-border);
   border-left-color: var(--primary-dark);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 html.light-mode .timeline-content:hover {
   border-left-color: var(--light-accent-amber);
-  box-shadow: 0 4px 20px rgba(46, 68, 107, 0.1);
+  box-shadow: 0 8px 24px rgba(46, 68, 107, 0.15);
 }
 
 .timeline-year {
   color: var(--accent-amber);
   font-weight: 700;
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.timeline-badge {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0 auto 1.25rem auto;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.timeline-badge[data-type="academic"] {
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.15), rgba(45, 212, 191, 0.05));
+  color: var(--accent-teal);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+}
+
+.timeline-badge[data-type="professional"] {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+  color: var(--accent-amber);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+html.light-mode .timeline-badge[data-type="academic"] {
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.2), rgba(45, 212, 191, 0.1));
+  color: #0D9488;
+  border-color: rgba(45, 212, 191, 0.4);
+}
+
+html.light-mode .timeline-badge[data-type="professional"] {
+  background: linear-gradient(135deg, rgba(180, 83, 9, 0.15), rgba(180, 83, 9, 0.05));
+  color: var(--light-accent-amber);
+  border-color: rgba(180, 83, 9, 0.3);
 }
 
 .timeline-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
 }
 
 html.light-mode .timeline-title {
@@ -1952,19 +2037,22 @@ html.light-mode .timeline-title {
 }
 
 .timeline-subtitle {
-  color: var(--text-tertiary);
-  font-size: 0.95rem;
-  margin-bottom: 0.75rem;
+  color: var(--primary-blue);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
 }
 
 html.light-mode .timeline-subtitle {
-  color: var(--light-text-tertiary);
+  color: var(--primary-dark);
 }
 
 .timeline-description {
   color: var(--text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.8;
+  text-align: center;
+  max-width: 100%;
 }
 
 html.light-mode .timeline-description {
@@ -1975,6 +2063,7 @@ html.light-mode .timeline-description {
 .contact {
   padding: 4rem 2rem;
   background: linear-gradient(135deg, #0A0E1A 0%, #141B2D 100%);
+  scroll-margin-top: 80px;
 }
 
 html.light-mode .contact {
@@ -4923,16 +5012,33 @@ textarea:focus-visible {
   body {
     overflow-x: hidden;
     position: relative;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  html {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
   }
   
   .section-container {
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
   }
   
   .hero-container,
   .projects-grid,
   .testimonials-grid {
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Asegurar que ningún elemento cause scroll horizontal */
+  * {
+    max-width: 100%;
   }
 }
 
