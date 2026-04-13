@@ -2,11 +2,17 @@
 
 import { useLanguage } from '../contexts/LanguageContext';
 
+interface FooterLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
 export default function Footer() {
   const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
-  const footerLinks = {
+  const footerLinks: Record<string, FooterLink[]> = {
     [t('footer.navigation')]: [
       { label: t('footer.home'), href: '#inicio' },
       { label: t('footer.about'), href: '#about' },
