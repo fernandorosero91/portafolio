@@ -44,6 +44,7 @@ export default function ProjectDemoModal({ isOpen, onClose, project }: ProjectDe
         </div>
 
         <div className="modal-body">
+          {/* Imagen primero en móviles */}
           <div className="modal-image">
             <img 
               src={project.image} 

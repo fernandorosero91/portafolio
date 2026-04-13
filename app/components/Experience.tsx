@@ -11,7 +11,7 @@ type ViewMode = 'carousel' | 'timeline';
 export default function Experience() {
   const { t, language } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
-  const [viewMode, setViewMode] = useState<ViewMode>('carousel');
+  const [viewMode, setViewMode] = useState<ViewMode>('timeline');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
@@ -21,6 +21,19 @@ export default function Experience() {
   const filteredExperiences = activeFilter === 'all' 
     ? experiences 
     : experiences.filter(exp => exp.type === activeFilter);
+
+  // Detectar si es móvil y forzar timeline
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setViewMode('timeline');
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Reset index when filter changes
   useEffect(() => {
