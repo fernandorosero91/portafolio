@@ -11,7 +11,7 @@ type ViewMode = 'carousel' | 'timeline';
 export default function Experience() {
   const { t, language } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
-  const [viewMode, setViewMode] = useState<ViewMode>('timeline');
+  const [viewMode, setViewMode] = useState<ViewMode>('carousel');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();

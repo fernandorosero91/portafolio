@@ -50,11 +50,13 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   };
 
-  const toggleLanguageMenu = () => {
+  const toggleLanguageMenu = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setLanguageMenuOpen(!languageMenuOpen);
   };
 
-  const selectLanguage = (lang: 'es' | 'en') => {
+  const selectLanguage = (lang: 'es' | 'en', e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     setLanguage(lang);
     setLanguageMenuOpen(false);
   };
@@ -101,16 +103,16 @@ export default function Navbar() {
                 />
               </button>
               {languageMenuOpen && (
-                <div className="language-dropdown">
+                <div className="language-dropdown" onClick={(e) => e.stopPropagation()}>
                   <button 
                     className={`language-option ${language === 'es' ? 'active' : ''}`}
-                    onClick={() => selectLanguage('es')}
+                    onClick={(e) => selectLanguage('es', e)}
                   >
                     🇪🇸 Español
                   </button>
                   <button 
                     className={`language-option ${language === 'en' ? 'active' : ''}`}
-                    onClick={() => selectLanguage('en')}
+                    onClick={(e) => selectLanguage('en', e)}
                   >
                     🇬🇧 English
                   </button>

@@ -6,7 +6,8 @@ export const en = {
     testimonials: 'Testimonials',
     experience: 'Experience',
     contact: 'Contact',
-    downloadCV: 'Download CV'
+    downloadCV: 'Download CV',
+    language: 'Language'
   },
   hero: {
     available: 'Available for projects',

@@ -309,7 +309,7 @@ html.light-mode .language-toggle:hover img {
   padding: 0.5rem;
   min-width: 160px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  z-index: 1000;
+  z-index: 1100;
   animation: fadeInDropdown 0.2s ease;
 }
 
@@ -2045,21 +2045,7 @@ html.light-mode .filter-btn.active:hover {
   margin: 0 auto;
 }
 
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 20px;
-  width: 3px;
-  height: 100%;
-  background: linear-gradient(180deg, var(--primary-blue), var(--accent-teal));
-  border-radius: 2px;
-}
-
-@media (max-width: 768px) {
-  .timeline::before {
-    display: none;
-  }
-}
+/* Línea vertical eliminada - sin ::before */
 
 .timeline-item {
   margin-bottom: 3rem;
@@ -2092,8 +2078,8 @@ html.light-mode .filter-btn.active:hover {
 
 .timeline-dot {
   position: absolute;
-  left: 12px;
-  transform: translateX(-50%);
+  left: 0;
+  transform: none;
   width: auto;
   height: auto;
   background: none;
@@ -2101,7 +2087,7 @@ html.light-mode .filter-btn.active:hover {
   border-radius: 0;
   top: 0;
   box-shadow: none;
-  display: flex;
+  display: none; /* Ocultar el dot ya que no hay línea */
   align-items: center;
   justify-content: center;
 }
@@ -2126,10 +2112,11 @@ html.light-mode .timeline-dot {
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: left;
+  margin-left: 0; /* Sin margen ya que no hay línea */
 }
 
 .timeline-content:hover {
-  transform: translateX(5px);
+  transform: translateY(-5px); /* Cambiar a translateY en lugar de translateX */
   border-left-color: var(--accent-amber);
   box-shadow: 0 8px 24px rgba(74, 111, 168, 0.2);
 }
@@ -5521,5 +5508,36 @@ html {
   img {
     max-width: 100%;
     height: auto;
+  }
+}
+
+/* Mejorar z-index del language selector en desktop y móvil */
+.language-selector {
+  position: relative;
+  z-index: 1100;
+}
+
+.language-dropdown {
+  z-index: 1100;
+}
+
+/* Ajustar orden de elementos en móvil */
+@media (max-width: 768px) {
+  .navbar-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .language-selector {
+    order: 1;
+  }
+  
+  .theme-toggle {
+    order: 2;
+  }
+  
+  .hamburger {
+    order: 3;
   }
 }
