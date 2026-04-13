@@ -84,17 +84,11 @@ export const en = {
     description: 'Full Stack Developer and Public Accountant specialized in innovative financial solutions.',
     navigation: 'Navigation',
     resources: 'Resources',
-    legal: 'Legal',
     home: 'Home',
     about: 'About',
     projects: 'Projects',
     experience: 'Experience',
-    blog: 'Blog',
-    documentation: 'Documentation',
-    tutorials: 'Tutorials',
-    faq: 'FAQ',
-    privacy: 'Privacy',
-    terms: 'Terms',
-    cookies: 'Cookies'
+    contact: 'Contact',
+    tutorials: 'Tutorials'
   }
 };

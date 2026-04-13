@@ -1646,7 +1646,7 @@ html.light-mode .social-link.youtube:hover {
 .footer {
   background-color: var(--bg-card);
   border-top: 1px solid var(--border-color);
-  padding: 3rem 2rem;
+  padding: 3rem 2rem 2rem;
 }
 
 html.light-mode .footer {
@@ -1658,14 +1658,27 @@ html.light-mode .footer {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
   margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .footer-logo {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   display: block;
 }
 
@@ -1673,16 +1686,108 @@ html.light-mode .footer {
   color: var(--text-tertiary);
   font-size: 0.9rem;
   line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
 html.light-mode .footer-description {
   color: var(--light-text-tertiary);
 }
 
+.footer-brand .social-links {
+  display: flex;
+  gap: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Ensure footer social icons use the same styling as contact section */
+.footer-brand .social-link {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1.15rem;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.footer-brand .social-link:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.footer-brand .social-link:focus {
+  outline: 2px solid var(--accent-amber);
+  outline-offset: 2px;
+}
+
+/* LinkedIn - Color oficial #0A66C2 */
+.footer-brand .social-link.linkedin {
+  background-color: #0A66C2 !important;
+}
+
+.footer-brand .social-link.linkedin:hover {
+  background-color: #004182 !important;
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.4);
+}
+
+/* GitHub - Color oficial #181717 */
+.footer-brand .social-link.github {
+  background-color: #181717 !important;
+}
+
+.footer-brand .social-link.github:hover {
+  background-color: #000000 !important;
+  box-shadow: 0 4px 12px rgba(24, 23, 23, 0.4);
+}
+
+/* YouTube - Color oficial #FF0000 */
+.footer-brand .social-link.youtube {
+  background-color: #FF0000 !important;
+}
+
+.footer-brand .social-link.youtube:hover {
+  background-color: #CC0000 !important;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
+}
+
+html.light-mode .footer-brand .social-link.linkedin {
+  background-color: #0A66C2 !important;
+}
+
+html.light-mode .footer-brand .social-link.linkedin:hover {
+  background-color: #004182 !important;
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.4);
+}
+
+html.light-mode .footer-brand .social-link.github {
+  background-color: #181717 !important;
+}
+
+html.light-mode .footer-brand .social-link.github:hover {
+  background-color: #000000 !important;
+  box-shadow: 0 4px 12px rgba(24, 23, 23, 0.4);
+}
+
+html.light-mode .footer-brand .social-link.youtube {
+  background-color: #FF0000 !important;
+}
+
+html.light-mode .footer-brand .social-link.youtube:hover {
+  background-color: #CC0000 !important;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
+}
+
 .footer-section h4 {
   color: var(--text-primary);
   margin-bottom: 1rem;
   font-weight: 700;
+  font-size: 1rem;
 }
 
 html.light-mode .footer-section h4 {
@@ -1697,22 +1802,23 @@ html.light-mode .footer-section h4 {
   margin-bottom: 0.75rem;
 }
 
-.footer-section a {
+/* Solo aplicar estos estilos a los enlaces de navegación, NO a los social-link */
+.footer-section ul a {
   color: var(--text-tertiary);
   text-decoration: none;
   transition: color 0.3s ease;
   font-size: 0.9rem;
 }
 
-html.light-mode .footer-section a {
+html.light-mode .footer-section ul a {
   color: var(--light-text-tertiary);
 }
 
-.footer-section a:hover {
+.footer-section ul a:hover {
   color: var(--accent-amber);
 }
 
-html.light-mode .footer-section a:hover {
+html.light-mode .footer-section ul a:hover {
   color: var(--light-accent-amber);
 }
 

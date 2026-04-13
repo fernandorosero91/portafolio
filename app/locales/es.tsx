@@ -185,17 +185,11 @@ export const es = {
     description: 'Desarrollador Full Stack y Contador Público especializado en soluciones financieras innovadoras.',
     navigation: 'Navegación',
     resources: 'Recursos',
-    legal: 'Legal',
     home: 'Inicio',
     about: 'Acerca de',
     projects: 'Proyectos',
     experience: 'Experiencia',
-    blog: 'Blog',
-    documentation: 'Documentación',
-    tutorials: 'Tutoriales',
-    faq: 'FAQ',
-    privacy: 'Privacidad',
-    terms: 'Términos',
-    cookies: 'Cookies'
+    contact: 'Contacto',
+    tutorials: 'Tutoriales'
   }
 };
