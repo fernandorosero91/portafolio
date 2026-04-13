@@ -37,8 +37,10 @@ export const en = {
   projects: {
     title: 'Featured Projects',
     subtitle: 'Technological solutions combining finance and development',
-    production: '✓ In Production',
-    testing: '⚡ In Testing',
+    production: 'In Production',
+    testing: 'In Testing',
+    viewDemo: 'View Demo',
+    noDemo: 'No Demo',
     project1: {
       title: 'Parking Management System',
       description: 'Complete platform for parking lot administration with income control, rates, and real-time reports.'

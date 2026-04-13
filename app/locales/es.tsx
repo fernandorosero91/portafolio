@@ -37,8 +37,10 @@ export const es = {
   projects: {
     title: 'Proyectos Destacados',
     subtitle: 'Soluciones tecnológicas que combinan finanzas y desarrollo',
-    production: '✓ En Producción',
-    testing: '⚡ En Pruebas',
+    production: 'En Producción',
+    testing: 'En Pruebas',
+    viewDemo: 'Ver Demo',
+    noDemo: 'Sin Demo',
     project1: {
       title: 'Sistema de Gestión de Parqueaderos',
       description: 'Plataforma completa para administración de parqueaderos con control de ingresos, tarifas y reportes en tiempo real.'
