@@ -74,7 +74,7 @@ export default function Hero() {
               width={400}
               height={500}
               priority
-              style={{ objectFit: 'cover', width: '100%', height: '100%', borderRadius: '12px' }}
+              style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%', borderRadius: '12px' }}
             />
           </div>
         </div>
