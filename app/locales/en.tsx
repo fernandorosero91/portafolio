@@ -40,7 +40,16 @@ export const en = {
     production: 'In Production',
     testing: 'In Testing',
     viewDemo: 'View Demo',
+    viewInfo: 'View Info',
     noDemo: 'No Demo',
+    demoPreview: 'Demo preview',
+    aboutProject: 'About the Project',
+    testCredentials: 'Test Credentials',
+    email: 'Email',
+    password: 'Password',
+    keyFeatures: 'Key Features',
+    cancel: 'Cancel',
+    visitDemo: 'Visit Demo',
     project1: {
       title: 'Parking Management System',
       description: 'Complete platform for parking lot administration with income control, rates, and real-time reports.'

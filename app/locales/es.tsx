@@ -40,7 +40,16 @@ export const es = {
     production: 'En Producción',
     testing: 'En Pruebas',
     viewDemo: 'Ver Demo',
+    viewInfo: 'Ver Información',
     noDemo: 'Sin Demo',
+    demoPreview: 'Vista previa del demo',
+    aboutProject: 'Acerca del Proyecto',
+    testCredentials: 'Credenciales de Prueba',
+    email: 'Email',
+    password: 'Contraseña',
+    keyFeatures: 'Características Principales',
+    cancel: 'Cancelar',
+    visitDemo: 'Visitar Demo',
     project1: {
       title: 'Sistema de Gestión de Parqueaderos',
       description: 'Plataforma completa para administración de parqueaderos con control de ingresos, tarifas y reportes en tiempo real.'
