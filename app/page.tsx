@@ -10,6 +10,7 @@ import ScrollProgress from './components/ScrollProgress';
 import CustomCursor from './components/CustomCursor';
 import ScrollToTop from './components/ScrollToTop';
 import Preloader from './components/Preloader';
+import WhatsAppButton from './components/WhatsAppButton';
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <CustomCursor />
       <ScrollProgress />
       <ScrollToTop />
+      <WhatsAppButton />
       <Navbar />
       <Hero />
       <About />

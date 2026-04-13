@@ -37,8 +37,19 @@ export const en = {
   projects: {
     title: 'Featured Projects',
     subtitle: 'Technological solutions combining finance and development',
-    production: '✓ In Production',
-    testing: '⚡ In Testing',
+    production: 'In Production',
+    testing: 'In Testing',
+    viewDemo: 'View Demo',
+    viewInfo: 'View Info',
+    noDemo: 'No Demo',
+    demoPreview: 'Demo preview',
+    aboutProject: 'About the Project',
+    testCredentials: 'Test Credentials',
+    email: 'Email',
+    password: 'Password',
+    keyFeatures: 'Key Features',
+    cancel: 'Cancel',
+    visitDemo: 'Visit Demo',
     project1: {
       title: 'Parking Management System',
       description: 'Complete platform for parking lot administration with income control, rates, and real-time reports.'
@@ -84,17 +95,11 @@ export const en = {
     description: 'Full Stack Developer and Public Accountant specialized in innovative financial solutions.',
     navigation: 'Navigation',
     resources: 'Resources',
-    legal: 'Legal',
     home: 'Home',
     about: 'About',
     projects: 'Projects',
     experience: 'Experience',
-    blog: 'Blog',
-    documentation: 'Documentation',
-    tutorials: 'Tutorials',
-    faq: 'FAQ',
-    privacy: 'Privacy',
-    terms: 'Terms',
-    cookies: 'Cookies'
+    contact: 'Contact',
+    tutorials: 'Tutorials'
   }
 };

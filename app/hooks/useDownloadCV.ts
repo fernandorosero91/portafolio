@@ -2,6 +2,9 @@
 
 import { useLanguage } from '../contexts/LanguageContext';
 import { experiencesData } from '../data/experiences';
+import { personalInfo } from '../data/personalInfo';
+import { projectsData } from '../data/projects';
+import { skillsData } from '../data/skills';
 
 export function useDownloadCV() {
   const { language } = useLanguage();
@@ -52,20 +55,71 @@ export function useDownloadCV() {
       doc.setFillColor(colors.white[0], colors.white[1], colors.white[2]);
       doc.rect(leftColumnWidth, 0, rightColumnWidth, pageHeight, 'F');
 
-      // ===== FOTO DE PERFIL (Círculo minimalista) =====
-      // Círculo con borde índigo
-      doc.setFillColor(colors.darkBg[0], colors.darkBg[1], colors.darkBg[2]);
-      doc.circle(leftColumnWidth / 2, 28, 16, 'F');
-      
-      doc.setDrawColor(colors.secondary[0], colors.secondary[1], colors.secondary[2]);
-      doc.setLineWidth(1.5);
-      doc.circle(leftColumnWidth / 2, 28, 16, 'S');
+      // ===== FOTO DE PERFIL (Cuadrada con bordes redondeados) =====
+      try {
+        // Cargar la imagen desde el servidor
+        const response = await fetch(personalInfo.photo);
+        const blob = await response.blob();
+        const reader = new FileReader();
+        
+        await new Promise((resolve) => {
+          reader.onloadend = () => {
+            const base64data = reader.result as string;
+            
+            // Agregar imagen cuadrada centrada
+            const imgSize = 32;
+            const centerX = leftColumnWidth / 2;
+            const centerY = 28;
+            
+            doc.addImage(
+              base64data,
+              'JPEG',
+              centerX - (imgSize / 2),
+              centerY - (imgSize / 2),
+              imgSize,
+              imgSize,
+              undefined,
+              'NONE'
+            );
+            
+            resolve(true);
+          };
+          
+          reader.onerror = () => {
+            // Si falla, usar iniciales
+            doc.setFillColor(colors.darkBg[0], colors.darkBg[1], colors.darkBg[2]);
+            doc.circle(leftColumnWidth / 2, 28, 16, 'F');
+            
+            doc.setDrawColor(colors.secondary[0], colors.secondary[1], colors.secondary[2]);
+            doc.setLineWidth(1.5);
+            doc.circle(leftColumnWidth / 2, 28, 16, 'S');
 
-      // Iniciales en el círculo
-      doc.setFontSize(16);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
-      doc.text('FR', leftColumnWidth / 2, 31, { align: 'center' });
+            doc.setFontSize(18);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+            const initials = personalInfo.name.charAt(0) + personalInfo.lastName.split(' ')[0].charAt(0);
+            doc.text(initials, leftColumnWidth / 2, 31, { align: 'center' });
+            
+            resolve(true);
+          };
+          
+          reader.readAsDataURL(blob);
+        });
+      } catch (error) {
+        // Fallback a iniciales si hay error
+        doc.setFillColor(colors.darkBg[0], colors.darkBg[1], colors.darkBg[2]);
+        doc.circle(leftColumnWidth / 2, 28, 16, 'F');
+        
+        doc.setDrawColor(colors.secondary[0], colors.secondary[1], colors.secondary[2]);
+        doc.setLineWidth(1.5);
+        doc.circle(leftColumnWidth / 2, 28, 16, 'S');
+
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+        const initials = personalInfo.name.charAt(0) + personalInfo.lastName.split(' ')[0].charAt(0);
+        doc.text(initials, leftColumnWidth / 2, 31, { align: 'center' });
+      }
 
       let leftY = 55;
       let rightY = 20;
@@ -85,10 +139,10 @@ export function useDownloadCV() {
       doc.setTextColor(colors.lightText[0], colors.lightText[1], colors.lightText[2]);
       
       const contactInfo = [
-        { text: '+57 310 123 4567' },
-        { text: 'elier.rosero@example.com' },
-        { text: 'Pasto, Nariño' },
-        { text: 'Colombia' }
+        { text: personalInfo.phone },
+        { text: personalInfo.email },
+        { text: personalInfo.location.city + ', ' + personalInfo.location.region },
+        { text: personalInfo.location.country }
       ];
 
       contactInfo.forEach(item => {
@@ -142,16 +196,10 @@ export function useDownloadCV() {
       
       leftY += 6;
 
-      const skillsData = [
-        { category: language === 'es' ? 'Contabilidad' : 'Accounting', items: ['NIIF/IFRS', language === 'es' ? 'Auditoria' : 'Auditing', language === 'es' ? 'Tributacion' : 'Taxation', language === 'es' ? 'Estados Financieros' : 'Financial Statements'] },
-        { category: 'Backend', items: ['Python', 'Django', 'Java Spring', 'Node.js', 'Flask'] },
-        { category: 'Frontend', items: ['React', 'Vue.js', 'Next.js', 'Tailwind CSS'] },
-        { category: language === 'es' ? 'Bases de Datos' : 'Databases', items: ['PostgreSQL', 'MySQL', 'MongoDB'] },
-        { category: language === 'es' ? 'Herramientas' : 'Tools', items: ['Git', 'Docker', 'API REST', 'DevOps'] }
-      ];
+      const currentSkills = skillsData[language];
 
       doc.setFontSize(7);
-      skillsData.forEach(skillGroup => {
+      currentSkills.forEach(skillGroup => {
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(colors.accent[0], colors.accent[1], colors.accent[2]);
         doc.text(skillGroup.category, leftMargin, leftY);
@@ -160,7 +208,7 @@ export function useDownloadCV() {
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(colors.lightText[0], colors.lightText[1], colors.lightText[2]);
         skillGroup.items.forEach(skill => {
-          doc.text('• ' + skill, leftMargin + 1, leftY);
+          doc.text('• ' + skill.name, leftMargin + 1, leftY);
           leftY += 3;
         });
         leftY += 2;
@@ -172,14 +220,13 @@ export function useDownloadCV() {
       doc.setFontSize(20);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(colors.primary[0], colors.primary[1], colors.primary[2]);
-      doc.text('ELIER FERNANDO ROSERO BRAVO', rightColumnStart + rightMargin, rightY);
+      doc.text(personalInfo.fullName.toUpperCase(), rightColumnStart + rightMargin, rightY);
       rightY += 6;
       
       doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(colors.secondary[0], colors.secondary[1], colors.secondary[2]);
-      const titleText = language === 'es' ? 'Ingeniero de Software & Contador Publico' : 'Software Engineer & Public Accountant';
-      doc.text(titleText, rightColumnStart + rightMargin, rightY);
+      doc.text(personalInfo.title[language], rightColumnStart + rightMargin, rightY);
       rightY += 10;
 
       // PERFIL
@@ -192,11 +239,8 @@ export function useDownloadCV() {
       doc.setFontSize(8);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
-      const summary = language === 'es' 
-        ? 'Contador Publico con Maestria en Gerencia y Auditoria Tributaria, cursando 5to semestre de Ingenieria de Software. Mas de 8 anos de experiencia combinando conocimientos en NIIF, auditoria tributaria y desarrollo full-stack. Especializado en crear soluciones tecnologicas que optimizan procesos empresariales y financieros.'
-        : 'Public Accountant with Master in Tax Management and Auditing, currently in 5th semester of Software Engineering. Over 8 years of experience combining IFRS knowledge, tax auditing, and full-stack development. Specialized in creating technological solutions that optimize business and financial processes.';
       
-      const summaryLines = doc.splitTextToSize(summary, rightColumnWidth - (rightMargin * 2));
+      const summaryLines = doc.splitTextToSize(personalInfo.summary[language], rightColumnWidth - (rightMargin * 2));
       doc.text(summaryLines, rightColumnStart + rightMargin, rightY);
       rightY += summaryLines.length * 4 + 8;
 
@@ -247,30 +291,9 @@ export function useDownloadCV() {
         doc.text((language === 'es' ? 'PROYECTOS DESTACADOS' : 'FEATURED PROJECTS'), rightColumnStart + rightMargin, rightY);
         rightY += 6;
 
-        const projects = [
-          {
-            title: language === 'es' ? 'Sistema de Gestion de Parqueaderos' : 'Parking Management System',
-            desc: language === 'es' ? 'Plataforma completa para administracion de parqueaderos con control de ingresos, tarifas y reportes en tiempo real.' : 'Complete platform for parking lot administration with income control, rates, and real-time reports.',
-            tech: 'Django • PostgreSQL • Tailwind CSS'
-          },
-          {
-            title: language === 'es' ? 'Facturacion Electronica DIAN' : 'Electronic Invoicing DIAN',
-            desc: language === 'es' ? 'Sistema de facturacion electronica cumpliendo normativa DIAN, con generacion automatica de documentos tributarios.' : 'Electronic invoicing system complying with DIAN regulations, with automatic generation of tax documents.',
-            tech: 'Python Flask • MySQL • API REST'
-          },
-          {
-            title: language === 'es' ? 'Gestion de Restaurantes' : 'Restaurant Management',
-            desc: language === 'es' ? 'Aplicacion para manejo de pedidos, inventario y facturacion en restaurantes con interfaz intuitiva.' : 'Application for managing orders, inventory, and billing in restaurants with an intuitive interface.',
-            tech: 'Node.js • Express.js • React'
-          },
-          {
-            title: language === 'es' ? 'Control de Inventarios y Ventas' : 'Inventory and Sales Control',
-            desc: language === 'es' ? 'Sistema integral para gestion de inventarios, ventas y reportes financieros con dashboard interactivo.' : 'Comprehensive system for inventory management, sales, and financial reports with interactive dashboard.',
-            tech: 'Vue.js • Python • PostgreSQL'
-          }
-        ];
+        const currentProjects = projectsData[language];
 
-        projects.forEach(project => {
+        currentProjects.forEach(project => {
           doc.setFontSize(8);
           doc.setFont('helvetica', 'bold');
           doc.setTextColor(colors.primary[0], colors.primary[1], colors.primary[2]);
@@ -281,14 +304,14 @@ export function useDownloadCV() {
           doc.setFontSize(7);
           doc.setFont('helvetica', 'normal');
           doc.setTextColor(colors.text[0], colors.text[1], colors.text[2]);
-          const descLines = doc.splitTextToSize(project.desc, rightColumnWidth - (rightMargin * 2));
+          const descLines = doc.splitTextToSize(project.description, rightColumnWidth - (rightMargin * 2));
           doc.text(descLines, rightColumnStart + rightMargin, rightY);
           rightY += descLines.length * 3;
           
           doc.setFontSize(6.5);
           doc.setFont('helvetica', 'italic');
           doc.setTextColor(colors.secondary[0], colors.secondary[1], colors.secondary[2]);
-          doc.text(project.tech, rightColumnStart + rightMargin, rightY);
+          doc.text(project.technologies.join(' • '), rightColumnStart + rightMargin, rightY);
           rightY += 5;
         });
       }
@@ -297,14 +320,14 @@ export function useDownloadCV() {
       doc.setFontSize(6.5);
       doc.setTextColor(colors.lightText[0], colors.lightText[1], colors.lightText[2]);
       doc.text(
-        `CV - Elier Fernando Rosero Bravo | ${new Date().getFullYear()}`,
+        `CV - ${personalInfo.fullName} | ${new Date().getFullYear()}`,
         pageWidth / 2,
         pageHeight - 5,
         { align: 'center' }
       );
 
       // Guardar PDF
-      const fileName = `CV_Fernando_Rosero_${new Date().getFullYear()}.pdf`;
+      const fileName = `CV_${personalInfo.fullName.replace(/\s+/g, '_')}_${new Date().getFullYear()}.pdf`;
       doc.save(fileName);
       
       return true;

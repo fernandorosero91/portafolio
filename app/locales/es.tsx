@@ -1,7 +1,7 @@
 export const es = {
   nav: {
     home: 'Inicio',
-    about: 'Acerca de',
+    about: 'Acerca de mí',
     projects: 'Proyectos',
     testimonials: 'Testimonios',
     experience: 'Experiencia',
@@ -37,8 +37,19 @@ export const es = {
   projects: {
     title: 'Proyectos Destacados',
     subtitle: 'Soluciones tecnológicas que combinan finanzas y desarrollo',
-    production: '✓ En Producción',
-    testing: '⚡ En Pruebas',
+    production: 'En Producción',
+    testing: 'En Pruebas',
+    viewDemo: 'Ver Demo',
+    viewInfo: 'Ver Información',
+    noDemo: 'Sin Demo',
+    demoPreview: 'Vista previa del demo',
+    aboutProject: 'Acerca del Proyecto',
+    testCredentials: 'Credenciales de Prueba',
+    email: 'Email',
+    password: 'Contraseña',
+    keyFeatures: 'Características Principales',
+    cancel: 'Cancelar',
+    visitDemo: 'Visitar Demo',
     project1: {
       title: 'Sistema de Gestión de Parqueaderos',
       description: 'Plataforma completa para administración de parqueaderos con control de ingresos, tarifas y reportes en tiempo real.'
@@ -185,17 +196,11 @@ export const es = {
     description: 'Desarrollador Full Stack y Contador Público especializado en soluciones financieras innovadoras.',
     navigation: 'Navegación',
     resources: 'Recursos',
-    legal: 'Legal',
     home: 'Inicio',
     about: 'Acerca de',
     projects: 'Proyectos',
     experience: 'Experiencia',
-    blog: 'Blog',
-    documentation: 'Documentación',
-    tutorials: 'Tutoriales',
-    faq: 'FAQ',
-    privacy: 'Privacidad',
-    terms: 'Términos',
-    cookies: 'Cookies'
+    contact: 'Contacto',
+    tutorials: 'Tutoriales'
   }
 };
