@@ -503,11 +503,12 @@ html.light-mode .mobile-menu ul li a:hover {
 
   /* Hero Section */
   .hero {
-    padding: 5rem 1rem 4rem 1rem;
+    padding: 5rem 0 4rem 0;
     min-height: auto;
     overflow: hidden;
     display: block;
     width: 100%;
+    max-width: 100vw;
     margin: 0;
     height: auto;
   }
@@ -521,17 +522,21 @@ html.light-mode .mobile-menu ul li a:hover {
   .hero-container {
     grid-template-columns: 1fr;
     gap: 1rem;
-    padding: 0 0.75rem;
+    padding: 0;
     width: 100%;
-    margin-top: 0.5rem;
+    max-width: 100%;
+    margin: 0 auto;
     height: auto;
+    overflow: hidden;
   }
 
   .hero-content {
     text-align: center;
     order: 2;
-    padding: 0;
+    padding: 0 1rem;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .hero-content h1 {
@@ -617,6 +622,8 @@ html.light-mode .mobile-menu ul li a:hover {
     width: 100%;
     max-width: 100%;
     overflow: hidden;
+    padding: 0 1rem;
+    box-sizing: border-box;
   }
 
   .avatar-box {
@@ -633,9 +640,20 @@ html.light-mode .mobile-menu ul li a:hover {
   .testimonials,
   .experience,
   .contact {
-    padding: 3rem 1rem;
+    padding: 3rem 0;
     overflow-x: hidden;
     width: 100%;
+    max-width: 100vw;
+  }
+  
+  .about .section-container,
+  .projects .section-container,
+  .testimonials .section-container,
+  .experience .section-container,
+  .contact .section-container {
+    padding: 0 1rem;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .section-title {
@@ -878,15 +896,18 @@ html.light-mode .mobile-menu ul li a:hover {
 
   /* About section */
   .about {
-    padding: 3rem 0.75rem;
+    padding: 3rem 0;
     overflow-x: hidden;
     overflow-y: visible;
     width: 100%;
+    max-width: 100vw;
   }
 
   .section-container {
-    padding: 0 0.5rem;
+    padding: 0 1rem;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .about-text-grid {
@@ -894,6 +915,7 @@ html.light-mode .mobile-menu ul li a:hover {
     gap: 1.25rem;
     width: 100%;
     max-width: 100%;
+    padding: 0;
   }
   
   .skills-categories-grid {
@@ -901,6 +923,7 @@ html.light-mode .mobile-menu ul li a:hover {
     gap: 1.25rem;
     width: 100%;
     max-width: 100%;
+    padding: 0;
   }
   
   .skill-category-card {
@@ -908,20 +931,24 @@ html.light-mode .mobile-menu ul li a:hover {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    overflow: hidden;
   }
   
   .skills-tags {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 0.65rem;
+    grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+    gap: 0.5rem;
     width: 100%;
+    max-width: 100%;
   }
   
   .skill-tag {
     min-height: 85px;
-    padding: 0.65rem 0.4rem;
-    font-size: 0.75rem;
+    padding: 0.65rem 0.3rem;
+    font-size: 0.7rem;
     width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
+    overflow: hidden;
   }
   
   .skill-icon {
@@ -970,15 +997,16 @@ html.light-mode .mobile-menu ul li a:hover {
   background: linear-gradient(135deg, #0A0E1A 0%, #141B2D 100%);
   overflow: hidden;
   width: 100%;
+  max-width: 100vw;
   position: relative;
   margin: 0;
   box-sizing: border-box;
 }
 
 .hero::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 html.light-mode .hero {
@@ -1219,6 +1247,8 @@ html.light-mode .avatar-placeholder {
   overflow-x: hidden;
   overflow-y: visible;
   width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
 }
 
 html.light-mode .about {
@@ -5405,4 +5435,91 @@ html {
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+
+/* ===== FIX SCROLL HORIZONTAL EN MÓVIL ===== */
+@media (max-width: 768px) {
+  /* Prevenir scroll horizontal global */
+  * {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  body, html {
+    overflow-x: hidden !important;
+    width: 100vw;
+    max-width: 100vw;
+    position: relative;
+  }
+  
+  /* Hero - Sin scroll */
+  .hero {
+    overflow-x: hidden !important;
+    max-width: 100vw;
+  }
+  
+  .hero-container {
+    overflow-x: hidden !important;
+    max-width: 100%;
+  }
+  
+  .hero-content,
+  .hero-avatar {
+    overflow-x: hidden !important;
+    max-width: 100%;
+  }
+  
+  /* About - Sin scroll */
+  .about {
+    overflow-x: hidden !important;
+    max-width: 100vw;
+  }
+  
+  .about-intro,
+  .about-text-grid,
+  .skills-section-full,
+  .skills-categories-grid {
+    overflow-x: hidden !important;
+    max-width: 100%;
+  }
+  
+  .skill-category-card,
+  .skills-tags,
+  .skill-tag {
+    overflow-x: hidden !important;
+    max-width: 100%;
+  }
+  
+  /* Contenedores generales */
+  .section-container {
+    overflow-x: hidden !important;
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
+  }
+  
+  /* Grids responsive */
+  .about-text-grid,
+  .skills-categories-grid,
+  .projects-grid,
+  .testimonials-grid {
+    overflow-x: hidden !important;
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  /* Textos que pueden causar overflow */
+  h1, h2, h3, h4, h5, h6, p, span, div {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+  
+  /* Imágenes responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
