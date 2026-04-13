@@ -21,7 +21,7 @@ export default function Projects() {
       demoUrl: 'https://solupark.gestionxpress.app/',
       image: '/projects/solupark-dashboard.jpg',
       credentials: {
-        email: 'demo@solupark.com',
+        email: 'demosolupark@gmail.com',
         password: 'demo123'
       },
       features: [
@@ -61,7 +61,7 @@ export default function Projects() {
       demoUrl: 'https://restaurante.gestionxpress.app/',
       image: '/projects/restaurante-dashboard.jpg',
       credentials: {
-        email: 'admin@restaurante.com',
+        email: 'demorestaurante@gmail.com',
         password: 'admin123'
       },
       features: [
@@ -84,7 +84,7 @@ export default function Projects() {
       demoUrl: 'https://pos.gestionxpress.app/',
       image: '/projects/pos-dashboard.jpg',
       credentials: {
-        email: 'admin@pos.com',
+        email: 'demopos@gmail.com',
         password: 'admin123'
       },
       features: [
