@@ -80,7 +80,7 @@ export default function Navbar() {
 
           <nav className="hidden lg:flex items-center gap-7">
             {links.map(l => (
-              <a key={l.href} href={l.href} className="text-[13px] font-medium" style={{ color: 'var(--text-tertiary)' }}>{l.label}</a>
+              <a key={l.href} href={l.href} className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{l.label}</a>
             ))}
           </nav>
 
@@ -104,7 +104,7 @@ export default function Navbar() {
               {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
             </button>
 
-            <button onClick={() => downloadCV()} className="btn-outline ml-2 hidden h-9 items-center rounded-full border-2 px-5 text-[13px] font-semibold lg:inline-flex" style={{ borderColor: 'var(--primary-blue)', color: 'var(--primary-blue)' }}>
+            <button onClick={() => downloadCV()} className="btn-outline ml-2 hidden h-10 items-center rounded-full border-2 px-6 text-sm font-semibold lg:inline-flex" style={{ borderColor: 'var(--primary-blue)', color: 'var(--primary-blue)' }}>
               {t('nav.downloadCV')}
             </button>
 

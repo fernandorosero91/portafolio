@@ -59,7 +59,7 @@ export default function About() {
           <h3 className="text-2xl font-bold text-center mb-8" style={{ color: 'var(--text-primary)' }}>{t('about.myJourney')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[t('about.text1'), t('about.text2'), t('about.text3')].map((text, i) => (
-              <p key={i} className="text-sm leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>{text}</p>
+              <p key={i} className="text-base leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>{text}</p>
             ))}
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function About() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map(cat => (
               <div key={cat.key} className="rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style={{ backgroundColor: 'rgba(74,111,168,0.04)', borderColor: 'var(--border-color)' }}>
-                <h4 className="text-sm font-bold text-center mb-5 pb-3 border-b-2" style={{ color: 'var(--accent-amber)', borderColor: 'var(--accent-amber)' }}>{t(`about.${cat.key}`)}</h4>
+                <h4 className="text-base font-bold text-center mb-5 pb-3 border-b-2" style={{ color: 'var(--accent-amber)', borderColor: 'var(--accent-amber)' }}>{t(`about.${cat.key}`)}</h4>
                 <div className="grid grid-cols-3 gap-2.5">
                   {cat.skills.map(s => (
                     <div key={s.name} className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl border text-center min-h-[80px] transition-all duration-300 cursor-pointer group hover:-translate-y-1 hover:shadow-md" style={{ backgroundColor: 'var(--bg-dark)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
@@ -79,7 +79,7 @@ export default function About() {
                       ) : (
                         <span className="text-2xl transition-transform duration-300 group-hover:scale-110">{s.icon}</span>
                       )}
-                      <span className="text-[11px] font-semibold leading-tight">{s.name}</span>
+                      <span className="text-xs font-semibold leading-tight">{s.name}</span>
                     </div>
                   ))}
                 </div>

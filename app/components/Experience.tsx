@@ -92,7 +92,7 @@ export default function Experience() {
                       <div className="text-sm font-bold mb-3 tracking-wide" style={{ color: 'var(--accent-amber)' }}>{exp.year}</div>
                       <h3 className="text-2xl font-bold mb-2 leading-snug" style={{ color: 'var(--text-primary)' }}>{exp.title}</h3>
                       <p className="text-base font-medium mb-4" style={{ color: 'var(--text-secondary)' }}>{exp.subtitle}</p>
-                      <p className="text-sm leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>{exp.description}</p>
+                      <p className="text-base leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>{exp.description}</p>
                     </div>
                   );
                 })}
@@ -123,8 +123,8 @@ export default function Experience() {
                   <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 border" style={{ backgroundColor: bc.bg, color: bc.color, borderColor: bc.border }}>{exp.type === 'academic' ? t('experience.academic') : t('experience.professional')}</span>
                   <div className="text-sm font-bold mb-2 tracking-wide uppercase" style={{ color: 'var(--accent-amber)' }}>{exp.year}</div>
                   <h3 className="text-xl font-bold mb-2 leading-snug" style={{ color: 'var(--text-primary)' }}>{exp.title}</h3>
-                  <p className="text-sm font-semibold mb-3" style={{ color: 'var(--primary-blue)' }}>{exp.subtitle}</p>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{exp.description}</p>
+                  <p className="text-base font-semibold mb-3" style={{ color: 'var(--primary-blue)' }}>{exp.subtitle}</p>
+                  <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{exp.description}</p>
                 </div>
               );
             })}

@@ -56,12 +56,12 @@ export default function Hero() {
             </h1>
 
             {/* Subtitle */}
-            <p className="mb-4 text-sm font-semibold tracking-wide lg:text-base" style={{ color: 'var(--text-primary)' }}>
+            <p className="mb-5 text-base font-semibold tracking-wide lg:text-lg" style={{ color: 'var(--text-primary)' }}>
               {t('hero.subtitle')}
             </p>
 
             {/* Description */}
-            <p className="mx-auto mb-10 max-w-md text-sm leading-relaxed lg:mx-0" style={{ color: 'var(--text-tertiary)' }}>
+            <p className="mx-auto mb-10 max-w-md text-base leading-relaxed lg:mx-0" style={{ color: 'var(--text-tertiary)' }}>
               {t('hero.description')}
             </p>
 
@@ -74,7 +74,7 @@ export default function Hero() {
               ].map(s => (
                 <div key={s.l} className="text-center lg:text-left">
                   <div className="text-3xl font-bold leading-none lg:text-4xl" style={{ color: 'var(--accent-amber)' }}>{s.v}</div>
-                  <div className="mt-1.5 text-xs font-medium" style={{ color: 'var(--text-tertiary)' }}>{s.l}</div>
+                  <div className="mt-1.5 text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{s.l}</div>
                 </div>
               ))}
             </div>

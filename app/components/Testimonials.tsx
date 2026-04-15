@@ -26,8 +26,8 @@ export default function Testimonials() {
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0" style={{ backgroundColor: 'var(--primary-blue)' }}>{featured.avatar}</div>
             <div>
-              <h4 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{featured.name}</h4>
-              <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>{featured.role}</p>
+              <h4 className="font-semibold text-base" style={{ color: 'var(--text-primary)' }}>{featured.name}</h4>
+              <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>{featured.role}</p>
             </div>
           </div>
         </div>
@@ -37,10 +37,10 @@ export default function Testimonials() {
           {list.map((t2, i) => (
             <div key={i} className="rounded-xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-md" style={{ backgroundColor: 'var(--bg-dark)', borderColor: 'var(--border-color)' }}>
               <div className="flex gap-0.5 mb-3">{[...Array(t2.stars)].map((_, j) => <span key={j} className="text-base">⭐</span>)}</div>
-              <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--text-secondary)' }}>&ldquo;{t2.text}&rdquo;</p>
+              <p className="text-base leading-relaxed mb-5" style={{ color: 'var(--text-secondary)' }}>&ldquo;{t2.text}&rdquo;</p>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0" style={{ backgroundColor: 'var(--primary-blue)' }}>{t2.avatar}</div>
-                <span className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>{t2.name} — {t2.role}</span>
+                <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{t2.name} — {t2.role}</span>
               </div>
             </div>
           ))}

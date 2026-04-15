@@ -30,12 +30,12 @@ function ProjectCard({ project, index, onDemo }: { project: typeof projects[0]; 
         </span>
       </div>
 
-      <h3 className="text-lg font-bold leading-snug" style={{ color: 'var(--text-primary)' }}>{t(`projects.${project.titleKey}`)}</h3>
-      <p className="text-sm leading-relaxed flex-grow" style={{ color: 'var(--text-secondary)' }}>{t(`projects.${project.descriptionKey}`)}</p>
+      <h3 className="text-xl font-bold leading-snug" style={{ color: 'var(--text-primary)' }}>{t(`projects.${project.titleKey}`)}</h3>
+      <p className="text-base leading-relaxed flex-grow" style={{ color: 'var(--text-secondary)' }}>{t(`projects.${project.descriptionKey}`)}</p>
 
       <div className="flex flex-wrap gap-2">
         {project.technologies.map(tech => (
-          <span key={tech} className="px-3 py-1 rounded-lg text-xs font-semibold border" style={{ backgroundColor: 'rgba(74,111,168,0.15)', borderColor: 'rgba(74,111,168,0.25)', color: 'var(--text-primary)' }}>{tech}</span>
+          <span key={tech} className="px-3 py-1 rounded-lg text-sm font-semibold border" style={{ backgroundColor: 'rgba(74,111,168,0.15)', borderColor: 'rgba(74,111,168,0.25)', color: 'var(--text-primary)' }}>{tech}</span>
         ))}
       </div>
 
