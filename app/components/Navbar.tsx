@@ -147,6 +147,26 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+        
+        {/* Mobile Language Selector */}
+        <div className="mobile-language-selector">
+          <button 
+            className={`mobile-language-btn ${language === 'es' ? 'active' : ''}`}
+            onClick={() => { selectLanguage('es'); closeMobileMenu(); }}
+          >
+            🇪🇸 Español
+          </button>
+          <button 
+            className={`mobile-language-btn ${language === 'en' ? 'active' : ''}`}
+            onClick={() => { selectLanguage('en'); closeMobileMenu(); }}
+          >
+            🇬🇧 English
+          </button>
+        </div>
+        
+        <button onClick={() => { downloadCV(); closeMobileMenu(); }} className="mobile-cv-button">
+          {t('nav.downloadCV')}
+        </button>
       </div>
     </>
   );
