@@ -111,6 +111,7 @@ export default function Hero() {
                 src="/profile-photo.jpg"
                 alt="Fernando Rosero"
                 fill
+                sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 340px"
                 className="object-cover"
                 priority
               />

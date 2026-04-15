@@ -3,7 +3,35 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useDownloadCV } from '../hooks/useDownloadCV';
-import Image from 'next/image';
+
+/* ── SVG Icons ── */
+const GlobeIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M2 12h20" />
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </svg>
+);
+
+const SunIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <circle cx="12" cy="12" r="5" />
+    <rect x="11" y="1" width="2" height="3" rx="1" />
+    <rect x="11" y="20" width="2" height="3" rx="1" />
+    <rect x="20" y="11" width="3" height="2" rx="1" />
+    <rect x="1" y="11" width="3" height="2" rx="1" />
+    <rect x="17.66" y="3.93" width="2" height="3" rx="1" transform="rotate(45 18.66 5.43)" />
+    <rect x="4.34" y="17.07" width="2" height="3" rx="1" transform="rotate(45 5.34 18.57)" />
+    <rect x="17.66" y="17.07" width="2" height="3" rx="1" transform="rotate(-45 18.66 18.57)" />
+    <rect x="4.34" y="3.93" width="2" height="3" rx="1" transform="rotate(-45 5.34 5.43)" />
+  </svg>
+);
+
+const MoonIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <path d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+  </svg>
+);
 
 export default function Navbar() {
   const { language, setLanguage, t } = useLanguage();
@@ -77,10 +105,11 @@ export default function Navbar() {
             <div className="lang-sel relative">
               <button
                 onClick={e => { e.stopPropagation(); setLangOpen(!langOpen); }}
-                className="flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200"
+                className="flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200 hover:bg-black/5"
                 style={{ color: 'var(--text-tertiary)' }}
+                aria-label="Language"
               >
-                <Image src="/globe-language.svg" alt="Language" width={18} height={18} className="opacity-60" />
+                <GlobeIcon />
               </button>
               {langOpen && (
                 <div
@@ -104,10 +133,11 @@ export default function Navbar() {
             {/* Theme */}
             <button
               onClick={toggleTheme}
-              className="flex h-9 w-9 items-center justify-center rounded-full text-base"
+              className="flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200 hover:bg-black/5"
+              style={{ color: 'var(--text-tertiary)' }}
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? '☀️' : '🌙'}
+              {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
             </button>
 
             {/* CV button */}
