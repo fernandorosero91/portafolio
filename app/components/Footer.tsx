@@ -31,9 +31,9 @@ export default function Footer() {
       className="border-t pt-12 pb-8 px-6 lg:px-8"
       style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-10 mb-10">
+      <div className="max-w-7xl mx-auto mb-10">
         {/* Brand */}
-        <div>
+        <div className="mb-10">
           <a href="#" className="text-2xl font-bold no-underline block mb-3" style={{ color: 'var(--primary-blue)' }}>
             FR
           </a>
@@ -59,28 +59,30 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Navigation columns */}
-        {Object.entries(navigationColumns).map(([title, items]) => (
-          <div key={title}>
-            <h4 className="font-bold text-sm mb-4" style={{ color: 'var(--text-primary)' }}>
-              {title}
-            </h4>
-            <ul className="list-none space-y-2.5">
-              {items.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    className="text-base no-underline transition-colors duration-200 hover:text-(--accent-amber)"
-                    style={{ color: 'var(--text-tertiary)' }}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {/* Navigation columns — side by side on all screens */}
+        <div className="grid grid-cols-2 md:grid-cols-2 gap-8">
+          {Object.entries(navigationColumns).map(([title, items]) => (
+            <div key={title}>
+              <h4 className="font-bold text-sm mb-4" style={{ color: 'var(--text-primary)' }}>
+                {title}
+              </h4>
+              <ul className="list-none space-y-2.5">
+                {items.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      className="text-base no-underline transition-colors duration-200 hover:text-(--accent-amber)"
+                      style={{ color: 'var(--text-tertiary)' }}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div
