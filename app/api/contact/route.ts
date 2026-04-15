@@ -1,7 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-// Configuración del transportador de Nodemailer
+/* ── Security: patterns to block ── */
+const SQL_PATTERNS = /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|UNION|ALTER|CREATE|EXEC|EXECUTE|TRUNCATE|DECLARE|CAST|CONVERT|xp_)\b|--|\/\*|\*\/)/i;
+const XSS_PATTERNS = /<script|javascript:|on\w+\s*=|eval\s*\(|document\.|window\.|alert\s*\(/i;
+const SPAM_PATTERNS = /(viagra|casino|lottery|crypto|bitcoin|click here|free money|make money|buy now|limited offer)/i;
+
+function sanitizeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;');
+}
+
+function hasMaliciousContent(val: string): string | null {
+  if (SQL_PATTERNS.test(val)) return 'Contenido potencialmente peligroso detectado';
+  if (XSS_PATTERNS.test(val)) return 'Contenido no permitido detectado';
+  if (SPAM_PATTERNS.test(val)) return 'Contenido detectado como spam';
+  return null;
+}
+
+/* ── Rate limiting (in-memory, per IP) ── */
+const rateLimit = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_MAX = 5;       // max requests
+const RATE_LIMIT_WINDOW = 60000; // per minute
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimit.get(ip);
+
+  if (!entry || now > entry.resetAt) {
+    rateLimit.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+    return false;
+  }
+
+  entry.count++;
+  return entry.count > RATE_LIMIT_MAX;
+}
+
+/* ── Nodemailer ── */
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -10,300 +50,156 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Verificar la configuración del transportador
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('Error en la configuración de Nodemailer:', error);
-  } else {
-    console.log('Servidor de email listo para enviar mensajes');
-  }
-});
-
 export async function POST(request: NextRequest) {
   try {
+    /* ── Rate limit ── */
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+      || request.headers.get('x-real-ip')
+      || 'unknown';
+
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { error: 'Demasiados intentos. Espera un minuto.' },
+        { status: 429 }
+      );
+    }
+
+    /* ── Parse body ── */
     const body = await request.json();
-    const { name, email, subject, message, timestamp } = body;
+    const { name, email, subject, message, honeypot } = body;
 
-    // Validaciones básicas
+    /* ── Honeypot check ── */
+    if (honeypot) {
+      return NextResponse.json({ success: true, message: 'Enviado' }, { status: 200 });
+    }
+
+    /* ── Required fields ── */
     if (!name || !email || !subject || !message) {
-      return NextResponse.json(
-        { error: 'Todos los campos son requeridos' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Todos los campos son requeridos' }, { status: 400 });
     }
 
-    // Validar formato de email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: 'Email inválido' },
-        { status: 400 }
-      );
+    /* ── Trim & validate lengths ── */
+    const trimName = String(name).trim();
+    const trimEmail = String(email).trim().toLowerCase();
+    const trimSubject = String(subject).trim();
+    const trimMessage = String(message).trim();
+
+    if (trimName.length < 2 || trimName.length > 50) {
+      return NextResponse.json({ error: 'Nombre: 2-50 caracteres' }, { status: 400 });
+    }
+    if (trimEmail.length < 5 || trimEmail.length > 100) {
+      return NextResponse.json({ error: 'Email: 5-100 caracteres' }, { status: 400 });
+    }
+    if (trimSubject.length < 3 || trimSubject.length > 100) {
+      return NextResponse.json({ error: 'Asunto: 3-100 caracteres' }, { status: 400 });
+    }
+    if (trimMessage.length < 10 || trimMessage.length > 1000) {
+      return NextResponse.json({ error: 'Mensaje: 10-1000 caracteres' }, { status: 400 });
     }
 
-    // Configurar el email para ti (notificación)
-    const mailOptionsToYou = {
-      from: `"Portafolio - Formulario de Contacto" <${process.env.GMAIL_USER}>`,
+    /* ── Only spaces check ── */
+    if (/^\s*$/.test(trimName) || /^\s*$/.test(trimSubject) || /^\s*$/.test(trimMessage)) {
+      return NextResponse.json({ error: 'Los campos no pueden contener solo espacios' }, { status: 400 });
+    }
+
+    /* ── Email format ── */
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimEmail)) {
+      return NextResponse.json({ error: 'Email inválido' }, { status: 400 });
+    }
+
+    /* ── Name: only letters ── */
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(trimName)) {
+      return NextResponse.json({ error: 'El nombre solo puede contener letras' }, { status: 400 });
+    }
+
+    /* ── Injection / XSS / Spam checks ── */
+    for (const [field, val] of [['nombre', trimName], ['email', trimEmail], ['asunto', trimSubject], ['mensaje', trimMessage]]) {
+      const threat = hasMaliciousContent(val);
+      if (threat) {
+        return NextResponse.json({ error: `${threat} en ${field}` }, { status: 400 });
+      }
+    }
+
+    /* ── Sanitize for HTML email ── */
+    const safeName = sanitizeHtml(trimName);
+    const safeEmail = sanitizeHtml(trimEmail);
+    const safeSubject = sanitizeHtml(trimSubject);
+    const safeMessage = sanitizeHtml(trimMessage);
+    const timestamp = new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+
+    /* ── Send notification email ── */
+    await transporter.sendMail({
+      from: `"Portafolio - Contacto" <${process.env.GMAIL_USER}>`,
       to: process.env.CONTACT_EMAIL || process.env.GMAIL_USER,
-      replyTo: email,
-      subject: `📩 Nuevo mensaje de contacto: ${subject}`,
+      replyTo: trimEmail,
+      subject: `📩 Nuevo mensaje: ${safeSubject}`,
       html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <style>
-            body {
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              line-height: 1.6;
-              color: #333;
-              max-width: 600px;
-              margin: 0 auto;
-              padding: 20px;
-            }
-            .header {
-              background: linear-gradient(135deg, #4A6FA8 0%, #2E446B 100%);
-              color: white;
-              padding: 30px;
-              border-radius: 10px 10px 0 0;
-              text-align: center;
-            }
-            .header h1 {
-              margin: 0;
-              font-size: 24px;
-            }
-            .content {
-              background: #f9f9f9;
-              padding: 30px;
-              border-radius: 0 0 10px 10px;
-              border: 1px solid #e0e0e0;
-            }
-            .field {
-              margin-bottom: 20px;
-              background: white;
-              padding: 15px;
-              border-radius: 8px;
-              border-left: 4px solid #4A6FA8;
-            }
-            .field-label {
-              font-weight: bold;
-              color: #4A6FA8;
-              font-size: 12px;
-              text-transform: uppercase;
-              letter-spacing: 0.5px;
-              margin-bottom: 5px;
-            }
-            .field-value {
-              color: #333;
-              font-size: 15px;
-            }
-            .message-box {
-              background: white;
-              padding: 20px;
-              border-radius: 8px;
-              border-left: 4px solid #F59E0B;
-              margin-top: 20px;
-              white-space: pre-wrap;
-              word-wrap: break-word;
-            }
-            .footer {
-              text-align: center;
-              margin-top: 30px;
-              padding-top: 20px;
-              border-top: 2px solid #e0e0e0;
-              color: #666;
-              font-size: 12px;
-            }
-            .reply-button {
-              display: inline-block;
-              background: #4A6FA8;
-              color: white;
-              padding: 12px 30px;
-              text-decoration: none;
-              border-radius: 6px;
-              margin-top: 20px;
-              font-weight: bold;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1>📩 Nuevo Mensaje de Contacto</h1>
+        <div style="font-family:Segoe UI,sans-serif;max-width:600px;margin:0 auto">
+          <div style="background:linear-gradient(135deg,#4A6FA8,#2E446B);color:#fff;padding:24px;border-radius:10px 10px 0 0;text-align:center">
+            <h1 style="margin:0;font-size:20px">📩 Nuevo Mensaje de Contacto</h1>
           </div>
-          <div class="content">
-            <div class="field">
-              <div class="field-label">👤 Nombre</div>
-              <div class="field-value">${name}</div>
+          <div style="background:#f9f9f9;padding:24px;border-radius:0 0 10px 10px;border:1px solid #e0e0e0">
+            <div style="background:#fff;padding:12px;border-radius:8px;border-left:4px solid #4A6FA8;margin-bottom:12px">
+              <div style="font-size:11px;font-weight:bold;color:#4A6FA8;text-transform:uppercase">Nombre</div>
+              <div style="font-size:14px;color:#333">${safeName}</div>
             </div>
-            
-            <div class="field">
-              <div class="field-label">📧 Email</div>
-              <div class="field-value"><a href="mailto:${email}">${email}</a></div>
+            <div style="background:#fff;padding:12px;border-radius:8px;border-left:4px solid #4A6FA8;margin-bottom:12px">
+              <div style="font-size:11px;font-weight:bold;color:#4A6FA8;text-transform:uppercase">Email</div>
+              <div style="font-size:14px;color:#333">${safeEmail}</div>
             </div>
-            
-            <div class="field">
-              <div class="field-label">📋 Asunto</div>
-              <div class="field-value">${subject}</div>
+            <div style="background:#fff;padding:12px;border-radius:8px;border-left:4px solid #4A6FA8;margin-bottom:12px">
+              <div style="font-size:11px;font-weight:bold;color:#4A6FA8;text-transform:uppercase">Asunto</div>
+              <div style="font-size:14px;color:#333">${safeSubject}</div>
             </div>
-            
-            <div class="field">
-              <div class="field-label">🕐 Fecha y Hora</div>
-              <div class="field-value">${timestamp || new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })}</div>
+            <div style="background:#fff;padding:12px;border-radius:8px;border-left:4px solid #4A6FA8;margin-bottom:12px">
+              <div style="font-size:11px;font-weight:bold;color:#4A6FA8;text-transform:uppercase">Fecha</div>
+              <div style="font-size:14px;color:#333">${timestamp}</div>
             </div>
-            
-            <div class="message-box">
-              <div class="field-label">💬 Mensaje</div>
-              <div class="field-value" style="margin-top: 10px;">${message}</div>
+            <div style="background:#fff;padding:16px;border-radius:8px;border-left:4px solid #F59E0B;margin-top:16px">
+              <div style="font-size:11px;font-weight:bold;color:#F59E0B;text-transform:uppercase">Mensaje</div>
+              <div style="font-size:14px;color:#333;margin-top:8px;white-space:pre-wrap;word-wrap:break-word">${safeMessage}</div>
             </div>
-            
-            <center>
-              <a href="mailto:${email}?subject=Re: ${encodeURIComponent(subject)}" class="reply-button">
-                Responder a ${name}
-              </a>
-            </center>
           </div>
-          <div class="footer">
-            <p>Este mensaje fue enviado desde el formulario de contacto de tu portafolio</p>
-            <p>Portafolio de Fernando Rosero - ${new Date().getFullYear()}</p>
+          <div style="text-align:center;margin-top:20px;color:#666;font-size:11px">
+            <p>Enviado desde el portafolio de Fernando Rosero — ${new Date().getFullYear()}</p>
           </div>
-        </body>
-        </html>
+        </div>
       `,
-      text: `
-Nuevo mensaje de contacto
+      text: `Nombre: ${trimName}\nEmail: ${trimEmail}\nAsunto: ${trimSubject}\nFecha: ${timestamp}\n\nMensaje:\n${trimMessage}`,
+    });
 
-Nombre: ${name}
-Email: ${email}
-Asunto: ${subject}
-Fecha: ${timestamp || new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })}
-
-Mensaje:
-${message}
-
----
-Responder a: ${email}
-      `,
-    };
-
-    // Configurar email de confirmación para el usuario
-    const mailOptionsToUser = {
+    /* ── Send confirmation to user ── */
+    await transporter.sendMail({
       from: `"Fernando Rosero" <${process.env.GMAIL_USER}>`,
-      to: email,
-      subject: `✅ Mensaje recibido: ${subject}`,
+      to: trimEmail,
+      subject: `✅ Mensaje recibido: ${safeSubject}`,
       html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <style>
-            body {
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              line-height: 1.6;
-              color: #333;
-              max-width: 600px;
-              margin: 0 auto;
-              padding: 20px;
-            }
-            .header {
-              background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-              color: white;
-              padding: 30px;
-              border-radius: 10px 10px 0 0;
-              text-align: center;
-            }
-            .header h1 {
-              margin: 0;
-              font-size: 24px;
-            }
-            .content {
-              background: #f9f9f9;
-              padding: 30px;
-              border-radius: 0 0 10px 10px;
-              border: 1px solid #e0e0e0;
-            }
-            .message-box {
-              background: white;
-              padding: 20px;
-              border-radius: 8px;
-              border-left: 4px solid #10B981;
-              margin: 20px 0;
-            }
-            .footer {
-              text-align: center;
-              margin-top: 30px;
-              padding-top: 20px;
-              border-top: 2px solid #e0e0e0;
-              color: #666;
-              font-size: 12px;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1>✅ ¡Mensaje Recibido!</h1>
+        <div style="font-family:Segoe UI,sans-serif;max-width:600px;margin:0 auto">
+          <div style="background:linear-gradient(135deg,#10B981,#059669);color:#fff;padding:24px;border-radius:10px 10px 0 0;text-align:center">
+            <h1 style="margin:0;font-size:20px">✅ ¡Mensaje Recibido!</h1>
           </div>
-          <div class="content">
-            <p>Hola <strong>${name}</strong>,</p>
-            
+          <div style="background:#f9f9f9;padding:24px;border-radius:0 0 10px 10px;border:1px solid #e0e0e0">
+            <p>Hola <strong>${safeName}</strong>,</p>
             <p>Gracias por contactarme. He recibido tu mensaje y te responderé lo antes posible.</p>
-            
-            <div class="message-box">
-              <p><strong>Tu mensaje:</strong></p>
-              <p style="white-space: pre-wrap; word-wrap: break-word;">${message}</p>
+            <div style="background:#fff;padding:16px;border-radius:8px;border-left:4px solid #10B981;margin:16px 0">
+              <p style="font-weight:bold;margin:0 0 8px">Tu mensaje:</p>
+              <p style="white-space:pre-wrap;word-wrap:break-word;margin:0">${safeMessage}</p>
             </div>
-            
-            <p>Normalmente respondo en un plazo de 24-48 horas.</p>
-            
-            <p>Saludos,<br>
-            <strong>Fernando Rosero</strong><br>
-            Ingeniero de Software & Contador Público</p>
+            <p>Normalmente respondo en 24-48 horas.</p>
+            <p>Saludos,<br><strong>Fernando Rosero</strong></p>
           </div>
-          <div class="footer">
-            <p>Este es un mensaje automático, por favor no respondas a este email.</p>
-            <p>Portafolio de Fernando Rosero - ${new Date().getFullYear()}</p>
+          <div style="text-align:center;margin-top:20px;color:#666;font-size:11px">
+            <p>Este es un mensaje automático. No respondas a este email.</p>
           </div>
-        </body>
-        </html>
+        </div>
       `,
-      text: `
-Hola ${name},
+      text: `Hola ${trimName},\n\nGracias por contactarme. Tu mensaje:\n${trimMessage}\n\nResponderé en 24-48 horas.\n\nFernando Rosero`,
+    });
 
-Gracias por contactarme. He recibido tu mensaje y te responderé lo antes posible.
+    return NextResponse.json({ success: true, message: '¡Mensaje enviado correctamente!' }, { status: 200 });
 
-Tu mensaje:
-${message}
-
-Normalmente respondo en un plazo de 24-48 horas.
-
-Saludos,
-Fernando Rosero
-Ingeniero de Software & Contador Público
-
----
-Este es un mensaje automático, por favor no respondas a este email.
-      `,
-    };
-
-    // Enviar ambos emails
-    await transporter.sendMail(mailOptionsToYou);
-    await transporter.sendMail(mailOptionsToUser);
-
-    return NextResponse.json(
-      { 
-        success: true, 
-        message: 'Email enviado exitosamente' 
-      },
-      { status: 200 }
-    );
-
-  } catch (error: any) {
-    console.error('Error al enviar el email:', error);
-    return NextResponse.json(
-      { 
-        error: 'Error al enviar el email',
-        details: error.message 
-      },
-      { status: 500 }
-    );
+  } catch (error: unknown) {
+    console.error('Error al enviar email:', error);
+    return NextResponse.json({ error: 'Error al enviar el mensaje. Intenta de nuevo.' }, { status: 500 });
   }
 }

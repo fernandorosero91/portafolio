@@ -6,47 +6,22 @@ export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      // Show button when page is scrolled down 300px
-      if (window.scrollY > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener('scroll', toggleVisibility);
-
-    return () => {
-      window.removeEventListener('scroll', toggleVisibility);
-    };
+    const h = () => setIsVisible(window.scrollY > 300);
+    window.addEventListener('scroll', h);
+    return () => window.removeEventListener('scroll', h);
   }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
 
   return (
     <button
-      onClick={scrollToTop}
-      className={`scroll-to-top ${isVisible ? 'visible' : ''}`}
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      className={`btn-filled fixed bottom-5 right-5 z-[999] w-11 h-11 rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-300 ${
+        isVisible ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-4'
+      }`}
+      style={{ backgroundColor: 'var(--primary-blue)' }}
       aria-label="Volver arriba"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <polyline points="18 15 12 9 6 15"></polyline>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="18 15 12 9 6 15" />
       </svg>
     </button>
   );

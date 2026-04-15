@@ -55,56 +55,59 @@ export function useDownloadCV() {
       doc.setFillColor(colors.white[0], colors.white[1], colors.white[2]);
       doc.rect(leftColumnWidth, 0, rightColumnWidth, pageHeight, 'F');
 
-      // ===== FOTO DE PERFIL (Cuadrada con bordes redondeados) =====
+      // ===== FOTO DE PERFIL =====
       try {
-        // Cargar la imagen desde el servidor
         const response = await fetch(personalInfo.photo);
         const blob = await response.blob();
-        const reader = new FileReader();
-        
-        await new Promise((resolve) => {
-          reader.onloadend = () => {
-            const base64data = reader.result as string;
-            
-            // Agregar imagen cuadrada centrada
-            const imgSize = 32;
-            const centerX = leftColumnWidth / 2;
-            const centerY = 28;
-            
-            doc.addImage(
-              base64data,
-              'JPEG',
-              centerX - (imgSize / 2),
-              centerY - (imgSize / 2),
-              imgSize,
-              imgSize,
-              undefined,
-              'NONE'
-            );
-            
-            resolve(true);
-          };
-          
-          reader.onerror = () => {
-            // Si falla, usar iniciales
-            doc.setFillColor(colors.darkBg[0], colors.darkBg[1], colors.darkBg[2]);
-            doc.circle(leftColumnWidth / 2, 28, 16, 'F');
-            
-            doc.setDrawColor(colors.secondary[0], colors.secondary[1], colors.secondary[2]);
-            doc.setLineWidth(1.5);
-            doc.circle(leftColumnWidth / 2, 28, 16, 'S');
-
-            doc.setFontSize(18);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
-            const initials = personalInfo.name.charAt(0) + personalInfo.lastName.split(' ')[0].charAt(0);
-            doc.text(initials, leftColumnWidth / 2, 31, { align: 'center' });
-            
-            resolve(true);
-          };
-          
+        const base64data = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.onerror = reject;
           reader.readAsDataURL(blob);
         });
+
+        // Load into an Image to get real dimensions
+        const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+          const i = new window.Image();
+          i.onload = () => resolve(i);
+          i.onerror = reject;
+          i.src = base64data;
+        });
+
+        const maxW = 36; // max width in mm
+        const maxH = 42; // max height in mm
+        const ratio = img.width / img.height;
+        let drawW = maxW;
+        let drawH = maxW / ratio;
+        if (drawH > maxH) {
+          drawH = maxH;
+          drawW = maxH * ratio;
+        }
+
+        const centerX = leftColumnWidth / 2;
+        const centerY = 30;
+
+        // Rounded border behind photo
+        const borderPad = 1.5;
+        doc.setFillColor(colors.secondary[0], colors.secondary[1], colors.secondary[2]);
+        doc.roundedRect(
+          centerX - drawW / 2 - borderPad,
+          centerY - drawH / 2 - borderPad,
+          drawW + borderPad * 2,
+          drawH + borderPad * 2,
+          3, 3, 'F'
+        );
+
+        doc.addImage(
+          base64data,
+          'JPEG',
+          centerX - drawW / 2,
+          centerY - drawH / 2,
+          drawW,
+          drawH,
+          undefined,
+          'FAST'
+        );
       } catch (error) {
         // Fallback a iniciales si hay error
         doc.setFillColor(colors.darkBg[0], colors.darkBg[1], colors.darkBg[2]);
@@ -121,7 +124,7 @@ export function useDownloadCV() {
         doc.text(initials, leftColumnWidth / 2, 31, { align: 'center' });
       }
 
-      let leftY = 55;
+      let leftY = 62;
       let rightY = 20;
 
       // ===== COLUMNA IZQUIERDA =====
