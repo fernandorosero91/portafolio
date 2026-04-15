@@ -1,21 +1,15 @@
 'use client';
 
 import { useLanguage } from '../contexts/LanguageContext';
+import type { ProjectCardData } from '../types';
 
-interface Props {
+interface ProjectDemoModalProps {
   isOpen: boolean;
   onClose: () => void;
-  project: {
-    titleKey: string;
-    descriptionKey: string;
-    demoUrl: string | null;
-    image: string;
-    credentials?: { email: string; password: string };
-    features: string[];
-  };
+  project: ProjectCardData;
 }
 
-export default function ProjectDemoModal({ isOpen, onClose, project }: Props) {
+export default function ProjectDemoModal({ isOpen, onClose, project }: ProjectDemoModalProps) {
   const { t } = useLanguage();
   if (!isOpen) return null;
 

@@ -1,4 +1,7 @@
 export const es = {
+  preloader: {
+    loading: 'Cargando...',
+  },
   nav: {
     home: 'Inicio',
     about: 'Acerca de mí',
@@ -25,6 +28,9 @@ export const es = {
   skills: {
     title: 'Habilidades Técnicas',
     subtitle: 'Tecnologías y conocimientos que domino',
+  },
+  preloader: {
+    loading: 'Cargando...',
   },
   about: {
     title: 'Acerca de Mí',

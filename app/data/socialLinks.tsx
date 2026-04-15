@@ -1,4 +1,6 @@
-export const socialLinks = [
+import type { SocialIconLink } from '../types';
+
+export const socialLinks: SocialIconLink[] = [
   {
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/in/elier-fernando-rosero-bravo-220858248/',

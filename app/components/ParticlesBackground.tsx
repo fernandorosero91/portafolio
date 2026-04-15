@@ -2,6 +2,60 @@
 
 import { useEffect, useRef } from 'react';
 
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+}
+
+const PARTICLE_COUNT = 50;
+const MAX_CONNECTION_DISTANCE = 150;
+const PARTICLE_COLOR = 'rgba(74, 111, 168, 0.5)';
+const CONNECTION_BASE_OPACITY = 0.2;
+
+function createParticle(canvasWidth: number, canvasHeight: number): Particle {
+  return {
+    x: Math.random() * canvasWidth,
+    y: Math.random() * canvasHeight,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    radius: Math.random() * 2 + 1,
+  };
+}
+
+function updateParticle(particle: Particle, width: number, height: number): void {
+  particle.x += particle.vx;
+  particle.y += particle.vy;
+
+  if (particle.x < 0 || particle.x > width) particle.vx *= -1;
+  if (particle.y < 0 || particle.y > height) particle.vy *= -1;
+}
+
+function drawParticle(ctx: CanvasRenderingContext2D, particle: Particle): void {
+  ctx.beginPath();
+  ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+  ctx.fillStyle = PARTICLE_COLOR;
+  ctx.fill();
+}
+
+function drawConnection(ctx: CanvasRenderingContext2D, a: Particle, b: Particle): void {
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  if (distance < MAX_CONNECTION_DISTANCE) {
+    const opacity = CONNECTION_BASE_OPACITY * (1 - distance / MAX_CONNECTION_DISTANCE);
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.strokeStyle = `rgba(74, 111, 168, ${opacity})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+}
+
 export default function ParticlesBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -15,67 +69,29 @@ export default function ParticlesBackground() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
-    const particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      radius: number;
-    }> = [];
+    const particles: Particle[] = Array.from(
+      { length: PARTICLE_COUNT },
+      () => createParticle(canvas.width, canvas.height),
+    );
 
-    const particleCount = 50;
-    const maxDistance = 150;
-
-    // Create particles
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 2 + 1,
-      });
-    }
+    let animationFrameId: number;
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update and draw particles
-      particles.forEach((particle, i) => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
+      for (let i = 0; i < particles.length; i++) {
+        updateParticle(particles[i], canvas.width, canvas.height);
+        drawParticle(ctx, particles[i]);
 
-        // Bounce off edges
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        for (let j = i + 1; j < particles.length; j++) {
+          drawConnection(ctx, particles[i], particles[j]);
+        }
+      }
 
-        // Draw particle
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(74, 111, 168, 0.5)';
-        ctx.fill();
-
-        // Draw connections
-        particles.slice(i + 1).forEach((otherParticle) => {
-          const dx = particle.x - otherParticle.x;
-          const dy = particle.y - otherParticle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < maxDistance) {
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(74, 111, 168, ${0.2 * (1 - distance / maxDistance)})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        });
-      });
-
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
-    animate();
+    animationFrameId = requestAnimationFrame(animate);
 
     const handleResize = () => {
       canvas.width = canvas.offsetWidth;
@@ -83,7 +99,11 @@ export default function ParticlesBackground() {
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return <canvas ref={canvasRef} className="particles-canvas" />;

@@ -1,4 +1,7 @@
 export const en = {
+  preloader: {
+    loading: 'Loading...',
+  },
   nav: {
     home: 'Home',
     about: 'About',
@@ -25,6 +28,9 @@ export const en = {
   skills: {
     title: 'Technical Skills',
     subtitle: 'Technologies and knowledge I master',
+  },
+  preloader: {
+    loading: 'Loading...',
   },
   about: {
     title: 'About Me',
