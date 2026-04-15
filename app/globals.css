@@ -503,7 +503,7 @@ html.light-mode .mobile-menu ul li a:hover {
 
   /* Hero Section */
   .hero {
-    padding: 5rem 0 4rem 0;
+    padding: 5rem 1rem 4rem 1rem;
     min-height: auto;
     overflow: hidden;
     display: block;
@@ -533,7 +533,7 @@ html.light-mode .mobile-menu ul li a:hover {
   .hero-content {
     text-align: center;
     order: 2;
-    padding: 0 1rem;
+    padding: 0;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -1034,7 +1034,7 @@ html.light-mode .hero {
   .hero-container {
     grid-template-columns: 1fr;
     gap: 2rem;
-    padding: 0 1rem;
+    padding: 0;
     width: 100%;
   }
 }
@@ -4838,15 +4838,15 @@ html.light-mode .btn-primary-modal:hover {
 /* Mejoras para pantallas muy grandes */
 @media (min-width: 1440px) {
   .section-container {
-    max-width: 1400px;
+    max-width: 1200px;
   }
   
   .navbar-container {
-    max-width: 1400px;
+    max-width: 1200px;
   }
   
   .hero-container {
-    max-width: 1400px;
+    max-width: 1200px;
   }
 }
 
