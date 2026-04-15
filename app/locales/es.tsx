@@ -26,8 +26,8 @@ export const es = {
     downloadCV: 'Descargar CV'
   },
   skills: {
-    title: 'Habilidades Técnicas',
-    subtitle: 'Tecnologías y conocimientos que domino',
+    title: 'Habilidades',
+    subtitle: 'Competencias técnicas y profesionales',
   },
   preloader: {
     loading: 'Cargando...',

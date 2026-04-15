@@ -26,8 +26,8 @@ export const en = {
     downloadCV: 'Download CV'
   },
   skills: {
-    title: 'Technical Skills',
-    subtitle: 'Technologies and knowledge I master',
+    title: 'Skills',
+    subtitle: 'Technical and professional competencies',
   },
   preloader: {
     loading: 'Loading...',

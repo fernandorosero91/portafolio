@@ -45,6 +45,18 @@ export const skillsData = {
       ]
     },
     {
+      category: 'Habilidades Blandas',
+      translationKey: 'softSkills',
+      items: [
+        { name: 'Comunicación', icon: '🗣️' },
+        { name: 'Trabajo en Equipo', icon: '🤝' },
+        { name: 'Liderazgo', icon: '🎯' },
+        { name: 'Resolución de Problemas', icon: '🧩' },
+        { name: 'Adaptabilidad', icon: '🔄' },
+        { name: 'Pensamiento Analítico', icon: '📐' }
+      ]
+    },
+    {
       category: 'Contabilidad & Finanzas',
       translationKey: 'accounting',
       items: [
@@ -98,6 +110,18 @@ export const skillsData = {
         { name: 'DevOps', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
         { name: 'API REST', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
         { name: 'AI', icon: '🤖' }
+      ]
+    },
+    {
+      category: 'Soft Skills',
+      translationKey: 'softSkills',
+      items: [
+        { name: 'Communication', icon: '🗣️' },
+        { name: 'Teamwork', icon: '🤝' },
+        { name: 'Leadership', icon: '🎯' },
+        { name: 'Problem Solving', icon: '🧩' },
+        { name: 'Adaptability', icon: '🔄' },
+        { name: 'Analytical Thinking', icon: '📐' }
       ]
     },
     {
