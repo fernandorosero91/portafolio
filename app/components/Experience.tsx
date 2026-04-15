@@ -57,7 +57,7 @@ export default function Experience() {
           <div className="flex gap-2 flex-wrap justify-center">
             {(['all', 'academic', 'professional'] as Filter[]).map(f => (
               <button key={f} onClick={() => setFilter(f)}
-                className={`px-5 py-2 rounded-full text-sm font-medium border transition-all duration-300 ${filter === f ? 'text-white' : ''}`}
+                className={`px-5 py-2 rounded-full text-sm font-medium border ${filter === f ? 'btn-filled text-white' : 'btn-outline'}`}
                 style={filter === f ? { backgroundColor: 'var(--primary-blue)', borderColor: 'var(--primary-blue)' } : { borderColor: 'var(--primary-blue)', color: 'var(--text-secondary)', backgroundColor: 'transparent' }}>
                 {f === 'all' ? t('experience.all') : f === 'academic' ? t('experience.academic') : t('experience.professional')}
               </button>

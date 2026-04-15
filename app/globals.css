@@ -62,6 +62,49 @@ body {
   overflow-x: hidden;
 }
 
+/* ===== Global Amber Hover ===== */
+
+/* Text links & icon buttons: text turns amber */
+a:hover,
+button:hover,
+[role="button"]:hover {
+  color: var(--accent-amber);
+}
+
+/* Smooth transitions on all interactive elements */
+a, button, [role="button"] {
+  transition: color 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Filled primary buttons: bg turns amber, text stays white, lift up */
+.btn-filled:hover {
+  background-color: var(--accent-amber) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+}
+
+/* Bordered/outline buttons: fill amber, text white */
+.btn-outline:hover {
+  background-color: var(--accent-amber) !important;
+  border-color: var(--accent-amber) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+}
+
+/* Social icons: lift + shadow, keep their own bg */
+.btn-social:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  color: #fff !important;
+}
+
+/* Cards & interactive containers: subtle lift */
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(74, 111, 168, 0.15);
+}
 /* ===== Custom Cursor (desktop) ===== */
 @media (min-width: 769px) {
   body, a, button { cursor: none; }

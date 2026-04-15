@@ -83,14 +83,14 @@ export default function Hero() {
             <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
               <a
                 href="#projects"
-                className="inline-flex h-11 items-center justify-center rounded-lg px-7 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+                className="btn-filled inline-flex h-11 items-center justify-center rounded-lg px-7 text-sm font-semibold text-white shadow-md"
                 style={{ backgroundColor: 'var(--primary-blue)' }}
               >
                 {t('hero.viewProjects')}
               </a>
               <button
                 onClick={() => downloadCV()}
-                className="inline-flex h-11 items-center justify-center rounded-lg border-2 bg-transparent px-7 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5"
+                className="btn-outline inline-flex h-11 items-center justify-center rounded-lg border-2 bg-transparent px-7 text-sm font-semibold"
                 style={{ borderColor: 'var(--primary-blue)', color: 'var(--primary-blue)' }}
               >
                 {t('hero.downloadCV')}

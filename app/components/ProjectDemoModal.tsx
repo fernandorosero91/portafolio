@@ -83,7 +83,7 @@ export default function ProjectDemoModal({ isOpen, onClose, project }: Props) {
         <div className="px-8 py-4 border-t flex justify-end gap-3 shrink-0 max-md:flex-col" style={{ borderColor: 'rgba(74,111,168,0.15)' }}>
           <button onClick={onClose} className="px-5 py-2.5 rounded-xl text-sm font-semibold border transition-all duration-200 max-md:w-full" style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)', backgroundColor: 'transparent' }}>{t('projects.cancel')}</button>
           {project.demoUrl && (
-            <button onClick={() => { window.open(project.demoUrl!, '_blank'); onClose(); }} className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg max-md:w-full" style={{ backgroundColor: 'var(--primary-blue)' }}>
+            <button onClick={() => { window.open(project.demoUrl!, '_blank'); onClose(); }} className="btn-filled px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2 max-md:w-full" style={{ backgroundColor: 'var(--primary-blue)' }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               {t('projects.visitDemo')}
             </button>
