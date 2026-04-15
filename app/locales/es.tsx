@@ -29,9 +29,6 @@ export const es = {
     title: 'Habilidades',
     subtitle: 'Competencias técnicas y profesionales',
   },
-  preloader: {
-    loading: 'Cargando...',
-  },
   about: {
     title: 'Acerca de Mí',
     subtitle: 'Conoce mi trayectoria profesional y habilidades',
