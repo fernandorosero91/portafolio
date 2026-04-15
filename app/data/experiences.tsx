@@ -1,6 +1,13 @@
 export const experiencesData = {
   es: [
     {
+      type: 'professional' as const,
+      year: '2024 - Actual',
+      title: 'Desarrollador Full Stack Freelancer',
+      subtitle: 'Independiente',
+      description: 'Desarrollo de soluciones web a medida para clientes diversos. Creación de sistemas de gestión empresarial, facturación electrónica y plataformas administrativas utilizando tecnologías como Django, Laravel, Node.js, React y Vue.js. Proyectos en producción que optimizan procesos operativos y financieros.'
+    },
+    {
       type: 'academic' as const,
       year: '2024 - Actual',
       title: 'Ingeniería de Software',
@@ -79,6 +86,13 @@ export const experiencesData = {
     },
   ],
   en: [
+    {
+      type: 'professional' as const,
+      year: '2024 - Present',
+      title: 'Full Stack Developer Freelancer',
+      subtitle: 'Independent',
+      description: 'Development of custom web solutions for diverse clients. Building business management systems, electronic invoicing, and administrative platforms using technologies like Django, Laravel, Node.js, React, and Vue.js. Production projects that optimize operational and financial processes.'
+    },
     {
       type: 'academic' as const,
       year: '2024 - Present',

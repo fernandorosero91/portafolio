@@ -65,6 +65,7 @@ export default function Navbar() {
   const links = [
     { href: '#inicio', label: t('nav.home') },
     { href: '#about', label: t('nav.about') },
+    { href: '#skills', label: t('nav.skills') },
     { href: '#projects', label: t('nav.projects') },
     { href: '#testimonials', label: t('nav.testimonials') },
     { href: '#experience', label: t('nav.experience') },

@@ -2,6 +2,7 @@ export const es = {
   nav: {
     home: 'Inicio',
     about: 'Acerca de mí',
+    skills: 'Habilidades',
     projects: 'Proyectos',
     testimonials: 'Testimonios',
     experience: 'Experiencia',
@@ -20,6 +21,10 @@ export const es = {
     organizations: 'Organizaciones',
     viewProjects: 'Ver Proyectos',
     downloadCV: 'Descargar CV'
+  },
+  skills: {
+    title: 'Habilidades Técnicas',
+    subtitle: 'Tecnologías y conocimientos que domino',
   },
   about: {
     title: 'Acerca de Mí',

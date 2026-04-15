@@ -2,6 +2,7 @@ export const en = {
   nav: {
     home: 'Home',
     about: 'About',
+    skills: 'Skills',
     projects: 'Projects',
     testimonials: 'Testimonials',
     experience: 'Experience',
@@ -20,6 +21,10 @@ export const en = {
     organizations: 'Organizations',
     viewProjects: 'View Projects',
     downloadCV: 'Download CV'
+  },
+  skills: {
+    title: 'Technical Skills',
+    subtitle: 'Technologies and knowledge I master',
   },
   about: {
     title: 'About Me',

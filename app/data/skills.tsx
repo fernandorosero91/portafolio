@@ -1,16 +1,6 @@
 export const skillsData = {
   es: [
     {
-      category: 'Contabilidad & Finanzas',
-      translationKey: 'accounting',
-      items: [
-        { name: 'NIIF', icon: '📊' },
-        { name: 'Auditoría Tributaria', icon: '🔍' },
-        { name: 'Gestión Financiera', icon: '💼' },
-        { name: 'Planeación Tributaria', icon: '📈' }
-      ]
-    },
-    {
       category: 'Desarrollo Backend',
       translationKey: 'backend',
       items: [
@@ -50,21 +40,22 @@ export const skillsData = {
         { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
         { name: 'Cloud Computing', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg' },
         { name: 'DevOps', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
-        { name: 'API REST', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' }
+        { name: 'API REST', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
+        { name: 'IA', icon: '🤖' }
+      ]
+    },
+    {
+      category: 'Contabilidad & Finanzas',
+      translationKey: 'accounting',
+      items: [
+        { name: 'NIIF', icon: '📊' },
+        { name: 'Auditoría Tributaria', icon: '🔍' },
+        { name: 'Gestión Financiera', icon: '💼' },
+        { name: 'Planeación Tributaria', icon: '📈' }
       ]
     }
   ],
   en: [
-    {
-      category: 'Accounting & Finance',
-      translationKey: 'accounting',
-      items: [
-        { name: 'IFRS', icon: '📊' },
-        { name: 'Tax Auditing', icon: '🔍' },
-        { name: 'Financial Management', icon: '💼' },
-        { name: 'Tax Planning', icon: '📈' }
-      ]
-    },
     {
       category: 'Backend Development',
       translationKey: 'backend',
@@ -105,7 +96,18 @@ export const skillsData = {
         { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
         { name: 'Cloud Computing', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg' },
         { name: 'DevOps', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
-        { name: 'API REST', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' }
+        { name: 'API REST', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
+        { name: 'AI', icon: '🤖' }
+      ]
+    },
+    {
+      category: 'Accounting & Finance',
+      translationKey: 'accounting',
+      items: [
+        { name: 'IFRS', icon: '📊' },
+        { name: 'Tax Auditing', icon: '🔍' },
+        { name: 'Financial Management', icon: '💼' },
+        { name: 'Tax Planning', icon: '📈' }
       ]
     }
   ]

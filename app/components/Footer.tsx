@@ -1,6 +1,7 @@
 'use client';
 
 import { useLanguage } from '../contexts/LanguageContext';
+import { socialLinks } from '../data/socialLinks';
 
 export default function Footer() {
   const { t } = useLanguage();
