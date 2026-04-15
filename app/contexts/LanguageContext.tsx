@@ -1,10 +1,9 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { es } from '../locales/es';
 import { en } from '../locales/en';
-
-type Language = 'es' | 'en';
+import type { Language } from '../types';
 
 interface LanguageContextType {
   language: Language;
@@ -12,38 +11,47 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
-const translations = {
-  es,
-  en
-};
+const STORAGE_KEY = 'language';
+const VALID_LANGUAGES: Language[] = ['es', 'en'];
+const DEFAULT_LANGUAGE: Language = 'es';
+
+const translations: Record<Language, typeof es> = { es, en };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+function resolveNestedKey(obj: Record<string, unknown>, path: string): string {
+  const keys = path.split('.');
+  let current: unknown = obj;
+
+  for (const key of keys) {
+    if (current === null || current === undefined || typeof current !== 'object') {
+      return path;
+    }
+    current = (current as Record<string, unknown>)[key];
+  }
+
+  return typeof current === 'string' ? current : path;
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('es');
+  const [language, setLanguageState] = useState<Language>(DEFAULT_LANGUAGE);
 
   useEffect(() => {
-    const savedLang = localStorage.getItem('language') as Language;
-    if (savedLang && (savedLang === 'es' || savedLang === 'en')) {
-      setLanguageState(savedLang);
+    const saved = localStorage.getItem(STORAGE_KEY) as Language | null;
+    if (saved && VALID_LANGUAGES.includes(saved)) {
+      setLanguageState(saved);
     }
   }, []);
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('language', lang);
-  };
+    localStorage.setItem(STORAGE_KEY, lang);
+  }, []);
 
-  const t = (key: string): string => {
-    const keys = key.split('.');
-    let value: any = translations[language];
-    
-    for (const k of keys) {
-      value = value?.[k];
-    }
-    
-    return value || key;
-  };
+  const t = useCallback(
+    (key: string): string => resolveNestedKey(translations[language] as unknown as Record<string, unknown>, key),
+    [language],
+  );
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
@@ -55,7 +63,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 export function useLanguage() {
   const context = useContext(LanguageContext);
   if (!context) {
-    throw new Error('useLanguage must be used within LanguageProvider');
+    throw new Error('useLanguage must be used within a LanguageProvider');
   }
   return context;
 }

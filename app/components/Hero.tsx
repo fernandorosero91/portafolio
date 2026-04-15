@@ -27,18 +27,18 @@ export default function Hero() {
 
       {/* Content wrapper — centered */}
       <div
-        className="relative z-[2] mx-auto w-full max-w-6xl px-5 pb-20 pt-32 lg:pb-28 lg:pt-40"
+        className="relative z-2 mx-auto w-full max-w-6xl px-5 pb-20 pt-28 sm:pt-32 lg:pb-28 lg:pt-40"
       >
-        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr_380px] lg:gap-20">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-16 xl:gap-20">
 
-          {/* ── Left column: text ── */}
+          {/* Left column: text */}
           <div
             className="order-2 mx-auto max-w-xl text-center lg:order-1 lg:mx-0 lg:text-left"
             style={{ transform: `translateY(${scrollY * 0.05}px)` }}
           >
             {/* Badge */}
             <span
-              className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium"
+              className="mb-6 sm:mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium"
               style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
             >
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -46,11 +46,11 @@ export default function Hero() {
             </span>
 
             {/* Name */}
-            <h1 className="mb-5 font-[Cormorant_Garamond,serif] font-black leading-[1.05] tracking-tight">
-              <span className="block text-5xl sm:text-6xl lg:text-7xl" style={{ color: 'var(--text-primary)' }}>
+            <h1 className="mb-4 sm:mb-5 font-[Cormorant_Garamond,serif] font-black leading-[1.05] tracking-tight">
+              <span className="block text-4xl sm:text-5xl md:text-6xl xl:text-7xl" style={{ color: 'var(--text-primary)' }}>
                 {t('hero.name')}
               </span>
-              <span className="block text-5xl sm:text-6xl lg:text-7xl" style={{ color: 'var(--accent-amber)' }}>
+              <span className="block text-4xl sm:text-5xl md:text-6xl xl:text-7xl" style={{ color: 'var(--accent-amber)' }}>
                 {t('hero.lastName')}
               </span>
             </h1>
@@ -66,14 +66,14 @@ export default function Hero() {
             </p>
 
             {/* Stats */}
-            <div className="mb-10 flex justify-center gap-10 lg:justify-start">
+            <div className="mb-8 sm:mb-10 flex justify-center gap-6 sm:gap-10 lg:justify-start">
               {[
                 { v: '8+', l: t('hero.yearsExp') },
                 { v: '5+', l: t('hero.projectsCount') },
                 { v: '7+', l: t('hero.organizations') },
               ].map(s => (
                 <div key={s.l} className="text-center lg:text-left">
-                  <div className="text-3xl font-bold leading-none lg:text-4xl" style={{ color: 'var(--accent-amber)' }}>{s.v}</div>
+                  <div className="text-2xl sm:text-3xl font-bold leading-none lg:text-4xl" style={{ color: 'var(--accent-amber)' }}>{s.v}</div>
                   <div className="mt-1.5 text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{s.l}</div>
                 </div>
               ))}
@@ -98,20 +98,20 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── Right column: photo ── */}
+          {/* Right column: photo */}
           <div
             className="order-1 flex justify-center lg:order-2"
             style={{ transform: `translateY(${scrollY * 0.03}px)` }}
           >
             <div
-              className="relative h-72 w-64 overflow-hidden rounded-2xl shadow-xl sm:h-80 sm:w-72 lg:h-[440px] lg:w-[340px]"
+              className="relative h-64 w-56 overflow-hidden rounded-2xl shadow-xl sm:h-72 sm:w-64 md:h-80 md:w-72 lg:h-96 lg:w-80 xl:h-110 xl:w-85 2xl:h-120 2xl:w-92.5"
               style={{ border: '1px solid var(--border-color)', background: 'linear-gradient(135deg, var(--avatar-from), var(--avatar-to))' }}
             >
               <Image
                 src="/profile-photo.jpg"
                 alt="Fernando Rosero"
                 fill
-                sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 340px"
+                sizes="(max-width: 640px) 224px, (max-width: 768px) 256px, (max-width: 1024px) 288px, (max-width: 1280px) 320px, 370px"
                 className="object-cover"
                 priority
               />

@@ -65,6 +65,7 @@ export default function Navbar() {
   const links = [
     { href: '#inicio', label: t('nav.home') },
     { href: '#about', label: t('nav.about') },
+    { href: '#skills', label: t('nav.skills') },
     { href: '#projects', label: t('nav.projects') },
     { href: '#testimonials', label: t('nav.testimonials') },
     { href: '#experience', label: t('nav.experience') },
@@ -80,9 +81,9 @@ export default function Navbar() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
           <a href="#" className="text-xl font-bold tracking-tight" style={{ color: 'var(--primary-blue)' }}>FR</a>
 
-          <nav className="hidden lg:flex items-center gap-7">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-7">
             {links.map(l => (
-              <a key={l.href} href={l.href} className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{l.label}</a>
+              <a key={l.href} href={l.href} className="text-xs lg:text-sm font-medium whitespace-nowrap" style={{ color: 'var(--text-tertiary)' }}>{l.label}</a>
             ))}
           </nav>
 
@@ -110,10 +111,10 @@ export default function Navbar() {
               {t('nav.downloadCV')}
             </button>
 
-            <button onClick={() => setMenuOpen(!menuOpen)} className="ml-1 flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden" aria-label="Menu">
-              <span className={`block h-[2px] w-5 rounded-full transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
-              <span className={`block h-[2px] w-5 rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
-              <span className={`block h-[2px] w-5 rounded-full transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
+            <button onClick={() => setMenuOpen(!menuOpen)} className="ml-1 flex h-9 w-9 flex-col items-center justify-center gap-1.25 lg:hidden" aria-label="Menu">
+              <span className={`block h-0.5 w-5 rounded-full transition-all duration-300 ${menuOpen ? 'translate-y-1.75 rotate-45' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
+              <span className={`block h-0.5 w-5 rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
+              <span className={`block h-0.5 w-5 rounded-full transition-all duration-300 ${menuOpen ? '-translate-y-1.75 -rotate-45' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
             </button>
           </div>
         </div>

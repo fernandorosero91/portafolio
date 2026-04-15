@@ -1,7 +1,11 @@
 export const es = {
+  preloader: {
+    loading: 'Cargando...',
+  },
   nav: {
     home: 'Inicio',
     about: 'Acerca de mí',
+    skills: 'Habilidades',
     projects: 'Proyectos',
     testimonials: 'Testimonios',
     experience: 'Experiencia',
@@ -20,6 +24,13 @@ export const es = {
     organizations: 'Organizaciones',
     viewProjects: 'Ver Proyectos',
     downloadCV: 'Descargar CV'
+  },
+  skills: {
+    title: 'Habilidades',
+    subtitle: 'Competencias técnicas y profesionales',
+  },
+  preloader: {
+    loading: 'Cargando...',
   },
   about: {
     title: 'Acerca de Mí',

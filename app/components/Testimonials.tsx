@@ -16,7 +16,7 @@ export default function Testimonials() {
     <section id="testimonials" className="scroll-mt-20 py-20 px-6 lg:px-8" style={{ backgroundColor: 'var(--bg-card)' }}>
       <div className="max-w-7xl mx-auto">
         <div ref={headerRef} className={`text-center mb-14 scroll-reveal ${hv ? 'visible' : ''}`}>
-          <h2 className="text-4xl lg:text-5xl font-bold font-[Cormorant_Garamond,serif] mb-3" style={{ color: 'var(--text-primary)' }}>{t('testimonials.title')}</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[Cormorant_Garamond,serif] mb-3" style={{ color: 'var(--text-primary)' }}>{t('testimonials.title')}</h2>
           <p className="text-base" style={{ color: 'var(--text-tertiary)' }}>{t('testimonials.subtitle')}</p>
         </div>
 
