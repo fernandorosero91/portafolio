@@ -311,6 +311,7 @@ html.light-mode .language-toggle:hover img {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   z-index: 1100;
   animation: fadeInDropdown 0.2s ease;
+  pointer-events: auto;
 }
 
 html.light-mode .language-dropdown {
@@ -474,6 +475,94 @@ html.light-mode .mobile-menu ul li a:hover {
   background-color: rgba(46, 68, 107, 0.08);
 }
 
+/* Mobile Language Selector */
+.mobile-language-selector {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid rgba(74, 111, 168, 0.2);
+}
+
+html.light-mode .mobile-language-selector {
+  border-top-color: rgba(46, 68, 107, 0.15);
+}
+
+.language-option-mobile {
+  flex: 1;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(74, 111, 168, 0.1), rgba(74, 111, 168, 0.05));
+  border: 2px solid var(--primary-blue);
+  color: var(--text-primary);
+  text-align: center;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 600;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+html.light-mode .language-option-mobile {
+  background: linear-gradient(135deg, rgba(46, 68, 107, 0.08), rgba(46, 68, 107, 0.03));
+  border-color: var(--primary-dark);
+  color: var(--light-text-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.language-option-mobile:active {
+  transform: scale(0.98);
+}
+
+.language-option-mobile.active {
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+  border-color: var(--primary-blue);
+  color: white;
+  box-shadow: 0 6px 20px rgba(74, 111, 168, 0.4);
+  transform: translateY(-2px);
+}
+
+html.light-mode .language-option-mobile.active {
+  background: linear-gradient(135deg, var(--primary-dark), #1e3a5f);
+  border-color: var(--primary-dark);
+  color: white;
+  box-shadow: 0 6px 20px rgba(46, 68, 107, 0.3);
+}
+
+.cv-button-mobile {
+  width: 100%;
+  background-color: var(--accent-amber);
+  border: none;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cv-button-mobile:hover {
+  background-color: var(--primary-blue);
+  transform: translateY(-2px);
+}
+
+html.light-mode .cv-button-mobile:hover {
+  background-color: var(--primary-dark);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   /* Navbar */
@@ -499,6 +588,11 @@ html.light-mode .mobile-menu ul li a:hover {
   
   .theme-toggle {
     order: -1;
+  }
+  
+  /* Ocultar language selector en móviles */
+  .language-selector {
+    display: none !important;
   }
 
   /* Hero Section */
@@ -1265,13 +1359,13 @@ html.light-mode .about {
 
 .section-header {
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 0.1rem;
 }
 
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.1rem;
   font-family: 'Cormorant Garamond', serif;
   color: var(--text-primary);
 }
@@ -2041,14 +2135,14 @@ html.light-mode .filter-btn.active:hover {
 .timeline {
   position: relative;
   padding: 2rem 0;
-  max-width: 100%;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 /* Línea vertical eliminada - sin ::before */
 
 .timeline-item {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   position: relative;
 }
 
@@ -2105,7 +2199,7 @@ html.light-mode .timeline-dot {
 
 .timeline-content {
   background-color: var(--bg-card);
-  padding: 2.5rem;
+  padding: 1rem 2.5rem 2.5rem 2.5rem;
   border-radius: 16px;
   border: 1px solid var(--border-color);
   border-left: 4px solid var(--primary-blue);
@@ -2137,18 +2231,18 @@ html.light-mode .timeline-content:hover {
   color: var(--accent-amber);
   font-weight: 700;
   font-size: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
 .timeline-badge {
   display: inline-block;
-  padding: 0.5rem 1.2rem;
+  padding: 0.4rem 1rem;
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 600;
-  margin: 0 0 1.25rem 0;
+  margin: 0 0 0.3rem 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -2181,7 +2275,7 @@ html.light-mode .timeline-badge[data-type="professional"] {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
   line-height: 1.3;
 }
 
@@ -2193,7 +2287,7 @@ html.light-mode .timeline-title {
   color: var(--primary-blue);
   font-size: 1.05rem;
   font-weight: 600;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.5rem;
 }
 
 html.light-mode .timeline-subtitle {
@@ -2203,9 +2297,10 @@ html.light-mode .timeline-subtitle {
 .timeline-description {
   color: var(--text-secondary);
   font-size: 1rem;
-  line-height: 1.8;
+  line-height: 1.5;
   text-align: left;
   max-width: 100%;
+  margin-bottom: 0;
 }
 
 html.light-mode .timeline-description {
@@ -3197,7 +3292,7 @@ html.light-mode .scroll-progress-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
+  margin-bottom: 0.25rem;
   flex-wrap: wrap;
   gap: 1.5rem;
 }
@@ -3255,7 +3350,7 @@ html.light-mode .toggle-btn.active {
 
 .experience-carousel {
   position: relative;
-  padding: 2rem 0;
+  padding: 0;
 }
 
 .carousel-container {
@@ -3282,7 +3377,7 @@ html.light-mode .toggle-btn.active {
   background: linear-gradient(135deg, var(--bg-card) 0%, rgba(31, 46, 77, 0.8) 100%);
   border: 1px solid var(--border-color);
   border-radius: 16px;
-  padding: 3rem;
+  padding: 1rem 3rem 3rem 3rem;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   transform: translateX(100%) scale(0.8);
@@ -3332,7 +3427,7 @@ html.light-mode .carousel-card {
   border-radius: 0;
   font-size: 0.85rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.3rem;
   color: var(--text-primary);
   border: none;
 }
@@ -3363,7 +3458,7 @@ html.light-mode .carousel-card[data-type="professional"] .card-badge {
   font-size: 1rem;
   font-weight: 700;
   color: var(--accent-amber);
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
   letter-spacing: 0.5px;
 }
 
@@ -3375,7 +3470,7 @@ html.light-mode .card-year {
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.3rem;
   line-height: 1.3;
 }
 
@@ -3386,7 +3481,7 @@ html.light-mode .card-title {
 .card-subtitle {
   font-size: 1.1rem;
   color: var(--text-secondary);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.5rem;
   font-weight: 500;
 }
 
@@ -3397,7 +3492,8 @@ html.light-mode .card-subtitle {
 .card-description {
   font-size: 1rem;
   color: var(--text-tertiary);
-  line-height: 1.8;
+  line-height: 1.5;
+  margin-bottom: 0;
 }
 
 html.light-mode .card-description {
@@ -3530,14 +3626,139 @@ html.light-mode .timeline-item[data-type="professional"] .timeline-content {
 }
 
 /* Responsive Carousel */
+
+/* Pantallas muy grandes (monitores 21"+ y 4K) */
+@media (min-width: 1920px) {
+  .carousel-container {
+    min-height: 500px;
+  }
+  
+  .carousel-card {
+    width: 65%;
+    max-width: 800px;
+    padding: 1rem 3.5rem 3.5rem 3.5rem;
+  }
+  
+  .section-header {
+    margin-bottom: 0.15rem;
+  }
+  
+  .experience-controls {
+    margin-bottom: 0.35rem;
+  }
+  
+  .timeline {
+    max-width: 1000px;
+  }
+}
+
+/* Pantallas grandes (monitores 17"-21") */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .carousel-container {
+    min-height: 480px;
+  }
+  
+  .carousel-card {
+    width: 68%;
+    max-width: 750px;
+    padding: 1rem 3.25rem 3.25rem 3.25rem;
+  }
+  
+  .section-header {
+    margin-bottom: 0.12rem;
+  }
+  
+  .experience-controls {
+    margin-bottom: 0.3rem;
+  }
+  
+  .timeline {
+    max-width: 950px;
+  }
+}
+
+/* Pantallas medianas-grandes (laptops 15"-17") */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .carousel-container {
+    min-height: 460px;
+  }
+  
+  .carousel-card {
+    width: 70%;
+    max-width: 700px;
+    padding: 1rem 3rem 3rem 3rem;
+  }
+  
+  .section-header {
+    margin-bottom: 0.1rem;
+  }
+  
+  .experience-controls {
+    margin-bottom: 0.25rem;
+  }
+  
+  .timeline {
+    max-width: 900px;
+  }
+}
+
+/* Laptops estándar (14"-15") */
+@media (min-width: 1025px) and (max-width: 1279px) {
+  .carousel-container {
+    min-height: 450px;
+  }
+  
+  .carousel-card {
+    width: 72%;
+    max-width: 680px;
+    padding: 1rem 2.75rem 2.75rem 2.75rem;
+  }
+  
+  .card-title {
+    font-size: 1.65rem;
+  }
+  
+  .card-subtitle {
+    font-size: 1.05rem;
+  }
+  
+  .section-header {
+    margin-bottom: 0.1rem;
+  }
+  
+  .experience-controls {
+    margin-bottom: 0.25rem;
+  }
+  
+  .timeline {
+    max-width: 850px;
+  }
+  
+  .timeline-item {
+    margin-bottom: 1.75rem;
+  }
+}
+
 @media (max-width: 1024px) {
   .carousel-card {
-    width: 80%;
-    padding: 2.5rem;
+    width: 75%;
+    padding: 1rem 2.5rem 2.5rem 2.5rem;
   }
   
   .card-title {
     font-size: 1.5rem;
+  }
+  
+  .section-header {
+    margin-bottom: 0.15rem;
+  }
+  
+  .experience-controls {
+    margin-bottom: 0.3rem;
+  }
+  
+  .timeline {
+    max-width: 800px;
   }
 }
 
@@ -3545,6 +3766,7 @@ html.light-mode .timeline-item[data-type="professional"] .timeline-content {
   .experience-controls {
     flex-direction: column;
     align-items: stretch;
+    margin-bottom: 0.5rem;
   }
   
   .experience-filters {
@@ -3558,12 +3780,12 @@ html.light-mode .timeline-item[data-type="professional"] .timeline-content {
   
   .carousel-container {
     gap: 1rem;
-    min-height: 500px;
+    min-height: 480px;
   }
   
   .carousel-card {
     width: 85%;
-    padding: 2rem;
+    padding: 1rem 2rem 2rem 2rem;
   }
   
   .carousel-card.prev,
@@ -3587,12 +3809,29 @@ html.light-mode .timeline-item[data-type="professional"] .timeline-content {
   .card-description {
     font-size: 0.95rem;
   }
+  
+  .section-header {
+    margin-bottom: 0.25rem;
+  }
+  
+  .timeline {
+    max-width: 100%;
+    padding: 1.5rem 0;
+  }
+  
+  .timeline-item {
+    margin-bottom: 1.5rem;
+  }
+  
+  .timeline-content {
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
   .carousel-card {
     width: 90%;
-    padding: 1.5rem;
+    padding: 0.75rem 1.5rem 1.5rem 1.5rem;
   }
   
   .carousel-nav {
@@ -3607,6 +3846,26 @@ html.light-mode .timeline-item[data-type="professional"] .timeline-content {
   
   .card-title {
     font-size: 1.25rem;
+  }
+  
+  .section-header {
+    margin-bottom: 0.35rem;
+  }
+  
+  .experience-controls {
+    margin-bottom: 0.5rem;
+  }
+  
+  .carousel-container {
+    min-height: 450px;
+  }
+  
+  .timeline-content {
+    padding: 0.75rem 1.25rem 1.25rem 1.25rem;
+  }
+  
+  .timeline-item {
+    margin-bottom: 1.25rem;
   }
 }
 
