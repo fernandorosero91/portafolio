@@ -20,7 +20,7 @@ export default function Skills() {
         </div>
 
         <div ref={gridRef} className={`scroll-reveal ${gv ? 'visible' : ''}`}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map(cat => (
               <div key={cat.translationKey} className="rounded-2xl p-5 sm:p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style={{ backgroundColor: 'rgba(74,111,168,0.04)', borderColor: 'var(--border-color)' }}>
                 <h4 className="text-sm sm:text-base font-bold text-center mb-4 sm:mb-5 pb-3 border-b-2" style={{ color: 'var(--accent-amber)', borderColor: 'var(--accent-amber)' }}>{cat.category}</h4>
