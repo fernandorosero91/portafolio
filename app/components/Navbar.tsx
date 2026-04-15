@@ -81,9 +81,9 @@ export default function Navbar() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
           <a href="#" className="text-xl font-bold tracking-tight" style={{ color: 'var(--primary-blue)' }}>FR</a>
 
-          <nav className="hidden lg:flex items-center gap-7">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-7">
             {links.map(l => (
-              <a key={l.href} href={l.href} className="text-sm font-medium" style={{ color: 'var(--text-tertiary)' }}>{l.label}</a>
+              <a key={l.href} href={l.href} className="text-xs lg:text-sm font-medium whitespace-nowrap" style={{ color: 'var(--text-tertiary)' }}>{l.label}</a>
             ))}
           </nav>
 

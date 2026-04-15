@@ -56,7 +56,7 @@ export default function Experience() {
     <section id="experience" className="scroll-mt-20 py-20 px-6 lg:px-8" style={{ backgroundColor: 'var(--bg-dark)' }}>
       <div className="max-w-7xl mx-auto">
         <div ref={headerRef} className={`text-center mb-14 scroll-reveal ${hv ? 'visible' : ''}`}>
-          <h2 className="text-4xl lg:text-5xl font-bold font-[Cormorant_Garamond,serif] mb-3" style={{ color: 'var(--text-primary)' }}>{t('experience.title')}</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[Cormorant_Garamond,serif] mb-3" style={{ color: 'var(--text-primary)' }}>{t('experience.title')}</h2>
           <p className="text-base" style={{ color: 'var(--text-tertiary)' }}>{t('experience.subtitle')}</p>
         </div>
 
@@ -83,7 +83,7 @@ export default function Experience() {
         {/* Carousel view */}
         {viewMode === 'carousel' && (
           <div className="hidden md:block relative py-4">
-            <div className="flex items-center gap-6 min-h-[420px]">
+            <div className="flex items-center gap-4 lg:gap-6 min-h-80 lg:min-h-96 xl:min-h-105">
               <button onClick={() => navigate(-1)} disabled={isAnimating} className="shrink-0 w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-300 hover:scale-110 disabled:opacity-30" style={{ borderColor: 'var(--primary-blue)', color: 'var(--primary-blue)', backgroundColor: 'var(--bg-card)' }}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
               </button>
@@ -95,12 +95,12 @@ export default function Experience() {
                   const isNext = i === (activeIndex + 1) % filteredExperiences.length;
                   const badge = getBadgeStyle(exp.type);
                   return (
-                    <div key={i} className={`absolute w-[75%] max-w-[680px] rounded-2xl p-10 border transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-xl ${isActive ? 'opacity-100 translate-x-0 scale-100 z-[3]' : isPrev ? 'opacity-20 -translate-x-[105%] scale-[0.85] z-[1]' : isNext ? 'opacity-20 translate-x-[105%] scale-[0.85] z-[1]' : 'opacity-0 translate-x-full scale-75'}`} style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)', borderLeftWidth: '4px', borderLeftColor: exp.type === 'academic' ? '#2DD4BF' : 'var(--accent-amber)', pointerEvents: isActive ? 'auto' : 'none' }}>
-                      <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 border" style={{ backgroundColor: badge.bg, color: badge.color, borderColor: badge.border }}>{exp.type === 'academic' ? t('experience.academic') : t('experience.professional')}</span>
-                      <div className="text-sm font-bold mb-3 tracking-wide" style={{ color: 'var(--accent-amber)' }}>{exp.year}</div>
-                      <h3 className="text-2xl font-bold mb-2 leading-snug" style={{ color: 'var(--text-primary)' }}>{exp.title}</h3>
-                      <p className="text-base font-medium mb-4" style={{ color: 'var(--text-secondary)' }}>{exp.subtitle}</p>
-                      <p className="text-base leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>{exp.description}</p>
+                    <div key={i} className={`absolute w-[80%] max-w-[720px] rounded-2xl p-6 lg:p-10 border transition-all duration-500 ease-in-out shadow-xl ${isActive ? 'opacity-100 translate-x-0 scale-100 z-3' : isPrev ? 'opacity-20 -translate-x-[105%] scale-[0.85] z-1' : isNext ? 'opacity-20 translate-x-[105%] scale-[0.85] z-1' : 'opacity-0 translate-x-full scale-75'}`} style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)', borderLeftWidth: '4px', borderLeftColor: exp.type === 'academic' ? '#2DD4BF' : 'var(--accent-amber)', pointerEvents: isActive ? 'auto' : 'none' }}>
+                      <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 lg:mb-4 border" style={{ backgroundColor: badge.bg, color: badge.color, borderColor: badge.border }}>{exp.type === 'academic' ? t('experience.academic') : t('experience.professional')}</span>
+                      <div className="text-xs lg:text-sm font-bold mb-2 lg:mb-3 tracking-wide" style={{ color: 'var(--accent-amber)' }}>{exp.year}</div>
+                      <h3 className="text-xl lg:text-2xl font-bold mb-2 leading-snug" style={{ color: 'var(--text-primary)' }}>{exp.title}</h3>
+                      <p className="text-sm lg:text-base font-medium mb-3 lg:mb-4" style={{ color: 'var(--text-secondary)' }}>{exp.subtitle}</p>
+                      <p className="text-sm lg:text-base leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>{exp.description}</p>
                     </div>
                   );
                 })}

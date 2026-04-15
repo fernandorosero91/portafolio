@@ -164,7 +164,7 @@ export default function Contact() {
     <section id="contact" className="scroll-mt-20 py-20 px-6 lg:px-8" style={{ background: 'linear-gradient(135deg, var(--hero-from), var(--hero-to))' }}>
       <div className="max-w-7xl mx-auto">
         <div ref={hRef} className={`text-center mb-14 scroll-reveal ${hv ? 'visible' : ''}`}>
-          <h2 className="text-4xl lg:text-5xl font-bold font-[Cormorant_Garamond,serif] mb-3" style={{ color: 'var(--text-primary)' }}>{t('contact.title')}</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[Cormorant_Garamond,serif] mb-3" style={{ color: 'var(--text-primary)' }}>{t('contact.title')}</h2>
           <p className="text-base" style={{ color: 'var(--text-tertiary)' }}>{t('contact.subtitle')}</p>
         </div>
 
