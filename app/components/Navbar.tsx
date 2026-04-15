@@ -56,7 +56,11 @@ export default function Navbar() {
   };
 
   const selectLanguage = (lang: 'es' | 'en', e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    console.log('Changing language to:', lang); // Debug
     setLanguage(lang);
     setLanguageMenuOpen(false);
   };
@@ -146,6 +150,40 @@ export default function Navbar() {
               <a href={link.href} onClick={closeMobileMenu}>{link.label}</a>
             </li>
           ))}
+          <li className="mobile-language-selector">
+            <button 
+              className={`language-option-mobile ${language === 'es' ? 'active' : ''}`}
+              onClick={() => {
+                setLanguage('es');
+                closeMobileMenu();
+              }}
+              type="button"
+            >
+              🇪🇸 Español
+            </button>
+            <button 
+              className={`language-option-mobile ${language === 'en' ? 'active' : ''}`}
+              onClick={() => {
+                setLanguage('en');
+                closeMobileMenu();
+              }}
+              type="button"
+            >
+              🇬🇧 English
+            </button>
+          </li>
+          <li>
+            <button 
+              onClick={() => {
+                downloadCV();
+                closeMobileMenu();
+              }} 
+              className="cv-button-mobile"
+              type="button"
+            >
+              {t('nav.downloadCV')}
+            </button>
+          </li>
         </ul>
       </div>
     </>
