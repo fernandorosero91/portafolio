@@ -40,9 +40,11 @@ export default function Navbar() {
   const [langOpen, setLangOpen] = useState(false);
 
   useEffect(() => {
-    const saved = (localStorage.getItem('theme') || 'light') as 'light' | 'dark';
-    setTheme(saved);
-    if (saved === 'light') document.documentElement.classList.add('light-mode');
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') {
+      document.documentElement.classList.remove('light-mode');
+      setTheme('dark');
+    }
   }, []);
 
   useEffect(() => {
