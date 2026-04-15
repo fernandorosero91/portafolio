@@ -27,7 +27,7 @@ export default function Hero() {
 
       {/* Content wrapper — centered */}
       <div
-        className="relative z-[2] mx-auto w-full max-w-6xl px-5 pb-20 pt-32 lg:pb-28 lg:pt-40"
+        className="relative z-2 mx-auto w-full max-w-6xl px-5 pb-20 pt-28 sm:pt-32 lg:pb-28 lg:pt-40"
       >
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-16 xl:gap-20">
 
@@ -104,7 +104,7 @@ export default function Hero() {
             style={{ transform: `translateY(${scrollY * 0.03}px)` }}
           >
             <div
-              className="relative h-64 w-56 overflow-hidden rounded-2xl shadow-xl sm:h-72 sm:w-64 md:h-80 md:w-72 lg:h-96 lg:w-80 xl:h-[440px] xl:w-[340px] 2xl:h-[480px] 2xl:w-[370px]"
+              className="relative h-64 w-56 overflow-hidden rounded-2xl shadow-xl sm:h-72 sm:w-64 md:h-80 md:w-72 lg:h-96 lg:w-80 xl:h-110 xl:w-85 2xl:h-120 2xl:w-92.5"
               style={{ border: '1px solid var(--border-color)', background: 'linear-gradient(135deg, var(--avatar-from), var(--avatar-to))' }}
             >
               <Image

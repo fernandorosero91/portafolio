@@ -111,10 +111,10 @@ export default function Navbar() {
               {t('nav.downloadCV')}
             </button>
 
-            <button onClick={() => setMenuOpen(!menuOpen)} className="ml-1 flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden" aria-label="Menu">
-              <span className={`block h-[2px] w-5 rounded-full transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
-              <span className={`block h-[2px] w-5 rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
-              <span className={`block h-[2px] w-5 rounded-full transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
+            <button onClick={() => setMenuOpen(!menuOpen)} className="ml-1 flex h-9 w-9 flex-col items-center justify-center gap-1.25 lg:hidden" aria-label="Menu">
+              <span className={`block h-0.5 w-5 rounded-full transition-all duration-300 ${menuOpen ? 'translate-y-1.75 rotate-45' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
+              <span className={`block h-0.5 w-5 rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
+              <span className={`block h-0.5 w-5 rounded-full transition-all duration-300 ${menuOpen ? '-translate-y-1.75 -rotate-45' : ''}`} style={{ backgroundColor: 'var(--text-primary)' }} />
             </button>
           </div>
         </div>

@@ -24,21 +24,21 @@ function ProjectCard({ project, index, onDemo }: ProjectCardProps) {
   const { ref, isVisible } = useScrollReveal({ threshold: 0.1, delay: index * 100 });
 
   return (
-    <div ref={ref} className={`rounded-2xl p-7 border flex flex-col gap-4 transition-all duration-300 group relative overflow-hidden hover:-translate-y-2 hover:shadow-xl scroll-reveal-scale ${isVisible ? 'visible' : ''}`} style={{ backgroundColor: 'var(--bg-dark)', borderColor: 'var(--border-color)' }}>
+    <div ref={ref} className={`rounded-2xl p-5 sm:p-7 border flex flex-col gap-4 transition-all duration-300 group relative overflow-hidden hover:-translate-y-2 hover:shadow-xl scroll-reveal-scale ${isVisible ? 'visible' : ''}`} style={{ backgroundColor: 'var(--bg-dark)', borderColor: 'var(--border-color)' }}>
       {/* Top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#4A6FA8] to-[#2DD4BF] scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-primary to-accent-teal scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
 
       <div className="flex justify-between items-start">
-        <div className="w-14 h-14 rounded-xl flex items-center justify-center border-2 transition-all duration-300 group-hover:scale-105" style={{ background: 'linear-gradient(135deg, rgba(74,111,168,0.15), rgba(45,212,191,0.15))', borderColor: 'rgba(74,111,168,0.3)' }}>
-          <svg viewBox="0 0 24 24" className="w-7 h-7 transition-[fill] duration-300" style={{ fill: 'var(--primary-blue)' }}><path d={project.icon} /></svg>
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center border-2 transition-all duration-300 group-hover:scale-105" style={{ background: 'linear-gradient(135deg, rgba(74,111,168,0.15), rgba(45,212,191,0.15))', borderColor: 'rgba(74,111,168,0.3)' }}>
+          <svg viewBox="0 0 24 24" className="w-6 h-6 sm:w-7 sm:h-7 transition-[fill] duration-300" style={{ fill: 'var(--primary-blue)' }}><path d={project.icon} /></svg>
         </div>
         <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${project.status === 'production' ? 'text-emerald-400 border-emerald-400 bg-emerald-400/10' : 'border-amber-400 bg-amber-400/10'}`} style={project.status !== 'production' ? { color: 'var(--accent-amber)', borderColor: 'var(--accent-amber)' } : {}}>
           {project.status === 'production' ? t('projects.production') : t('projects.testing')}
         </span>
       </div>
 
-      <h3 className="text-xl font-bold leading-snug" style={{ color: 'var(--text-primary)' }}>{t(`projects.${project.titleKey}`)}</h3>
-      <p className="text-base leading-relaxed flex-grow" style={{ color: 'var(--text-secondary)' }}>{t(`projects.${project.descriptionKey}`)}</p>
+      <h3 className="text-lg sm:text-xl font-bold leading-snug" style={{ color: 'var(--text-primary)' }}>{t(`projects.${project.titleKey}`)}</h3>
+      <p className="text-sm sm:text-base leading-relaxed grow" style={{ color: 'var(--text-secondary)' }}>{t(`projects.${project.descriptionKey}`)}</p>
 
       <div className="flex flex-wrap gap-2">
         {project.technologies.map(tech => (

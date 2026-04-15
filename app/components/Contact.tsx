@@ -272,7 +272,7 @@ export default function Contact() {
                   maxLength={1000}
                   onKeyDown={handleKeyDown}
                   onPaste={handlePaste}
-                  className={`${inputCls(!!errors.message)} resize-y min-h-[120px] max-h-[300px]`}
+                  className={`${inputCls(!!errors.message)} resize-y min-h-30 max-h-75`}
                   style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-primary)', borderColor: errors.message ? undefined : 'var(--border-color)' }}
                   placeholder="Escribe tu mensaje aquí..."
                 />

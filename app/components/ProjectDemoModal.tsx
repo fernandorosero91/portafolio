@@ -14,8 +14,8 @@ export default function ProjectDemoModal({ isOpen, onClose, project }: ProjectDe
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 lg:p-8 backdrop-blur-xl animate-[fadeIn_0.3s]" style={{ backgroundColor: 'var(--modal-bg)' }} onClick={onClose}>
-      <div className="rounded-3xl max-w-[880px] w-full max-h-[90vh] overflow-hidden relative animate-[slideUp_0.4s_cubic-bezier(0.16,1,0.3,1)] shadow-2xl flex flex-col border" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }} onClick={e => e.stopPropagation()}>
+    <div className="fixed inset-0 z-9999 flex items-center justify-center p-4 lg:p-8 backdrop-blur-xl animate-[fadeIn_0.3s]" style={{ backgroundColor: 'var(--modal-bg)' }} onClick={onClose}>
+      <div className="rounded-3xl max-w-220 w-full max-h-[90vh] overflow-hidden relative animate-[slideUp_0.4s_cubic-bezier(0.16,1,0.3,1)] shadow-2xl flex flex-col border" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)' }} onClick={e => e.stopPropagation()}>
         {/* Close */}
         <button onClick={onClose} className="absolute top-5 right-5 w-9 h-9 rounded-xl flex items-center justify-center border transition-all duration-300 z-10 hover:rotate-90" style={{ backgroundColor: 'rgba(74,111,168,0.1)', borderColor: 'rgba(74,111,168,0.2)', color: 'var(--text-secondary)' }} aria-label="Cerrar">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -25,7 +25,7 @@ export default function ProjectDemoModal({ isOpen, onClose, project }: ProjectDe
         <div className="px-8 pt-8 pb-5 border-b shrink-0" style={{ borderColor: 'rgba(74,111,168,0.15)' }}>
           <h2 className="text-xl lg:text-2xl font-extrabold leading-tight mb-1" style={{ color: 'var(--text-primary)' }}>{t(`projects.${project.titleKey}`)}</h2>
           <p className="text-sm font-semibold flex items-center gap-2" style={{ color: 'var(--accent-teal)' }}>
-            <span className="w-2 h-2 rounded-full bg-[#2DD4BF] animate-[pulse_2s_infinite]" />
+            <span className="w-2 h-2 rounded-full bg-accent-teal animate-[pulse_2s_infinite]" />
             {t('projects.demoPreview')}
           </p>
         </div>
