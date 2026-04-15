@@ -51,6 +51,7 @@ html {
   scroll-behavior: smooth;
   overflow-x: hidden;
   scrollbar-width: none;
+  font-size: 17px; /* Base size — all rem values scale from this */
 }
 html::-webkit-scrollbar { display: none; }
 
