@@ -1021,7 +1021,7 @@ html.light-mode .hero {
   gap: 4rem;
   align-items: center;
   width: 100%;
-  padding: 0 1rem;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -1259,7 +1259,7 @@ html.light-mode .about {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-  padding: 0 1rem;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -1293,6 +1293,9 @@ html.light-mode .section-subtitle {
 /* Biografía - Ancho completo */
 .about-intro {
   margin-bottom: 3rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .about-intro h3 {
@@ -1312,6 +1315,9 @@ html.light-mode .about-intro h3 {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin-bottom: 0;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .about-text {
@@ -1345,6 +1351,8 @@ html.light-mode .skills-main-title {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .skill-category-card {
@@ -1840,6 +1848,9 @@ html.light-mode .testimonials {
   padding: 3rem;
   border-radius: 12px;
   margin-bottom: 3rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 html.light-mode .featured-testimonial {
@@ -1899,6 +1910,8 @@ html.light-mode .author-title {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .testimonial-card {
@@ -2041,7 +2054,7 @@ html.light-mode .filter-btn.active:hover {
 .timeline {
   position: relative;
   padding: 2rem 0;
-  max-width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
