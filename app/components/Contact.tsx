@@ -7,384 +7,107 @@ import { z } from 'zod';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useLanguage } from '../contexts/LanguageContext';
 
-// Esquema de validación con Zod
-const contactSchema = z.object({
-  name: z.string()
-    .min(1, 'El nombre es requerido')
-    .transform(val => val.trim()) // Eliminar espacios al inicio y final
-    .refine(val => val.length >= 2, 'El nombre debe tener al menos 2 caracteres')
-    .refine(val => val.length <= 50, 'El nombre no puede exceder 50 caracteres')
-    .refine(val => /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(val), 'El nombre solo puede contener letras')
-    .refine(val => !/^\s+$/.test(val), 'El nombre no puede contener solo espacios')
-    .refine(val => !/\s{2,}/.test(val), 'El nombre no puede contener espacios múltiples'),
-  email: z.string()
-    .min(1, 'El email es requerido')
-    .transform(val => val.trim().toLowerCase()) // Normalizar email
-    .refine(val => val.length >= 5, 'El email debe tener al menos 5 caracteres')
-    .refine(val => val.length <= 100, 'El email no puede exceder 100 caracteres')
-    .refine(val => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), 'Email inválido')
-    .refine(val => !/\s/.test(val), 'El email no puede contener espacios'),
-  subject: z.string()
-    .min(1, 'El asunto es requerido')
-    .transform(val => val.trim())
-    .refine(val => val.length >= 3, 'El asunto debe tener al menos 3 caracteres')
-    .refine(val => val.length <= 100, 'El asunto no puede exceder 100 caracteres')
-    .refine(val => !/^\s+$/.test(val), 'El asunto no puede contener solo espacios')
-    .refine(val => /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s\-.,;:¿?¡!()]+$/.test(val), 'El asunto contiene caracteres no permitidos'),
-  message: z.string()
-    .min(1, 'El mensaje es requerido')
-    .transform(val => val.trim())
-    .refine(val => val.length >= 10, 'El mensaje debe tener al menos 10 caracteres')
-    .refine(val => val.length <= 1000, 'El mensaje no puede exceder 1000 caracteres')
-    .refine(val => !/^\s+$/.test(val), 'El mensaje no puede contener solo espacios')
-    .refine(val => /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s\-.,;:¿?¡!()\n\r@#$%&*+=/"']+$/.test(val), 'El mensaje contiene caracteres no permitidos'),
-  honeypot: z.string().max(0, 'Bot detectado') // Campo honeypot para detectar bots
+const schema = z.object({
+  name: z.string().min(2, 'Mínimo 2 caracteres').max(50).transform(v => v.trim()),
+  email: z.string().email('Email inválido').transform(v => v.trim().toLowerCase()),
+  subject: z.string().min(3, 'Mínimo 3 caracteres').max(100).transform(v => v.trim()),
+  message: z.string().min(10, 'Mínimo 10 caracteres').max(1000).transform(v => v.trim()),
+  honeypot: z.string().max(0),
 });
-
-type ContactFormData = z.infer<typeof contactSchema>;
+type FormData = z.infer<typeof schema>;
 
 export default function Contact() {
   const { t } = useLanguage();
-  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
-  const { ref: infoRef, isVisible: infoVisible } = useScrollReveal({ threshold: 0.1, delay: 200 });
-  const { ref: formRef, isVisible: formVisible } = useScrollReveal({ threshold: 0.1, delay: 400 });
+  const { ref: hRef, isVisible: hv } = useScrollReveal();
+  const { ref: iRef, isVisible: iv } = useScrollReveal({ threshold: 0.1, delay: 200 });
+  const { ref: fRef, isVisible: fv } = useScrollReveal({ threshold: 0.1, delay: 400 });
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [msg, setMsg] = useState('');
+  const [start, setStart] = useState(0);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [submitMessage, setSubmitMessage] = useState('');
-  const [startTime, setStartTime] = useState<number>(0);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
-    watch
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
-    defaultValues: {
-      honeypot: '' // Campo oculto para detectar bots
-    },
-    mode: 'onBlur' // Validar al perder el foco
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
+    resolver: zodResolver(schema), defaultValues: { honeypot: '' }, mode: 'onBlur',
   });
 
-  // Función para sanitizar inputs en tiempo real
-  const sanitizeInput = (value: string, type: 'name' | 'email' | 'subject' | 'message') => {
-    let sanitized = value;
+  useEffect(() => { setStart(Date.now()); }, []);
 
-    switch (type) {
-      case 'name':
-        // Solo letras y espacios simples
-        sanitized = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '');
-        // Reemplazar múltiples espacios por uno solo
-        sanitized = sanitized.replace(/\s{2,}/g, ' ');
-        break;
-      
-      case 'email':
-        // Remover espacios y caracteres no permitidos en emails
-        sanitized = value.replace(/\s/g, '').toLowerCase();
-        break;
-      
-      case 'subject':
-        // Permitir letras, números y puntuación básica
-        sanitized = value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s\-.,;:¿?¡!()]/g, '');
-        break;
-      
-      case 'message':
-        // Permitir más caracteres en el mensaje
-        sanitized = value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s\-.,;:¿?¡!()\n\r@#$%&*+=/"']/g, '');
-        break;
-    }
-
-    return sanitized;
-  };
-
-  // Registrar tiempo de carga del formulario (protección anti-bot)
-  useEffect(() => {
-    setStartTime(Date.now());
-  }, []);
-
-  const onSubmit = async (data: ContactFormData) => {
-    // Protección 1: Verificar tiempo mínimo de llenado (bots llenan formularios muy rápido)
-    const timeSpent = Date.now() - startTime;
-    if (timeSpent < 3000) { // Menos de 3 segundos es sospechoso
-      setSubmitStatus('error');
-      setSubmitMessage('Por favor, tómate tu tiempo para llenar el formulario.');
-      return;
-    }
-
-    // Protección 2: Verificar honeypot
-    if (data.honeypot) {
-      setSubmitStatus('error');
-      setSubmitMessage('Envío no permitido.');
-      return;
-    }
-
-    // Protección 3: Validar que los campos no estén vacíos después del trim
-    if (!data.name.trim() || !data.email.trim() || !data.subject.trim() || !data.message.trim()) {
-      setSubmitStatus('error');
-      setSubmitMessage('Por favor, completa todos los campos correctamente.');
-      return;
-    }
-
-    // Protección 4: Validar longitud mínima después del trim
-    if (data.name.trim().length < 2) {
-      setSubmitStatus('error');
-      setSubmitMessage('El nombre debe tener al menos 2 caracteres.');
-      return;
-    }
-
-    if (data.message.trim().length < 10) {
-      setSubmitStatus('error');
-      setSubmitMessage('El mensaje debe tener al menos 10 caracteres.');
-      return;
-    }
-
-    // Protección 5: Detectar spam patterns
-    const spamPatterns = [
-      /viagra/i,
-      /casino/i,
-      /lottery/i,
-      /click here/i,
-      /buy now/i,
-      /(http|https):\/\/.*\.(ru|cn)/i, // URLs sospechosas
-      /\$\$\$/,
-      /!!!{3,}/
-    ];
-
-    const fullText = `${data.name} ${data.email} ${data.subject} ${data.message}`;
-    if (spamPatterns.some(pattern => pattern.test(fullText))) {
-      setSubmitStatus('error');
-      setSubmitMessage('El mensaje contiene contenido no permitido.');
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
+  const onSubmit = async (data: FormData) => {
+    if (Date.now() - start < 3000) { setStatus('error'); setMsg('Espera un momento.'); return; }
+    setSubmitting(true);
     try {
-      // Preparar los datos para enviar
-      const emailData = {
-        name: data.name.trim(),
-        email: data.email.trim().toLowerCase(),
-        subject: data.subject.trim(),
-        message: data.message.trim(),
-        timestamp: new Date().toLocaleString('es-CO', { 
-          timeZone: 'America/Bogota',
-          dateStyle: 'full',
-          timeStyle: 'short'
-        })
-      };
-
-      // Enviar a la API
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(emailData),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Error al enviar el mensaje');
-      }
-
-      console.log('Email enviado exitosamente:', result);
-
-      setSubmitStatus('success');
-      setSubmitMessage('¡Mensaje enviado exitosamente! Recibirás una confirmación en tu email.');
-      reset();
-      
-      // Limpiar mensaje después de 5 segundos
-      setTimeout(() => {
-        setSubmitStatus('idle');
-        setSubmitMessage('');
-      }, 5000);
-
-    } catch (error: any) {
-      console.error('Error al enviar el email:', error);
-      
-      let errorMessage = 'Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.';
-      
-      if (error.message) {
-        errorMessage = error.message;
-      }
-      
-      setSubmitStatus('error');
-      setSubmitMessage(errorMessage);
-    } finally {
-      setIsSubmitting(false);
-    }
+      const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...data, timestamp: new Date().toISOString() }) });
+      const json = await res.json();
+      if (res.ok) { setStatus('success'); setMsg(json.message || '¡Enviado!'); reset(); }
+      else { setStatus('error'); setMsg(json.error || 'Error.'); }
+    } catch { setStatus('error'); setMsg('Error de conexión.'); }
+    finally { setSubmitting(false); setTimeout(() => { setStatus('idle'); setMsg(''); }, 5000); }
   };
 
   return (
-    <section className="contact" id="contact">
-      <div className="section-container">
-        <div ref={headerRef} className={`section-header scroll-reveal ${headerVisible ? 'visible' : ''}`} style={{ marginBottom: '3rem' }}>
-          <h2 className="section-title">{t('contact.title')}</h2>
-          <p className="section-subtitle">{t('contact.subtitle')}</p>
+    <section id="contact" className="scroll-mt-20 py-20 px-6 lg:px-8" style={{ background: 'linear-gradient(135deg, var(--hero-from), var(--hero-to))' }}>
+      <div className="max-w-7xl mx-auto">
+        <div ref={hRef} className={`text-center mb-14 scroll-reveal ${hv ? 'visible' : ''}`}>
+          <h2 className="text-4xl lg:text-5xl font-bold font-[Cormorant_Garamond,serif] mb-3" style={{ color: 'var(--text-primary)' }}>{t('contact.title')}</h2>
+          <p className="text-base" style={{ color: 'var(--text-tertiary)' }}>{t('contact.subtitle')}</p>
         </div>
-        
-        <div className="contact-grid">
-          {/* INFORMACIÓN DE CONTACTO - IZQUIERDA */}
-          <div ref={infoRef} className={`contact-info scroll-reveal-left ${infoVisible ? 'visible' : ''}`}>
-            <div className="contact-item">
-              <div className="contact-icon">@</div>
-              <div className="contact-details">
-                <h4>{t('contact.email')}</h4>
-                <p>ferrosero@gmail.com</p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
+          {/* Info */}
+          <div ref={iRef} className={`space-y-4 scroll-reveal ${iv ? 'visible' : ''}`}>
+            {[
+              { icon: '📧', title: t('contact.email'), val: 'ferrosero@gmail.com' },
+              { icon: '📱', title: t('contact.phone'), val: '+57 (311) 709-8269' },
+              { icon: '📍', title: t('contact.location'), val: 'Pasto, Nariño - Colombia' },
+            ].map(item => (
+              <div key={item.title} className="flex items-center gap-4 p-4 rounded-xl border transition-all duration-300 hover:translate-x-1 group" style={{ backgroundColor: 'rgba(74,111,168,0.04)', borderColor: 'var(--border-color)' }}>
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center text-lg shrink-0 transition-all duration-300 group-hover:scale-105" style={{ backgroundColor: 'rgba(74,111,168,0.1)' }}>{item.icon}</div>
+                <div>
+                  <h4 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{item.title}</h4>
+                  <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>{item.val}</p>
+                </div>
               </div>
-            </div>
-            
-            <div className="contact-item">
-              <div className="contact-icon">☎</div>
-              <div className="contact-details">
-                <h4>{t('contact.phone')}</h4>
-                <p>+57 (311) 709-8269</p>
-              </div>
-            </div>
-            
-            <a 
-              href="https://wa.me/573117098269?text=¡Hola%20Fernando!%20Me%20gustaría%20contactarte." 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="contact-item whatsapp-contact-item"
-            >
-              <div className="contact-icon whatsapp-icon-contact">
-                <svg viewBox="0 0 32 32" style={{ width: '24px', height: '24px', fill: 'currentColor' }}>
-                  <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-5.247 1.408 1.417-5.267-0.315-0.517c-1.318-2.17-2.011-4.652-2.011-7.262 0-7.44 6.060-13.5 13.5-13.5s13.5 6.060 13.5 13.5-6.060 13.5-13.5 13.5zM21.803 18.142c-0.397-0.197-2.348-1.158-2.713-1.29-0.365-0.132-0.63-0.197-0.895 0.197s-1.027 1.29-1.26 1.555-0.463 0.295-0.86 0.098-1.675-0.618-3.19-1.968c-1.18-1.050-1.977-2.348-2.21-2.745s-0.025-0.607 0.173-0.803c0.177-0.177 0.397-0.463 0.595-0.693 0.198-0.232 0.265-0.397 0.397-0.662s0.067-0.495-0.033-0.693c-0.1-0.198-0.895-2.155-1.227-2.948-0.323-0.773-0.65-0.668-0.895-0.68-0.232-0.012-0.497-0.015-0.762-0.015s-0.695 0.098-1.060 0.495c-0.365 0.397-1.393 1.36-1.393 3.318s1.425 3.85 1.623 4.115c0.198 0.265 2.795 4.267 6.773 5.983 0.947 0.408 1.687 0.652 2.263 0.835 0.952 0.302 1.817 0.26 2.502 0.157 0.763-0.113 2.348-0.96 2.68-1.887s0.332-1.723 0.232-1.887c-0.1-0.165-0.365-0.265-0.762-0.463z"/>
-                </svg>
-              </div>
-              <div className="contact-details">
-                <h4>WhatsApp</h4>
-                <p>Chatea conmigo</p>
-              </div>
-            </a>
-            
-            <div className="contact-item">
-              <div className="contact-icon">⌘</div>
-              <div className="contact-details">
-                <h4>{t('contact.location')}</h4>
-                <p>Pasto, Nariño - Colombia</p>
-              </div>
+            ))}
+            <div className="flex gap-3 pt-4">
+              {[
+                { href: 'https://www.linkedin.com/in/elier-fernando-rosero-bravo-220858248/', bg: '#0A66C2', d: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z' },
+                { href: 'https://github.com/fernandorosero91', bg: '#181717', d: 'M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z' },
+              ].map(s => (
+                <a key={s.bg} href={s.href} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center text-white transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-lg" style={{ backgroundColor: s.bg }}>
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d={s.d} /></svg>
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* FORMULARIO - DERECHA */}
-          <div ref={formRef} className={`scroll-reveal-right ${formVisible ? 'visible' : ''}`}>
-            <form onSubmit={handleSubmit(onSubmit)} className="contact-form" noValidate>
-              {/* Campo Honeypot (oculto para humanos, visible para bots) */}
-              <div style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }} aria-hidden="true">
-                <label htmlFor="honeypot">No llenar este campo</label>
-                <input
-                  type="text"
-                  id="honeypot"
-                  {...register('honeypot')}
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
+          {/* Form */}
+          <div ref={fRef} className={`scroll-reveal ${fv ? 'visible' : ''}`}>
+            {status !== 'idle' && (
+              <div className={`p-4 rounded-xl mb-5 text-sm font-medium flex items-center gap-3 animate-[slideDown_0.3s] border ${status === 'success' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500' : 'bg-red-500/10 border-red-500/30 text-red-500'}`}>
+                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] text-white ${status === 'success' ? 'bg-emerald-500' : 'bg-red-500'}`}>{status === 'success' ? '✓' : '✕'}</span>
+                {msg}
               </div>
-
-              <div className="form-group">
-                <label htmlFor="name">{t('contact.name')} *</label>
-                <input
-                  type="text"
-                  id="name"
-                  {...register('name')}
-                  className={errors.name ? 'error' : ''}
-                  placeholder="Juan Pérez"
-                  disabled={isSubmitting}
-                  onChange={(e) => {
-                    const sanitized = sanitizeInput(e.target.value, 'name');
-                    setValue('name', sanitized, { shouldValidate: false });
-                  }}
-                  maxLength={50}
-                />
-                {errors.name && (
-                  <span className="error-message">{errors.name.message}</span>
-                )}
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="email">{t('contact.email')} *</label>
-                <input
-                  type="email"
-                  id="email"
-                  {...register('email')}
-                  className={errors.email ? 'error' : ''}
-                  placeholder="juan@ejemplo.com"
-                  disabled={isSubmitting}
-                  onChange={(e) => {
-                    const sanitized = sanitizeInput(e.target.value, 'email');
-                    setValue('email', sanitized, { shouldValidate: false });
-                  }}
-                  maxLength={100}
-                />
-                {errors.email && (
-                  <span className="error-message">{errors.email.message}</span>
-                )}
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="subject">{t('contact.subject')} *</label>
-                <input
-                  type="text"
-                  id="subject"
-                  {...register('subject')}
-                  className={errors.subject ? 'error' : ''}
-                  placeholder="Consulta sobre proyecto"
-                  disabled={isSubmitting}
-                  onChange={(e) => {
-                    const sanitized = sanitizeInput(e.target.value, 'subject');
-                    setValue('subject', sanitized, { shouldValidate: false });
-                  }}
-                  maxLength={100}
-                />
-                {errors.subject && (
-                  <span className="error-message">{errors.subject.message}</span>
-                )}
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="message">{t('contact.message')} *</label>
-                <textarea
-                  id="message"
-                  {...register('message')}
-                  className={errors.message ? 'error' : ''}
-                  placeholder="Escribe tu mensaje aquí..."
-                  disabled={isSubmitting}
-                  onChange={(e) => {
-                    const sanitized = sanitizeInput(e.target.value, 'message');
-                    setValue('message', sanitized, { shouldValidate: false });
-                  }}
-                  rows={5}
-                  maxLength={1000}
-                />
-                {errors.message && (
-                  <span className="error-message">{errors.message.message}</span>
-                )}
-                <div className="char-counter">
-                  {watch('message')?.length || 0} / 1000
+            )}
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 p-7 rounded-2xl border" style={{ backgroundColor: 'rgba(74,111,168,0.03)', borderColor: 'var(--border-color)' }}>
+              <input type="text" {...register('honeypot')} className="hidden" tabIndex={-1} />
+              {[
+                { name: 'name' as const, label: t('contact.name'), type: 'text' },
+                { name: 'email' as const, label: t('contact.email'), type: 'email' },
+                { name: 'subject' as const, label: t('contact.subject'), type: 'text' },
+              ].map(f => (
+                <div key={f.name}>
+                  <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>{f.label}</label>
+                  <input type={f.type} {...register(f.name)} className={`w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-300 border ${errors[f.name] ? 'border-red-500 animate-[shake_0.4s]' : 'hover:border-[var(--primary-blue)] focus:border-[var(--primary-blue)] focus:shadow-[0_0_0_3px_rgba(74,111,168,0.1)]'}`} style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-primary)', borderColor: errors[f.name] ? undefined : 'var(--border-color)' }} />
+                  {errors[f.name] && <p className="text-red-500 text-xs mt-1 animate-[slideDown_0.3s]">⚠ {errors[f.name]?.message}</p>}
                 </div>
+              ))}
+              <div>
+                <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>{t('contact.message')}</label>
+                <textarea {...register('message')} rows={5} className={`w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-300 border resize-y min-h-[120px] ${errors.message ? 'border-red-500 animate-[shake_0.4s]' : 'hover:border-[var(--primary-blue)] focus:border-[var(--primary-blue)] focus:shadow-[0_0_0_3px_rgba(74,111,168,0.1)]'}`} style={{ backgroundColor: 'var(--bg-dark)', color: 'var(--text-primary)', borderColor: errors.message ? undefined : 'var(--border-color)' }} />
+                {errors.message && <p className="text-red-500 text-xs mt-1 animate-[slideDown_0.3s]">⚠ {errors.message?.message}</p>}
               </div>
-
-              {/* Mensaje de estado */}
-              {submitStatus !== 'idle' && (
-                <div className={`submit-message ${submitStatus}`}>
-                  {submitMessage}
-                </div>
-              )}
-              
-              <button 
-                type="submit" 
-                className="btn btn-primary" 
-                style={{ width: '100%' }}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Enviando...' : t('contact.send')}
+              <button type="submit" disabled={submitting} className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-60 disabled:hover:translate-y-0" style={{ backgroundColor: 'var(--primary-blue)' }}>
+                {submitting ? `${t('contact.send')}...` : t('contact.send')}
               </button>
             </form>
           </div>

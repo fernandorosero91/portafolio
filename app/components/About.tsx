@@ -5,111 +5,82 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 export default function About() {
   const { t } = useLanguage();
-  const { ref: headerRef, isVisible: headerVisible } = useScrollReveal();
-  const { ref: contentRef, isVisible: contentVisible } = useScrollReveal({ threshold: 0.1, delay: 200 });
-  const { ref: skillsRef, isVisible: skillsVisible } = useScrollReveal({ threshold: 0.1, delay: 400 });
+  const { ref: headerRef, isVisible: hv } = useScrollReveal();
+  const { ref: contentRef, isVisible: cv } = useScrollReveal({ threshold: 0.1, delay: 200 });
+  const { ref: skillsRef, isVisible: sv } = useScrollReveal({ threshold: 0.1, delay: 400 });
 
-  const skillCategories = [
-    {
-      category: 'Desarrollo Backend',
-      translationKey: 'backend',
-      skills: [
-        { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-        { name: 'Django', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg' },
-        { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
-        { name: 'Spring Boot', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg' },
-        { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
-        { name: 'Laravel', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg' }
-      ]
-    },
-    {
-      category: 'Desarrollo Frontend',
-      translationKey: 'frontend',
-      skills: [
-        { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-        { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-        { name: 'Vue.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
-        { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
-        { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
-        { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' }
-      ]
-    },
-    {
-      category: 'Bases de Datos',
-      translationKey: 'databases',
-      skills: [
-        { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
-        { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
-        { name: 'SQL Server', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg' }
-      ]
-    },
-    {
-      category: 'Herramientas',
-      translationKey: 'tools',
-      skills: [
-        { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
-        { name: 'Cloud Computing', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg' },
-        { name: 'DevOps', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
-        { name: 'API REST', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' }
-      ]
-    },
-    {
-      category: 'Contabilidad & Finanzas',
-      translationKey: 'accounting',
-      skills: [
-        { name: 'NIIF', icon: '📊' },
-        { name: 'Auditoría Tributaria', icon: '🔍' },
-        { name: 'Gestión Financiera', icon: '💼' },
-        { name: 'Planeación Tributaria', icon: '📈' }
-      ]
-    }
+  const categories = [
+    { key: 'backend', skills: [
+      { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+      { name: 'Django', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg' },
+      { name: 'Java', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
+      { name: 'Spring Boot', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg' },
+      { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+      { name: 'Laravel', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg' },
+    ]},
+    { key: 'frontend', skills: [
+      { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+      { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+      { name: 'Vue.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
+      { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+      { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+      { name: 'Tailwind', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
+    ]},
+    { key: 'databases', skills: [
+      { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+      { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
+      { name: 'SQL Server', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg' },
+    ]},
+    { key: 'tools', skills: [
+      { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+      { name: 'Cloud', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg' },
+      { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+      { name: 'API REST', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
+    ]},
+    { key: 'accounting', skills: [
+      { name: 'NIIF', icon: '📊' },
+      { name: 'Auditoría', icon: '🔍' },
+      { name: 'Finanzas', icon: '💼' },
+      { name: 'Tributaria', icon: '📈' },
+    ]},
   ];
 
   return (
-    <section className="about" id="about">
-      <div className="section-container">
-        <div ref={headerRef} className={`section-header scroll-reveal ${headerVisible ? 'visible' : ''}`}>
-          <h2 className="section-title">{t('about.title')}</h2>
-          <p className="section-subtitle">{t('about.subtitle')}</p>
+    <section id="about" className="scroll-mt-20 py-20 px-6 lg:px-8" style={{ backgroundColor: 'var(--bg-dark)' }}>
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div ref={headerRef} className={`text-center mb-14 scroll-reveal ${hv ? 'visible' : ''}`}>
+          <h2 className="text-4xl lg:text-5xl font-bold font-[Cormorant_Garamond,serif] mb-3" style={{ color: 'var(--text-primary)' }}>{t('about.title')}</h2>
+          <p className="text-base" style={{ color: 'var(--text-tertiary)' }}>{t('about.subtitle')}</p>
         </div>
-        
-        {/* Biografía en ancho completo */}
-        <div ref={contentRef} className={`about-intro scroll-reveal ${contentVisible ? 'visible' : ''}`}>
-          <h3>{t('about.myJourney')}</h3>
-          <div className="about-text-grid">
-            <p className="about-text">
-              {t('about.text1')}
-            </p>
-            <p className="about-text">
-              {t('about.text2')}
-            </p>
-            <p className="about-text">
-              {t('about.text3')}
-            </p>
+
+        {/* Bio */}
+        <div ref={contentRef} className={`mb-16 scroll-reveal ${cv ? 'visible' : ''}`}>
+          <h3 className="text-2xl font-bold text-center mb-8" style={{ color: 'var(--text-primary)' }}>{t('about.myJourney')}</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[t('about.text1'), t('about.text2'), t('about.text3')].map((text, i) => (
+              <p key={i} className="text-sm leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>{text}</p>
+            ))}
           </div>
         </div>
 
-        {/* Habilidades Técnicas */}
-        <div ref={skillsRef} className={`skills-section-full scroll-reveal ${skillsVisible ? 'visible' : ''}`}>
-          <h3 className="skills-main-title">{t('about.skills')}</h3>
-          <div className="skills-categories-grid">
-            {skillCategories.map((category) => (
-              <div key={category.category} className="skill-category-card">
-                <h4 className="category-title">{t(`about.${category.translationKey}`)}</h4>
-                <div className="skills-tags">
-                  {category.skills.map((skill) => (
-                    <span key={skill.name} className="skill-tag">
-                      {typeof skill.icon === 'string' && skill.icon.startsWith('http') ? (
-                        <img 
-                          src={skill.icon} 
-                          alt={skill.name}
-                          className="skill-icon"
-                        />
+        {/* Skills */}
+        <div ref={skillsRef} className={`scroll-reveal ${sv ? 'visible' : ''}`}>
+          <h3 className="text-2xl font-bold text-center mb-10" style={{ color: 'var(--text-primary)' }}>{t('about.skills')}</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map(cat => (
+              <div key={cat.key} className="rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style={{ backgroundColor: 'rgba(74,111,168,0.04)', borderColor: 'var(--border-color)' }}>
+                <h4 className="text-sm font-bold text-center mb-5 pb-3 border-b-2" style={{ color: 'var(--accent-amber)', borderColor: 'var(--accent-amber)' }}>{t(`about.${cat.key}`)}</h4>
+                <div className="grid grid-cols-3 gap-2.5">
+                  {cat.skills.map(s => (
+                    <div key={s.name} className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl border text-center min-h-[80px] transition-all duration-300 cursor-pointer group hover:-translate-y-1 hover:shadow-md" style={{ backgroundColor: 'var(--bg-dark)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
+                      {s.icon.startsWith('http') ? (
+                        <img src={s.icon} alt={s.name} className="w-7 h-7 object-contain transition-transform duration-300 group-hover:scale-110" />
                       ) : (
-                        <span className="skill-emoji">{skill.icon}</span>
+                        <span className="text-2xl transition-transform duration-300 group-hover:scale-110">{s.icon}</span>
                       )}
-                      <span className="skill-name">{skill.name}</span>
-                    </span>
+                      <span className="text-[11px] font-semibold leading-tight">{s.name}</span>
+                    </div>
                   ))}
                 </div>
               </div>

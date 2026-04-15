@@ -12,71 +12,111 @@ export default function Hero() {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const h = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', h, { passive: true });
+    return () => window.removeEventListener('scroll', h);
   }, []);
 
-  const handleDownloadCV = () => {
-    downloadCV();
-  };
-
   return (
-    <section className="hero" id="inicio">
+    <section
+      id="inicio"
+      className="relative flex min-h-screen items-center overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%)' }}
+    >
       <ParticlesBackground />
-      <div className="hero-container">
-        <div 
-          className="hero-content"
-          style={{ transform: `translateY(${scrollY * 0.1}px)` }}
-        >
-          <div className="hero-badge">● {t('hero.available')}</div>
-          <h1>
-            <span className="name-first">{t('hero.name')}</span><br />
-            <span className="name-last">{t('hero.lastName')}</span>
-          </h1>
-          <p className="hero-subtitle">{t('hero.subtitle')}</p>
-          <p className="hero-description">
-            {t('hero.description')}
-          </p>
-          
-          <div className="hero-stats">
-            <div className="stat">
-              <span className="stat-value">8+</span>
-              <span className="stat-label">{t('hero.yearsExp')}</span>
+
+      {/* Content wrapper — centered */}
+      <div
+        className="relative z-[2] mx-auto w-full max-w-6xl px-5 pb-20 pt-32 lg:pb-28 lg:pt-40"
+      >
+        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr_380px] lg:gap-20">
+
+          {/* ── Left column: text ── */}
+          <div
+            className="order-2 mx-auto max-w-xl text-center lg:order-1 lg:mx-0 lg:text-left"
+            style={{ transform: `translateY(${scrollY * 0.05}px)` }}
+          >
+            {/* Badge */}
+            <span
+              className="mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-medium"
+              style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              {t('hero.available')}
+            </span>
+
+            {/* Name */}
+            <h1 className="mb-5 font-[Cormorant_Garamond,serif] font-black leading-[1.05] tracking-tight">
+              <span className="block text-5xl sm:text-6xl lg:text-7xl" style={{ color: 'var(--text-primary)' }}>
+                {t('hero.name')}
+              </span>
+              <span className="block text-5xl sm:text-6xl lg:text-7xl" style={{ color: 'var(--accent-amber)' }}>
+                {t('hero.lastName')}
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="mb-4 text-sm font-semibold tracking-wide lg:text-base" style={{ color: 'var(--text-primary)' }}>
+              {t('hero.subtitle')}
+            </p>
+
+            {/* Description */}
+            <p className="mx-auto mb-10 max-w-md text-sm leading-relaxed lg:mx-0" style={{ color: 'var(--text-tertiary)' }}>
+              {t('hero.description')}
+            </p>
+
+            {/* Stats */}
+            <div className="mb-10 flex justify-center gap-10 lg:justify-start">
+              {[
+                { v: '8+', l: t('hero.yearsExp') },
+                { v: '5+', l: t('hero.projectsCount') },
+                { v: '7+', l: t('hero.organizations') },
+              ].map(s => (
+                <div key={s.l} className="text-center lg:text-left">
+                  <div className="text-3xl font-bold leading-none lg:text-4xl" style={{ color: 'var(--accent-amber)' }}>{s.v}</div>
+                  <div className="mt-1.5 text-xs font-medium" style={{ color: 'var(--text-tertiary)' }}>{s.l}</div>
+                </div>
+              ))}
             </div>
-            <div className="stat">
-              <span className="stat-value">5+</span>
-              <span className="stat-label">{t('hero.projectsCount')}</span>
-            </div>
-            <div className="stat">
-              <span className="stat-value">7+</span>
-              <span className="stat-label">{t('hero.organizations')}</span>
+
+            {/* CTA */}
+            <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
+              <a
+                href="#projects"
+                className="inline-flex h-11 items-center justify-center rounded-lg px-7 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+                style={{ backgroundColor: 'var(--primary-blue)' }}
+              >
+                {t('hero.viewProjects')}
+              </a>
+              <button
+                onClick={() => downloadCV()}
+                className="inline-flex h-11 items-center justify-center rounded-lg border-2 bg-transparent px-7 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5"
+                style={{ borderColor: 'var(--primary-blue)', color: 'var(--primary-blue)' }}
+              >
+                {t('hero.downloadCV')}
+              </button>
             </div>
           </div>
-          
-          <div className="hero-buttons">
-            <a href="#projects" className="btn btn-primary">{t('hero.viewProjects')}</a>
-            <button onClick={handleDownloadCV} className="btn btn-secondary"> {t('hero.downloadCV')}</button>
+
+          {/* ── Right column: photo ── */}
+          <div
+            className="order-1 flex justify-center lg:order-2"
+            style={{ transform: `translateY(${scrollY * 0.03}px)` }}
+          >
+            <div
+              className="relative h-72 w-64 overflow-hidden rounded-2xl shadow-xl sm:h-80 sm:w-72 lg:h-[440px] lg:w-[340px]"
+              style={{ border: '1px solid var(--border-color)', background: 'linear-gradient(135deg, var(--avatar-from), var(--avatar-to))' }}
+            >
+              <Image
+                src="/profile-photo.jpg"
+                alt="Fernando Rosero"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
           </div>
-        </div>
-        
-        <div 
-          className="hero-avatar"
-          style={{ transform: `translateY(${scrollY * 0.05}px)` }}
-        >
-          <div className="avatar-box">
-            <Image 
-              src="/profile-photo.jpg" 
-              alt="Fernando Rosero - Perfil Profesional"
-              width={400}
-              height={500}
-              priority
-              style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%', borderRadius: '12px' }}
-            />
-          </div>
+
         </div>
       </div>
     </section>
